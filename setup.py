@@ -11,7 +11,7 @@ setup(
     description = "Rename image files according to exif tags",
     long_description = long_description,
     long_description_content_type = "text/markdown",
-    packages = find_packages(ignore = ["tests", "docs"]),
+    packages = find_packages(exclude = ["tests", "docs"]),
     install_requires = ["piexif"],
     author="s-ball",
     author_email = 's-ball@laposte.net',
@@ -27,7 +27,7 @@ setup(
     python_requires=">=3",
     entry_points = {
         'console_scripts': [
-            'pyimgren=pyimgren:main';
+            'pyimgren=pyimgren:main',
             ],
         },
     )
