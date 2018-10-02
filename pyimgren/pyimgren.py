@@ -6,19 +6,35 @@ import csv
 import sys
 import collections
 
-class Converter:
-    """A Converter is used to convert image names provided by a camera
+class Renamer:
+    """Parameters:
+folder: the default folder where pictures will be renamed
+src_mask: a pattern to select the files to be renamed (default
+          "DSCF*.jpg")
+dst_mask: a format containing strftime formatting directives, that
+          will be used for the new name of a picture (default
+          "%Y%m%d_%H%M%S")
+ext_mask: the extension of the new name
+ref_file: the name of a file that will remember the old names
+debug   : a boolean flag that will cause a line to be printed for
+          each rename when true
+dummy   : a boolean flag that will cause a "dry run", meaning that
+          the folder will be scanned, and debug info eventually printed
+          but no file will be renamed
+          
+A Renamer is used to rename image names provided by a camera
 (commonly IMGxxxxx.JPG or DSCFyyyy.JPG into a name based on the time
-when the photography had been taken (as smartphones do). It is then
-possible to rename them to their original name.
+when the photography had been taken (as smartphones do). That time is
+extracted from the exif tag of the picture. No rename occurs if the
+picture contains no exif time..
 
 A file named names.log is created in the folder to store the new names
-and the original ones, and is what allows to rename them back.
+and the original ones, in order to be able to rename them back.
 
 Typical use:
 
-conv = Converter(path)
-conv.convert()    # to convert to "date" names
+conv = Renamer(path)
+conv.rename()    # to convert to "date" names
 conv.back()
 
 This class requires piexif and Python >= 3."""
@@ -32,7 +48,9 @@ This class requires piexif and Python >= 3."""
         self.folder, self.src_mask, self.dst_mask, self.ref_file = (
             folder, src_mask, dst_mask, ref_file)
         self.ext_mask, self.debug, self.dummy = ext_mask, debug, dummy
-    def convert(self, folder = None):
+    def rename(self, folder = None):
+        """Rename pictures in folder (by default the folder declared
+at Renamer initialization"""
         if folder is None: folder = self.folder
         orig_folder = os.getcwd()
         os.chdir(folder)
@@ -55,6 +73,8 @@ This class requires piexif and Python >= 3."""
                     wr.writerow((name, old))
         os.chdir(orig_folder)
     def back(self, folder = None):
+        """Rename pictures back to their initial name in folder
+(by default the folder declared at Renamer initialization)"""
         if folder is None: folder = self.folder
         orig_folder = os.getcwd()
         os.chdir(folder)

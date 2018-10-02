@@ -25,9 +25,9 @@ setup(
         'Operating System :: OS Independent',
         ],
     python_requires=">=3",
-    entry_points = {
-        'console_scripts': [
-            'pyimgren=pyimgren:main',
-            ],
-        },
+##    entry_points = {
+##        'console_scripts': [
+##            'pyimgren=pyimgren:main',
+##            ],
+##        },
     )
