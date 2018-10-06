@@ -2,10 +2,23 @@ import os.path
 import glob
 import datetime
 import piexif
-import csv
 import sys
 import collections
+import io
 
+class NamesLogException(Exception):
+    """Raised when a line in the names.log file cannot be parsed
+
+Attributes:
+    numlig: line number where the problem occurs
+    line  : content of the offending line"""
+    def __init__(self, numlig, line):
+        self.numlig = numlig
+        self.line = line
+    def __str__(self):
+        return "Error in name log file line {}: >{}<".format(
+            self.numlig, repr(self.line))
+        
 class Renamer:
     """Parameters:
 folder: the default folder where pictures will be renamed
@@ -16,6 +29,7 @@ dst_mask: a format containing strftime formatting directives, that
           "%Y%m%d_%H%M%S")
 ext_mask: the extension of the new name
 ref_file: the name of a file that will remember the old names
+         (default names.log)
 debug   : a boolean flag that will cause a line to be printed for
           each rename when true
 dummy   : a boolean flag that will cause a "dry run", meaning that
@@ -67,10 +81,9 @@ at Renamer initialization"""
                 if not self.dummy:
                     os.rename(file, new_name)
         if len(names) != 0:
-            with open(self.ref_file, "w", newline='') as fd:
-                wr = csv.writer(fd, delimiter = ":")
+            with io.open(self.ref_file, "w", encoding="utf-8") as fd:
                 for name, old in names.items():
-                    wr.writerow((name, old))
+                    fd.write(u"{}:{}\n".format(name, old))
         os.chdir(orig_folder)
     def back(self, folder = None):
         """Rename pictures back to their initial name in folder
@@ -85,26 +98,19 @@ at Renamer initialization"""
         os.chdir(orig_folder)
     def _load_names(self):
         names = collections.OrderedDict()
+        numlig = 0
         try:
-            with open(self.ref_file) as fd:
-                rd = csv.reader(fd, delimiter=":")
-                for numlig, row in enumerate(rd):
+            with io.open(self.ref_file, encoding='utf-8') as fd:
+                for line in fd:
+                    numlig += 1
+                    row = [i.strip() for i in line.split(u":")[:2]]
                     names[row[0]] = row[1]
         except FileNotFoundError:
             pass
-        except IndexError:
-            print(numlig, row)
-            raise
+        except IndexError as e:
+            raise NamesLogException(numlig,line).with_traceback(
+                sys.exc_info()[2]) from e
         return names
-    def _get_dat(self, file):
-        exif = piexif.load(file)["Exif"]
-        dt = None
-        for i in (0x9003, 0x9004):
-            dt = exif[i]
-            if dt is not None: break
-        if dt is None: return None
-        return datetime.datetime.strptime(dt.decode('ascii'),
-                                          "%Y:%m:%d %H:%M:%S")
     def _get_new_name(self, name):
         if os.path.exists(name + self.ext_mask):
             for i in range(ord('a'), ord('z') + 1):
@@ -117,3 +123,15 @@ at Renamer initialization"""
             raise RuntimeError("Too much files for {}".format(
                 name + self.ext_mask))
         return name
+
+def exif_dat(file):
+    """Utility function that uses the piexif module to extract the date
+and time when the picture was taken from the exif tags"""
+    exif = piexif.load(file)["Exif"]
+    dt = None
+    for i in (0x9003, 0x9004):
+        dt = exif[i]
+        if dt is not None: break
+    if dt is None: return None
+    return datetime.datetime.strptime(dt.decode('ascii'),
+                                      "%Y:%m:%d %H:%M:%S")
