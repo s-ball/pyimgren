@@ -11,9 +11,9 @@ Digital cameras name their picture in a sequential manner. When you want to put 
 
 Even if we can find here and there programs that allow for batch renaming of such pictures, I could not find a portable Python module for that. So the goals of this project are:
 
-* few dependencies: a Python 3 installation
+* few dependencies: a Python 3 (>= 3.2) or 2.7 installation
 * few additional module requirements: only [piexif](https://github.com/hMatoba/Piexif) is required at installation time
-* portability: this is a pure Python package
+* portability: this is a pure Python package and is tested with travis-ci for versions 2.7, and 3.2 to 3.6
 
 ## Usage:
 
@@ -49,13 +49,14 @@ Parameters:
 * dst_mask: a format containing strftime formatting directives, that
           will be used for the new name of a picture (default
           "%Y%m%d_%H%M%S")
-* ext_mask: the extension of the new name
+* ext_mask: the extension of the new name (default ".jpg")
 * ref_file: the name of a file that will remember the old names
+          (default "names.log")
 * debug   : a boolean flag that will cause a line to be printed for
-          each rename when true
+          each rename when true (default False)
 * dummy   : a boolean flag that will cause a "dry run", meaning that
           the folder will be scanned, and debug info eventually printed
-          but no file will be renamed
+          but no file will be renamed (default False)
           
 Typical use:
 
