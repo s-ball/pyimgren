@@ -3,7 +3,7 @@ A python module to rename images according to their exif tags.
 
 ## BEWARE: work in progress
 
-This should be Python package distributed in PyPI. It is currently in alpha-level and only available here with git.
+This package package is distributed in PyPI since version 1.0.1. It is currently in alpha-level and full source is available from [GitHUB](https://github.com/s-ball/pyimgren).
 
 ## Goals
 
@@ -77,9 +77,7 @@ Still not implemented...
 
 ### End user installation
 
-<del>With pip: `pip install pyimgren`</del>
-
-Currently still not available...
+With pip: `pip install pyimgren`.
 
 ### Developper installation
 
@@ -103,7 +101,7 @@ As this project is developped on my free time, I cannot guarantee very fast feed
 
 ## Versioning
 
-This project uses a standard Major.Minor.Patch versioning pattern. Inside a major version, public API stability is expected.
+This project uses a standard Major.Minor.Patch versioning pattern. Inside a major version, public API stability is expected (at least after 1.0.0 version will be published).
 
 ## License
 
@@ -112,4 +110,3 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * The hard job of exif data processing was already done in [piexif](https://github.com/hMatoba/Piexif)
-
