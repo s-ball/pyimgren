@@ -13,7 +13,7 @@ Even if we can find here and there programs that allow for batch renaming of suc
 
 * few dependencies: a Python 3 (>= 3.2)
 * few additional module requirements: only [piexif](https://github.com/hMatoba/Piexif) is required at installation time
-* portability: this is a pure Python package and is tested with travis-ci for versions 3.2 to 3.6
+* portability: this is a pure Python package and is tested with travis-ci (linux) and AppVeyor (Windows) for versions 3.3 to 3.6 (3.7 for AppVeyor only).
 
 ## Usage:
 
