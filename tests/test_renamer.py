@@ -1,5 +1,8 @@
 import unittest
-import unittest.mock
+try:
+    from unittest import mock
+except:
+    import mock
 import pyimgren
 import os.path
 import io
@@ -20,7 +23,7 @@ c:d
             self.assertEqual(2, len(names.keys()))
             self.assertEqual(u'b', names[u'a'])
     def test_load_names_ko(self):
-        with unittest.mock.patch("pyimgren.pyimgren.io.open",
+        with mock.patch("pyimgren.pyimgren.io.open",
                                  return_value = io.StringIO(u"""a:b
 c
 :d
