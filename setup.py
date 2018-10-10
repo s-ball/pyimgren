@@ -4,16 +4,19 @@ import re
 
 from io import open
 
-with open('README.md') as fd:
-    long_description = fd.read()
-
 NAME = "pyimgren"
 with open(os.path.join(os.path.dirname(__file__), NAME,
                        "version.py")) as fd:
     ver_line = next(fd)
     m = re.match(r"\s*__version__\s*=\s*['\"]([^'\"]+)['\"]", ver_line)
     VERSION = m.group(1)
-    
+
+# In long description, replace "master" in the build status badges
+#  with the current version we are building
+with open('README.md') as fd:
+    long_description = next(fd).replace('master', VERSION)
+    long_description += ''.join(fd)
+
 setup(
     name=NAME,
     version = VERSION,

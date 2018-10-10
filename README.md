@@ -1,9 +1,11 @@
+[![Travis-CI Build Status](https://travis-ci.com/s-ball/pyimgren.svg?branch=master)](https://travis-ci.com/s-ball/pyimgren) [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/salqj2q1h8mid74t/branch/master?svg=true)](https://ci.appveyor.com/project/s-ball/pyimgren/branch/master)
+
 # pyimgren
 A python module to rename images according to their exif tags.
 
 ## BEWARE: work in progress
 
-This package package is distributed in PyPI since version 1.0.1. It is currently in alpha-level and full source is available from [GitHUB](https://github.com/s-ball/pyimgren).
+This package package is distributed in PyPI since version 0.1.0. It is currently in alpha-level and full source is available from [GitHUB](https://github.com/s-ball/pyimgren).
 
 ## Goals
 
@@ -11,9 +13,9 @@ Digital cameras name their picture in a sequential manner. When you want to put 
 
 Even if we can find here and there programs that allow for batch renaming of such pictures, I could not find a portable Python module for that. So the goals of this project are:
 
-* few dependencies: a Python 3 (>= 3.2)
+* few dependencies: a Python 3 (tested for >= 3.3)
 * few additional module requirements: only [piexif](https://github.com/hMatoba/Piexif) is required at installation time
-* portability: this is a pure Python package and is tested with travis-ci (linux) and AppVeyor (Windows) for versions 3.3 to 3.6 (3.7 for AppVeyor only).
+* portability: this is a pure Python package and is tested with Travis-CI (linux) and AppVeyor (Windows) for versions 3.3 to 3.6 (3.7 for AppVeyor only).
 
 ## Usage:
 
