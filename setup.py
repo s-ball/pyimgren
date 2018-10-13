@@ -38,9 +38,9 @@ setup(
         ],
     python_requires=">=3",
     test_suite = "tests",
-##    entry_points = {
-##        'console_scripts': [
-##            'pyimgren=pyimgren:main',
-##            ],
-##        },
+    entry_points = {
+        'console_scripts': [
+            'pyimgren=pyimgren.__main__:main',
+            ],
+        },
     )
