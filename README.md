@@ -3,13 +3,13 @@
 # pyimgren
 A python module to rename images according to their exif tags.
 
-## BEWARE: work in progress
+## Current status
 
-This package package is distributed in PyPI since version 0.1.0. It is currently in alpha-level and full source is available from [GitHUB](https://github.com/s-ball/pyimgren).
+This package package is distributed in PyPI since version 0.1.0. It can be used by end users, but should be considered at beta quality because it still lacks extensive testing and documentation. Its full source is available from [GitHUB](https://github.com/s-ball/pyimgren).
 
 ## Goals
 
-Digital cameras name their picture in a sequential manner. When you want to put pictures from several cameras in the same folder, they will be sorted by camera instead of by picture date and time.
+Digital cameras name their pictures in a sequential manner. When you want to put pictures from several cameras in the same folder, they will be sorted by camera instead of by picture date and time.
 
 Even if we can find here and there programs that allow for batch renaming of such pictures, I could not find a portable Python module for that. So the goals of this project are:
 
@@ -73,7 +73,45 @@ conv.back()      # if you want to revert to original names
 
 #### As a script
 
-Still not implemented...
+The pip installation install a `pyimgren` script (`pyimgren.exe` on Windows) in the Scripts directory. It can then be directly used (provided the Script directory be in the path) with the following syntax:
+
+```
+usage: pyimgren [-h] [-v] [-b] [-s SRC_MASK] [-d DST_MASK] [-e EXT_MASK]
+                [-r REF_FILE] [-D] [-X]
+                folder
+
+Rename pictures according to their exif timestamp
+
+positional arguments:
+  folder                folder containing files to rename
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --version         show program's version number and exit
+  -b, --back            restore original names
+  -s SRC_MASK, --src_mask SRC_MASK
+                        pattern to select the files to rename
+  -d DST_MASK, --dst_mask DST_MASK
+                        format for the new file name
+  -e EXT_MASK, --ext EXT_MASK
+                        extension for the new file name
+  -r REF_FILE, --ref_file REF_FILE
+                        a file to remember the old names
+  -D, --debug           print a line per rename
+  -X, --dry_run         process normally except no rename occurs
+```
+
+#### As a module
+
+It can be use as a Python module, which allows to use it in Windows even if the Scripts directory is not in the path thanks to the `py` launcher with same syntax as the script:
+
+```
+usage: python -m pyimgren [-h] [-v] [-b] [-s SRC_MASK] [-d DST_MASK]
+                [-e EXT_MASK] [-r REF_FILE] [-D] [-X]
+                folder
+```
+
+or when using the Windows launcher `py -m pyimgren ...`
 
 ## Installing
 

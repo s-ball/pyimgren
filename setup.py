@@ -29,7 +29,7 @@ setup(
     author_email = 's-ball@laposte.net',
     url = "https://github.com/s-ball/pyimgren",
     classifiers = [
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Intended Audience :: End Users/Desktop',
         'Intended Audience :: Developers',
