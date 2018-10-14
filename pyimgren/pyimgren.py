@@ -70,7 +70,7 @@ at Renamer initialization"""
         os.chdir(folder)
         names = self._load_names()
         for file in glob.glob(self.src_mask):
-            dat = self._get_dat(file)
+            dat = exif_dat(file)
             if dat is not None:
                 new_name = self._get_new_name(
                     datetime.datetime.strftime(dat, self.dst_mask)) \
@@ -119,7 +119,7 @@ at Renamer initialization"""
             for i in range(ord('a'), ord('z') + 1):
                 for j in range(ord('a'), ord('z') + 1):
                     n = name + chr(i) + chr(j) + self.ext_mask
-                    if not os.path.exist(n): return n
+                    if not os.path.exists(n): return n
             raise RuntimeError("Too much files for {}".format(
                 name + self.ext_mask))
         return name
