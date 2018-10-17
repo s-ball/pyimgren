@@ -55,12 +55,11 @@ c
     def test_back(self):
         """Rename back 3 files"""
         flist = [('a', 'b'), ('c', 'd'), ('e', 'f')]
-        with mock.patch('os.rename'),mock.patch('os.chdir'),mock.patch.object(
+        with mock.patch('os.rename'),mock.patch.object(
             self.obj, "_load_names", return_value =
             collections.OrderedDict(flist)):
             
             self.obj.back()
-            self.assertEqual(2, os.chdir.call_count)
             self.assertEqual(3, os.rename.call_count)
             for i, pair in enumerate(flist):
                 self.assertEqual(pair, os.rename.call_args_list[i][0])
@@ -77,7 +76,7 @@ c
         open_ctx = mock.Mock()
         open_ctx.__enter__ = mock.Mock(return_value = fd)
         open_ctx.__exit__ = mock.Mock()
-        with mock.patch('os.rename'), mock.patch('os.chdir'), \
+        with mock.patch('os.rename'), \
              mock.patch.object(self.obj, "_load_names",
                                return_value = collections.OrderedDict()), \
              mock.patch('io.open', return_value = open_ctx), \
@@ -85,7 +84,6 @@ c
              mock.patch('pyimgren.pyimgren.exif_dat',
                         side_effect = dates):
             self.obj.rename()
-            self.assertEqual(2, os.chdir.call_count)
             for i, n in enumerate(names):
                 nn = dates[i].strftime(self.obj.dst_mask) + self.obj.ext_mask
                 self.assertEqual((n, nn), os.rename.call_args_list[i][0])

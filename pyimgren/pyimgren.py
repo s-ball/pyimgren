@@ -5,8 +5,11 @@ import piexif
 import sys
 import collections
 import io
+import logging
 
-class NamesLogException(Exception):
+class PyimgrenException(Exception):
+    """Base for pyimgren exceptions"""
+class NamesLogException(PyimgrenException):
     """Raised when a line in the names.log file cannot be parsed
 
 Attributes:
@@ -18,10 +21,21 @@ Attributes:
     def __str__(self):
         return "Error in name log file line {}: >{}<".format(
             self.numlig, repr(self.line))
-        
+
+class UnknownPictureException(PyimgrenException):
+    """Raised when trying to rename back a file not registered in the
+ref_file"""
+    def __init__(self, file, renamer):
+        self.file = file
+        self.ref_file = renamer.ref_file
+        self.folder = renamer.folder
+    def __str__(self):
+        return "File {} in folder {} not found in {}".format(
+            self.file, self.folder, self.ref_file)
+
 class Renamer:
     """Parameters:
-folder: the default folder where pictures will be renamed
+folder  : the folder where pictures will be renamed
 src_mask: a pattern to select the files to be renamed (default
           "DSCF*.jpg")
 dst_mask: a format containing strftime formatting directives, that
@@ -35,7 +49,9 @@ debug   : a boolean flag that will cause a line to be printed for
 dummy   : a boolean flag that will cause a "dry run", meaning that
           the folder will be scanned, and debug info eventually printed
           but no file will be renamed
-          
+
+All those parameters become attributes of the object.
+
 A Renamer is used to rename image names provided by a camera
 (commonly IMGxxxxx.JPG or DSCFyyyy.JPG into a name based on the time
 when the photography had been taken (as smartphones do). That time is
@@ -48,7 +64,7 @@ and the original ones, in order to be able to rename them back.
 Typical use:
 
 conv = Renamer(path)
-conv.rename()    # to convert to "date" names
+conv.rename() # to convert all files with selected pattern to "date" names
 conv.back()
 
 This class requires piexif and Python >= 3."""
@@ -62,45 +78,60 @@ This class requires piexif and Python >= 3."""
         self.folder, self.src_mask, self.dst_mask, self.ref_file = (
             folder, src_mask, dst_mask, ref_file)
         self.ext_mask, self.debug, self.dummy = ext_mask, debug, dummy
-    def rename(self, folder = None):
-        """Rename pictures in folder (by default the folder declared
-at Renamer initialization"""
-        if folder is None: folder = self.folder
-        orig_folder = os.getcwd()
-        os.chdir(folder)
+        self._log = logging.getLogger(__name__)
+    def rename(self, pictures = None):
+        """Rename pictures in folder (by default the pictures with the
+src_mask pattern)
+
+pictures is an iterable of paths. If a path is a folder, all files
+matching src_mask will be renamed. If it is a file, that file will be
+renamed regardless of src_mask. If it contains generic characters (*
+and ?), all files matching that pattern will be renamed."""
         names = self._load_names()
-        for file in glob.glob(self.src_mask):
-            dat = exif_dat(file)
-            if dat is not None:
-                new_name = self._get_new_name(
-                    datetime.datetime.strftime(dat, self.dst_mask)) \
-                     + self.ext_mask
-                if self.debug:
-                    print(file, "->", new_name, file=sys.stderr)
-                names[new_name] = file
-                if not self.dummy:
-                    os.rename(file, new_name)
+        if pictures is None:
+            pictures = [self.src_mask]
+        for pict in pictures:
+            files = glob.glob(os.path.join(self.folder, pict))
+            if len(files) == 0:
+                self._log.warn("{} not found".format(pict))
+            else:
+                for file in files:
+                    dat = exif_dat(file)
+                    if dat is not None:
+                        new_name = self._get_new_name(
+                            datetime.datetime.strftime(dat, self.dst_mask)) \
+                             + self.ext_mask
+                        if self.debug:
+                            self._log.debug("%s -> %s", file, new_name)
+                        names[new_name] = file
+                        if not self.dummy:
+                            os.rename(file, new_name)
         if len(names) != 0:
-            with io.open(self.ref_file, "w", encoding="utf-8") as fd:
+            with io.open(
+                os.path.join(self.folder, self.ref_file),
+                "w", encoding="utf-8") as fd:
                 for name, old in names.items():
                     fd.write(u"{}:{}\n".format(name, old))
-        os.chdir(orig_folder)
-    def back(self, folder = None):
+    def back(self, pictures = None):
         """Rename pictures back to their initial name in folder
-(by default the folder declared at Renamer initialization)"""
-        if folder is None: folder = self.folder
-        orig_folder = os.getcwd()
-        os.chdir(folder)
+(by default all pictures known in ref file)"""
         names = self._load_names()
-        for name, orig in names.items():
-            if self.debug: print(name, "->", orig, file=sys.stderr)
+        if pictures is None:
+            pictures = names.keys()
+        for name in pictures:
+            try:
+                orig = names[name]
+            except KeyError as e:
+                self._log.warn(UnknownPictureException(name, self))
+                continue
+            if self.debug: self._log.debug("%s -> %s", name, orig)
             if not self.dummy: os.rename(name, orig)
-        os.chdir(orig_folder)
     def _load_names(self):
         names = collections.OrderedDict()
         numlig = 0
         try:
-            with io.open(self.ref_file, encoding='utf-8') as fd:
+            with io.open(os.path.join(self.folder, self.ref_file),
+                         encoding='utf-8') as fd:
                 for line in fd:
                     numlig += 1
                     row = [i.strip() for i in line.split(u":")[:2]]
@@ -127,7 +158,10 @@ at Renamer initialization"""
 def exif_dat(file):
     """Utility function that uses the piexif module to extract the date
 and time when the picture was taken from the exif tags"""
-    exif = piexif.load(file)["Exif"]
+    try:
+        exif = piexif.load(file)["Exif"]
+    except ValueError:
+        return None
     dt = None
     for i in (0x9003, 0x9004):
         dt = exif[i]
