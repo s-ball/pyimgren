@@ -6,6 +6,7 @@ import sys
 import collections
 import io
 import logging
+import os.path
 
 class PyimgrenException(Exception):
     """Base for pyimgren exceptions"""
@@ -78,54 +79,93 @@ This class requires piexif and Python >= 3."""
         self.folder, self.src_mask, self.dst_mask, self.ref_file = (
             folder, src_mask, dst_mask, ref_file)
         self.ext_mask, self.debug, self.dummy = ext_mask, debug, dummy
-        self._log = logging.getLogger(__name__)
+        self._log = logging.getLogger('pyimgren')
     def rename(self, pictures = None):
         """Rename pictures in folder (by default the pictures with the
 src_mask pattern)
 
-pictures is an iterable of paths. If a path is a folder, all files
-matching src_mask will be renamed. If it is a file, that file will be
-renamed regardless of src_mask. If it contains generic characters (*
-and ?), all files matching that pattern will be renamed."""
+pictures is an iterable of paths. If a path is a folder, a new Renamer
+is started in that folder with current parameters to rename all files
+matching src_mask. If it is a file (that must be in the Renamer folder),
+that file will be renamed regardless of src_mask. If it contains
+wildcard characters (* and ?), all files matching that pattern will be
+renamed."""
         names = self._load_names()
         if pictures is None:
             pictures = [self.src_mask]
         for pict in pictures:
             files = glob.glob(os.path.join(self.folder, pict))
             if len(files) == 0:
-                self._log.warn("{} not found".format(pict))
+                self._log.warning("{} not found".format(pict))
             else:
                 for file in files:
-                    dat = exif_dat(file)
-                    if dat is not None:
-                        new_name = self._get_new_name(
-                            datetime.datetime.strftime(dat, self.dst_mask)) \
-                             + self.ext_mask
-                        if self.debug:
-                            self._log.debug("%s -> %s", file, new_name)
-                        names[new_name] = file
-                        if not self.dummy:
-                            os.rename(file, new_name)
+                    if os.path.isdir(file):
+                        sub = Renamer(file, self.src_mask,
+                                      self.dst_mask, self.ref_file,
+                                      self.ext_mask, self.debug,
+                                      self.dummy)
+                        sub._log = self.log
+                        sub.rename()
+                    else:  # it is a file: must be in folder
+                        rel = os.path.relpath(file, self.folder)
+                        if rel.startswith('..'):
+                            self._log.warning("%s is not in %s", file,
+                                           self.folder)
+                            continue
+                        if os.path.dirname(rel) != '':
+                            self._log.warning("%s is not directly in %s",
+                                           file, self.folder)
+                            continue
+                            
+                        dat = exif_dat(file)
+                        if dat is not None:
+                            new_name = self._get_new_name(
+                                datetime.datetime.strftime(dat, self.dst_mask)) \
+                                 + self.ext_mask
+                            if self.debug:
+                                self._log.debug("%s -> %s", rel, new_name)
+                            names[new_name] = rel
+                            if not self.dummy:
+                                os.rename(file, os.path.join(self.folder,
+                                                             new_name))
         if len(names) != 0:
             with io.open(
                 os.path.join(self.folder, self.ref_file),
                 "w", encoding="utf-8") as fd:
                 for name, old in names.items():
-                    fd.write(u"{}:{}\n".format(name, old))
+                    fd.write(u"{}:{}\n".format(os.path.normcase(name), old))
     def back(self, pictures = None):
         """Rename pictures back to their initial name in folder
-(by default all pictures known in ref file)"""
+(by default all pictures known in ref file)
+
+pictures is an iterable of names. If one name exists in the local,
+ref_file, that file will be renamed back. If it contains wildcard
+characters (* and ?), all files matching that pattern will be
+processed."""
+
         names = self._load_names()
         if pictures is None:
             pictures = names.keys()
         for name in pictures:
-            try:
-                orig = names[name]
-            except KeyError as e:
-                self._log.warn(UnknownPictureException(name, self))
-                continue
-            if self.debug: self._log.debug("%s -> %s", name, orig)
-            if not self.dummy: os.rename(name, orig)
+            for file in glob.glob(os.path.join(self.folder, name)):
+                if os.path.isdir(file):
+                    sub = Renamer(file, self.src_mask,
+                                  self.dst_mask, self.ref_file,
+                                  self.ext_mask, self.debug,
+                                  self.dummy)
+                    sub._log = self._log
+                    sub.back()
+                else:  # it is a file: must be in names
+                    rel = os.path.relpath(file, self.folder)
+                    try:
+                        orig = names[os.path.normcase(rel)]
+                    except KeyError as e:
+                        self._log.warning(UnknownPictureException(rel,self))
+                        continue
+                    if self.debug: self._log.debug("%s -> %s", name, orig)
+                    if not self.dummy: os.rename(
+                        os.path.join(self.folder, name),
+                        os.path.join(self.folder, orig))
     def _load_names(self):
         names = collections.OrderedDict()
         numlig = 0
@@ -169,3 +209,4 @@ and time when the picture was taken from the exif tags"""
     if dt is None: return None
     return datetime.datetime.strptime(dt.decode('ascii'),
                                       "%Y:%m:%d %H:%M:%S")
+

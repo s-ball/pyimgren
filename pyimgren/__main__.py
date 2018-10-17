@@ -1,5 +1,6 @@
 from . import __version__, Renamer, __name__ as prog
 import argparse
+import logging
 
 def set_parser():
     parser = argparse.ArgumentParser(
@@ -31,6 +32,10 @@ def main():
     back = params.back
     kwargs = vars(params)
     del kwargs['back']
+    if params.debug:
+        log = logging.getLogger('pyimgren')
+        log.setLevel(logging.DEBUG)
+        log.addHandler(logging.StreamHandler())
     renamer = Renamer(**kwargs)
     if back:
         renamer.back()

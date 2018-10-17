@@ -57,7 +57,10 @@ c
         flist = [('a', 'b'), ('c', 'd'), ('e', 'f')]
         with mock.patch('os.rename'),mock.patch.object(
             self.obj, "_load_names", return_value =
-            collections.OrderedDict(flist)):
+            collections.OrderedDict(flist)), mock.patch(
+                'glob.glob', side_effect = [
+                    [ os.path.join(self.folder, i)]
+                    for i,j in flist]):
             
             self.obj.back()
             self.assertEqual(3, os.rename.call_count)
@@ -72,7 +75,7 @@ c
             datetime.datetime(2018, 2, 2),
             datetime.datetime(2018, 4, 1)
             ]
-        names = list("abcd")
+        names = [os.path.join(self.folder, i) for i in "abcd"]
         open_ctx = mock.Mock()
         open_ctx.__enter__ = mock.Mock(return_value = fd)
         open_ctx.__exit__ = mock.Mock()
