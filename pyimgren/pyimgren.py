@@ -145,27 +145,31 @@ processed."""
 
         names = self._load_names()
         if pictures is None:
-            pictures = names.keys()
-        for name in pictures:
-            for file in glob.glob(os.path.join(self.folder, name)):
-                if os.path.isdir(file):
-                    sub = Renamer(file, self.src_mask,
-                                  self.dst_mask, self.ref_file,
-                                  self.ext_mask, self.debug,
-                                  self.dummy)
-                    sub._log = self._log
-                    sub.back()
-                else:  # it is a file: must be in names
-                    rel = os.path.relpath(file, self.folder)
-                    try:
-                        orig = names[os.path.normcase(rel)]
-                    except KeyError as e:
-                        self._log.warning(UnknownPictureException(rel,self))
-                        continue
-                    if self.debug: self._log.debug("%s -> %s", name, orig)
-                    if not self.dummy: os.rename(
-                        os.path.join(self.folder, name),
-                        os.path.join(self.folder, orig))
+            files = [os.path.join(self.folder, i) for i in names.keys()]
+        else:
+            def genfiles():
+                for name in pictures:
+                    for file in glob.glob(os.path.join(self.folder, name)):
+                        yield file
+            files = genfile()
+        for file in files:
+            if os.path.isdir(file):
+                sub = Renamer(file, self.src_mask,
+                              self.dst_mask, self.ref_file,
+                              self.ext_mask, self.debug,
+                              self.dummy)
+                sub._log = self._log
+                sub.back()
+            else:  # it is a file: must be in names
+                rel = os.path.relpath(file, self.folder)
+                try:
+                    orig = names[os.path.normcase(rel)]
+                except KeyError as e:
+                    self._log.warning(UnknownPictureException(rel,self))
+                    continue
+                if self.debug: self._log.debug("%s -> %s", rel, orig)
+                if not self.dummy:
+                    os.rename(file, os.path.join(self.folder, orig))
     def _load_names(self):
         names = collections.OrderedDict()
         numlig = 0

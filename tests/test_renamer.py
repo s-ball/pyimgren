@@ -65,7 +65,9 @@ c
             self.obj.back()
             self.assertEqual(3, os.rename.call_count)
             for i, pair in enumerate(flist):
-                self.assertEqual(pair, os.rename.call_args_list[i][0])
+                self.assertEqual(
+                    tuple(map(lambda x: os.path.join(self.folder, x),pair)),
+                    os.rename.call_args_list[i][0])
     def test_rename(self):
         """Rename 4 files"""
         fd = mock.Mock()
@@ -88,9 +90,11 @@ c
                         side_effect = dates):
             self.obj.rename()
             for i, n in enumerate(names):
-                nn = dates[i].strftime(self.obj.dst_mask) + self.obj.ext_mask
+                nn0 = dates[i].strftime(self.obj.dst_mask) + self.obj.ext_mask
+                nn = os.path.join(self.folder, nn0)
                 self.assertEqual((n, nn), os.rename.call_args_list[i][0])
-                self.assertEqual(nn + ":" + n + '\n',
+                self.assertEqual(nn0 + ":" +
+                                 os.path.relpath(n, self.folder) + '\n',
                                  fd.write.call_args_list[i][0][0])
             
              
