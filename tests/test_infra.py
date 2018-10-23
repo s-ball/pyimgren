@@ -3,6 +3,8 @@ import pyimgren
 import re
 
 class InfraTest(unittest.TestCase):
+    """Controls that pyimgren__version is defined, is a string, and is
+above 0.0"""
     def test_version_is_string(self):
         self.assertTrue(isinstance(pyimgren.__version__, str),
                         "No version string")

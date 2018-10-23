@@ -80,7 +80,7 @@ This class requires piexif and Python >= 3."""
             folder, src_mask, dst_mask, ref_file)
         self.ext_mask, self.debug, self.dummy = ext_mask, debug, dummy
         self._log = logging.getLogger('pyimgren')
-    def rename(self, pictures = None):
+    def rename(self, *pictures):
         """Rename pictures in folder (by default the pictures with the
 src_mask pattern)
 
@@ -91,7 +91,7 @@ that file will be renamed regardless of src_mask. If it contains
 wildcard characters (* and ?), all files matching that pattern will be
 renamed."""
         names = self._load_names()
-        if pictures is None:
+        if len(pictures) == 0:
             pictures = [self.src_mask]
         for pict in pictures:
             files = glob.glob(os.path.join(self.folder, pict))
@@ -101,10 +101,12 @@ renamed."""
                 for file in files:
                     if os.path.isdir(file):
                         sub = Renamer(file, self.src_mask,
-                                      self.dst_mask, self.ref_file,
-                                      self.ext_mask, self.debug,
+                                      self.dst_mask,
+                                      self.ext_mask,
+                                      self.ref_file,
+                                      self.debug,
                                       self.dummy)
-                        sub._log = self.log
+                        sub._log = self._log
                         sub.rename()
                     else:  # it is a file: must be in folder
                         rel = os.path.relpath(file, self.folder)
@@ -134,7 +136,7 @@ renamed."""
                 "w", encoding="utf-8") as fd:
                 for name, old in names.items():
                     fd.write(u"{}:{}\n".format(os.path.normcase(name), old))
-    def back(self, pictures = None):
+    def back(self, *pictures):
         """Rename pictures back to their initial name in folder
 (by default all pictures known in ref file)
 
@@ -144,19 +146,21 @@ characters (* and ?), all files matching that pattern will be
 processed."""
 
         names = self._load_names()
-        if pictures is None:
+        if len(pictures) == 0:
             files = [os.path.join(self.folder, i) for i in names.keys()]
         else:
             def genfiles():
                 for name in pictures:
                     for file in glob.glob(os.path.join(self.folder, name)):
                         yield file
-            files = genfile()
+            files = genfiles()
         for file in files:
             if os.path.isdir(file):
                 sub = Renamer(file, self.src_mask,
-                              self.dst_mask, self.ref_file,
-                              self.ext_mask, self.debug,
+                              self.dst_mask,
+                              self.ext_mask,
+                              self.ref_file,
+                              self.debug,
                               self.dummy)
                 sub._log = self._log
                 sub.back()
@@ -195,7 +199,7 @@ processed."""
                 for j in range(ord('a'), ord('z') + 1):
                     n = name + chr(i) + chr(j) + self.ext_mask
                     if not os.path.exists(n): return n
-            raise RuntimeError("Too much files for {}".format(
+            raise RuntimeError("Too many files for {}".format(
                 name + self.ext_mask))
         return name
 
@@ -213,4 +217,3 @@ and time when the picture was taken from the exif tags"""
     if dt is None: return None
     return datetime.datetime.strptime(dt.decode('ascii'),
                                       "%Y:%m:%d %H:%M:%S")
-

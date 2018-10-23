@@ -37,6 +37,7 @@ c
             except pyimgren.pyimgren.NamesLogException as e:
                 self.assertEqual(2, e.numlig)
                 self.assertEqual(u'c\n', e.line)
+                self.assertTrue(isinstance(str(e), str))
                 return
             self.fail("No NamesLogException")
     def test_get_names(self):
@@ -97,4 +98,70 @@ c
                                  os.path.relpath(n, self.folder) + '\n',
                                  fd.write.call_args_list[i][0][0])
             
-             
+    def test_rename_dir(self):
+        """Rename a sub-folder"""
+        abs_folder = os.path.join(self.folder, 'sub')
+        sub = mock.Mock(spec = pyimgren.Renamer)
+        with mock.patch('os.path.join', return_value=abs_folder) as join, \
+             mock.patch('os.path.isdir') as isdir, \
+             mock.patch('glob.glob', return_value=[abs_folder]), \
+             mock.patch('pyimgren.pyimgren.Renamer', return_value = sub) as ren:
+            self.obj.rename('sub')
+            ren.assert_called_once_with(abs_folder, self.obj.src_mask,
+                                    self.obj.dst_mask,
+                                    self.obj.ext_mask,
+                                    self.obj.ref_file,
+                                    self.obj.debug,
+                                    self.obj.dummy)
+            self.assertTrue(sub._log is self.obj._log)
+            sub.rename.assert_called_once_with()
+            
+    def test_unknown_picture(self):
+        """Try to rename back a file not known in names.log"""
+        log = mock.Mock()
+        with mock.patch('os.path.isdir', return_value = False), \
+             mock.patch('os.path.relpath', return_value = "xy"), \
+             mock.patch('glob.glob', return_value = ['xy']), \
+             mock.patch.object(self.obj, '_log') as log, \
+             mock.patch.object(self.obj, '_load_names',
+                return_value = collections.OrderedDict([('a', 'b')])):
+        
+            self.obj.back("xy")
+            e = log.method_calls[0][1][0]
+            self.assertTrue(isinstance(e,
+                            pyimgren.pyimgren.UnknownPictureException))
+            self.assertEqual(self.obj.folder, e.folder)
+            self.assertEqual(self.obj.ref_file, e.ref_file)
+    def test_back_dir(self):
+        """Rename back a sub-folder"""
+        abs_folder = os.path.join(self.folder, 'sub')
+        sub = mock.Mock(spec = pyimgren.Renamer)
+        with mock.patch('os.path.join', return_value=abs_folder), \
+             mock.patch('os.path.isdir', return_value = True), \
+             mock.patch('glob.glob', return_value=[abs_folder]), \
+             mock.patch('pyimgren.pyimgren.Renamer', return_value = sub) as ren:
+            self.obj.back('sub')
+            ren.assert_called_once_with(abs_folder, self.obj.src_mask,
+                                    self.obj.dst_mask,
+                                    self.obj.ext_mask,
+                                    self.obj.ref_file,
+                                    self.obj.debug,
+                                    self.obj.dummy)
+            self.assertTrue(sub._log is self.obj._log)
+            sub.back.assert_called_once_with()
+    def test_too_many_files(self):
+        """Try to rename more than 700 files with same timestamp"""
+        with mock.patch('os.path.exists', return_value = True):
+            try:
+                n = self.obj._get_new_name('foo')
+            except Exception as e:
+                self.assertTrue('foo' in str(e))
+                return
+        self.fail("No exception")
+
+    def test_inexistant_file(self):
+        """Try to rename an inexistant file"""
+        with mock.patch.object(self.obj, '_log') as log:
+            self.obj.rename('foo')
+            self.assertEqual('warning', log.method_calls[0][0])
+        
