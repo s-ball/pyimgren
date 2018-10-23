@@ -122,8 +122,7 @@ renamed."""
                         dat = exif_dat(file)
                         if dat is not None:
                             new_name = self._get_new_name(
-                                datetime.datetime.strftime(dat, self.dst_mask)) \
-                                 + self.ext_mask
+                                dat.strftime(self.dst_mask))
                             if self.debug:
                                 self._log.debug("%s -> %s", rel, new_name)
                             names[new_name] = rel
@@ -191,17 +190,19 @@ processed."""
                 sys.exc_info()[2]) from e
         return names
     def _get_new_name(self, name):
-        if os.path.exists(name + self.ext_mask):
+        if os.path.exists(os.path.join(self.folder, name) + self.ext_mask):
             for i in range(ord('a'), ord('z') + 1):
-                n = name + chr(i)
-                if not os.path.exists(n + self.ext_mask): return n
+                n = name + chr(i) + self.ext_mask
+                if not os.path.exists(os.path.join(self.folder, n)):
+                    return n
             for i in range(ord('a'), ord('z') + 1):
                 for j in range(ord('a'), ord('z') + 1):
                     n = name + chr(i) + chr(j) + self.ext_mask
-                    if not os.path.exists(n): return n
+                    if not os.path.exists(os.path.join(self.folder, n)):
+                          return n
             raise RuntimeError("Too many files for {}".format(
                 name + self.ext_mask))
-        return name
+        return name + self.ext_mask
 
 def exif_dat(file):
     """Utility function that uses the piexif module to extract the date

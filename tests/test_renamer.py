@@ -46,11 +46,14 @@ c
                         side_effect = ([True] * 55) + [False]):
             n = self.obj._get_new_name('foo')
             self.assertEqual(56, os.path.exists.call_count)
-            self.assertEqual('foobc' + self.obj.ext_mask,
+            self.assertEqual(os.path.join(self.obj.folder, 'foobc')
+                             + self.obj.ext_mask,
                              os.path.exists.call_args[0][0])
-            self.assertEqual('foo' + self.obj.ext_mask,
+            self.assertEqual(os.path.join(self.obj.folder, 'foo')
+                             + self.obj.ext_mask,
                              os.path.exists.call_args_list[0][0][0])
-            self.assertEqual('fooa' + self.obj.ext_mask,
+            self.assertEqual(os.path.join(self.obj.folder, 'fooa')
+                             + self.obj.ext_mask,
                              os.path.exists.call_args_list[1][0][0])
             self.assertEqual('foobc' + self.obj.ext_mask, n)
     def test_back(self):
