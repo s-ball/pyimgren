@@ -43,22 +43,22 @@ class SimpleTest(TestCase):
 
     def test_dir_rename(self):
         self.fs.create_dir('/test/sub')
-        shutil.copyfile('/orig/DSCF9762.JPG', '/test/DSCF9762.JPG')
-        shutil.copyfile('/orig/DSCF9762.JPG', '/test/sub/DSCF9762.JPG')
+        shutil.copyfile('/orig/DSCF9762.JPG', '/test/DSCF9762.jpg')
+        shutil.copyfile('/orig/DSCF9762.JPG', '/test/sub/DSCF9762.jpg')
         self.ren.rename('sub')
-        self.assertTrue(os.path.exists('/test/DSCF9762.JPG'))
-        self.assertFalse(os.path.exists('/test/sub/DSCF9762.JPG'))
+        self.assertTrue(os.path.exists('/test/DSCF9762.jpg'))
+        self.assertFalse(os.path.exists('/test/sub/DSCF9762.jpg'))
         self.assertTrue(os.path.exists('/test/sub/names.log'))
         self.assertFalse(os.path.exists('/test/names.log'))
 
     def test_dir_back(self):
         self.fs.create_dir('/test/sub')
-        shutil.copyfile('/orig/DSCF9762.JPG', '/test/DSCF9762.JPG')
-        shutil.copyfile('/orig/DSCF9762.JPG', '/test/sub/DSCF9762.JPG')
+        shutil.copyfile('/orig/DSCF9762.JPG', '/test/DSCF9762.jpg')
+        shutil.copyfile('/orig/DSCF9762.JPG', '/test/sub/DSCF9762.jpg')
         self.ren.rename('sub')
         self.ren.back('sub')
-        self.assertTrue(os.path.exists('/test/DSCF9762.JPG'))
-        self.assertTrue(os.path.exists('/test/sub/DSCF9762.JPG'))
+        self.assertTrue(os.path.exists('/test/DSCF9762.jpg'))
+        self.assertTrue(os.path.exists('/test/sub/DSCF9762.jpg'))
         self.assertTrue(os.path.exists('/test/sub/names.log'))
         self.assertFalse(os.path.exists('/test/names.log'))
 
