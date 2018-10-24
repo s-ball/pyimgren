@@ -25,6 +25,7 @@ setup(
     long_description_content_type = "text/markdown",
     packages = find_packages(exclude = ["tests", "docs"]),
     install_requires = ["piexif"],
+    tests_require = ['pyfakefs'],
     author="s-ball",
     author_email = 's-ball@laposte.net',
     url = "https://github.com/s-ball/pyimgren",

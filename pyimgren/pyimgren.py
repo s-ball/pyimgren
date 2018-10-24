@@ -129,7 +129,7 @@ renamed."""
                             if not self.dummy:
                                 os.rename(file, os.path.join(self.folder,
                                                              new_name))
-        if len(names) != 0:
+        if len(names) != 0 and not self.dummy:
             with io.open(
                 os.path.join(self.folder, self.ref_file),
                 "w", encoding="utf-8") as fd:

@@ -14,25 +14,36 @@ class TestMain(unittest.TestCase):
                      {'folder': 'fold', 'src_mask': "DSCF*.jpg",
                       'dst_mask': "%Y%m%d_%H%M%S",
                       'ext_mask': ".jpg", 'ref_file': "names.log",
-                      'debug': True, 'dummy': False, 'back': True
+                      'debug': True, 'dummy': False, 'back': True,
+                      'files': []
                       },
                      "--ext=.jpeg -X fold":
                      {'folder': 'fold', 'src_mask': "DSCF*.jpg",
                       'dst_mask': "%Y%m%d_%H%M%S",
                       'ext_mask': ".jpeg", 'ref_file': "names.log",
-                      'debug': False, 'dummy': True, 'back': False
+                      'debug': False, 'dummy': True, 'back': False,
+                      'files': []
                       },
                      """--src=IMG*.* --dst=%Y%m%d%H%M%S fold""":
                      {'folder': 'fold', 'src_mask': "IMG*.*",
                       'dst_mask': "%Y%m%d%H%M%S",
                       'ext_mask': ".jpg", 'ref_file': "names.log",
-                      'debug': False, 'dummy': False, 'back': False
+                      'debug': False, 'dummy': False, 'back': False,
+                      'files': []
                       },
                      "-r names.txt fold":
                      {'folder': 'fold', 'src_mask': "DSCF*.jpg",
                       'dst_mask': "%Y%m%d_%H%M%S",
                       'ext_mask': ".jpg", 'ref_file': "names.txt",
-                      'debug': False, 'dummy': False, 'back': False
+                      'debug': False, 'dummy': False, 'back': False,
+                      'files': []
+                      },
+                     "-r names.txt fold foo bar":
+                     {'folder': 'fold', 'src_mask': "DSCF*.jpg",
+                      'dst_mask': "%Y%m%d_%H%M%S",
+                      'ext_mask': ".jpg", 'ref_file': "names.txt",
+                      'debug': False, 'dummy': False, 'back': False,
+                      'files': ['foo', 'bar']
                       },
                      }
         for (args, v) in args_list.items():

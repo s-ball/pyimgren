@@ -78,12 +78,13 @@ The pip installation install a `pyimgren` script (`pyimgren.exe` on Windows) in 
 ```
 usage: pyimgren [-h] [-v] [-b] [-s SRC_MASK] [-d DST_MASK] [-e EXT_MASK]
                 [-r REF_FILE] [-D] [-X]
-                folder
+                folder [files [files ...]]
 
 Rename pictures according to their exif timestamp
 
 positional arguments:
   folder                folder containing files to rename
+  files                 files of sub folders to process (optional)
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -108,7 +109,7 @@ It can be use as a Python module, which allows to use it in Windows even if the 
 ```
 usage: python -m pyimgren [-h] [-v] [-b] [-s SRC_MASK] [-d DST_MASK]
                 [-e EXT_MASK] [-r REF_FILE] [-D] [-X]
-                folder
+                folder [files [files ...]]
 ```
 
 or when using the Windows launcher `py -m pyimgren ...`
@@ -135,6 +136,8 @@ As the project intends to be PyPI compatible, you can simply run tests from the 
 python setup.py test
 ```
 
+The integration tests depend on [pyfakefs](http://pyfakefs.org), which is automatically intalled from PyPI when you run `python setup.py test`. But it is not require for running `pyimgren`, nor installed by `pip install pyimgren`.
+
 ## Contributing
 
 As this project is developped on my free time, I cannot guarantee very fast feedbacks. Anyway, I shall be glad to receive issues or pull requests on GitHUB. 
@@ -150,3 +153,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * The hard job of exif data processing was already done in [piexif](https://github.com/hMatoba/Piexif)
+* The excellent [pyfakefs](http://pyfakefs.org), allows integration tests to run on a fake file system

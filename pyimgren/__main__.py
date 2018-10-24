@@ -10,6 +10,8 @@ def set_parser():
                         version='%(prog)s ' + __version__)
     parser.add_argument('folder',
                         help = "folder containing files to rename")
+    parser.add_argument('files', nargs='*',
+                        help = "files of sub folders to process (optional)")
     parser.add_argument('-b', '--back', action='store_true',
                         help = 'restore original names')
     parser.add_argument('-s', '--src_mask', default="DSCF*.jpg",
@@ -30,17 +32,19 @@ def main():
     parser = set_parser()
     params = parser.parse_args()
     back = params.back
+    files = params.files
     kwargs = vars(params)
     del kwargs['back']
+    del kwargs['files']
     if params.debug:
         log = logging.getLogger('pyimgren')
         log.setLevel(logging.DEBUG)
         log.addHandler(logging.StreamHandler())
     renamer = Renamer(**kwargs)
     if back:
-        renamer.back()
+        renamer.back(*files)
     else:
-        renamer.rename()
+        renamer.rename(*files)
 
 if __name__ == "__main__":
     main()
