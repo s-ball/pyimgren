@@ -25,7 +25,11 @@ Attributes:
 
 class UnknownPictureException(PyimgrenException):
     """Raised when trying to rename back a file not registered in the
-ref_file"""
+ref_file
+
+Attributes:
+    file   : name of the unknown image
+    renamer: the Renamer object that raised the current error"""
     def __init__(self, file, renamer):
         self.file = file
         self.ref_file = renamer.ref_file
@@ -35,23 +39,7 @@ ref_file"""
             self.file, self.folder, self.ref_file)
 
 class Renamer:
-    """Parameters:
-folder  : the folder where pictures will be renamed
-src_mask: a pattern to select the files to be renamed (default
-          "DSCF*.jpg")
-dst_mask: a format containing strftime formatting directives, that
-          will be used for the new name of a picture (default
-          "%Y%m%d_%H%M%S")
-ext_mask: the extension of the new name
-ref_file: the name of a file that will remember the old names
-         (default names.log)
-debug   : a boolean flag that will cause a line to be printed for
-          each rename when true
-dummy   : a boolean flag that will cause a "dry run", meaning that
-          the folder will be scanned, and debug info eventually printed
-          but no file will be renamed
-
-All those parameters become attributes of the object.
+    """Main class of the module.
 
 A Renamer is used to rename image names provided by a camera
 (commonly IMGxxxxx.JPG or DSCFyyyy.JPG into a name based on the time
@@ -59,16 +47,36 @@ when the photography had been taken (as smartphones do). That time is
 extracted from the exif tag of the picture. No rename occurs if the
 picture contains no exif time..
 
+Parameters:
+    folder  : the folder where pictures will be renamed
+    src_mask: a pattern to select the files to be renamed (default
+              "DSCF*.jpg")
+    dst_mask: a format containing strftime formatting directives, that
+              will be used for the new name of a picture (default
+              "%Y%m%d_%H%M%S")
+    ext_mask: the extension of the new name
+    ref_file: the name of a file that will remember the old names
+             (default names.log)
+    debug   : a boolean flag that will cause a line to be printed for
+              each rename when true
+    dummy   : a boolean flag that will cause a "dry run", meaning that
+              the folder will be scanned, and debug info eventually printed
+              but no file will be renamed
+
+All those parameters become attributes of the object.
+
+
 A file named names.log is created in the folder to store the new names
 and the original ones, in order to be able to rename them back.
 
-Typical use:
+Typical use::
 
-conv = Renamer(path)
-conv.rename() # to convert all files with selected pattern to "date" names
-conv.back()
+    conv = Renamer(path)
+    conv.rename() # to convert all files with selected pattern to "date" names
+    conv.back()
 
-This class requires piexif and Python >= 3."""
+note:
+    This class requires piexif and Python >= 3."""
     
     def __init__(self, folder, src_mask = "DSCF*.jpg",
                  dst_mask = "%Y%m%d_%H%M%S",
@@ -84,12 +92,13 @@ This class requires piexif and Python >= 3."""
         """Rename pictures in folder (by default the pictures with the
 src_mask pattern)
 
-pictures is an iterable of paths. If a path is a folder, a new Renamer
-is started in that folder with current parameters to rename all files
-matching src_mask. If it is a file (that must be in the Renamer folder),
-that file will be renamed regardless of src_mask. If it contains
-wildcard characters (* and ?), all files matching that pattern will be
-renamed."""
+Parameters:
+    pictures: an iterable of paths. If a path is a folder, a new Renamer
+        is started in that folder with current parameters to rename all files
+        matching src_mask. If it is a file (that must be in the Renamer folder),
+        that file will be renamed regardless of src_mask. If it contains
+        wildcard characters (* and ?), all files matching that pattern will be
+        renamed."""
         names = self._load_names()
         if len(pictures) == 0:
             pictures = [self.src_mask]
@@ -139,10 +148,11 @@ renamed."""
         """Rename pictures back to their initial name in folder
 (by default all pictures known in ref file)
 
-pictures is an iterable of names. If one name exists in the local,
-ref_file, that file will be renamed back. If it contains wildcard
-characters (* and ?), all files matching that pattern will be
-processed."""
+Parameters:
+    pictures: an iterable of names. If one name exists in the local,
+        ref_file, that file will be renamed back. If it contains wildcard
+        characters (* and ?), all files matching that pattern will be
+        processed."""
 
         names = self._load_names()
         if len(pictures) == 0:
@@ -206,7 +216,19 @@ processed."""
 
 def exif_dat(file):
     """Utility function that uses the piexif module to extract the date
-and time when the picture was taken from the exif tags"""
+and time when the picture was taken from the exif tags
+
+Parameters:
+    file: the name of an image file that shall contain an exif tag
+
+Returns:
+    the date when the picture was taken or stored by the camera found
+    in the exif tag or None.
+
+Raises:
+    ValueError: raised if the file contains no exif tag or if of an
+        unsupported type.
+"""
     try:
         exif = piexif.load(file)["Exif"]
     except ValueError:
