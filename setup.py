@@ -15,6 +15,7 @@ with open(os.path.join(os.path.dirname(__file__), NAME,
 #  with the current version we are building
 with open('README.md') as fd:
     long_description = next(fd).replace('master', VERSION)
+    long_description += next(fd).replace('latest', VERSION)
     long_description += ''.join(fd)
 
 setup(
@@ -29,6 +30,11 @@ setup(
     author="s-ball",
     author_email = 's-ball@laposte.net',
     url = "https://github.com/s-ball/pyimgren",
+    license = "MIT License",
+    project_urls = {
+        "Home": "https://github.com/s-ball/pyimgren",
+        "Doc.": "https://readthedocs.org/projects/pyimgren/" + VERSION,
+        },
     classifiers = [
         'Development Status :: 4 - Beta',
         'Environment :: Console',

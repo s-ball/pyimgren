@@ -1,11 +1,12 @@
 [![Travis-CI Build Status](https://travis-ci.com/s-ball/pyimgren.svg?branch=master)](https://travis-ci.com/s-ball/pyimgren) [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/salqj2q1h8mid74t/branch/master?svg=true)](https://ci.appveyor.com/project/s-ball/pyimgren/branch/master)
+[![Documentation Status](https://readthedocs.org/projects/pyimgren/badge/?version=latest)](https://pyimgren.readthedocs.io/en/latest/?badge=latest)
 
 # pyimgren
 A python module to rename images according to their exif tags.
 
 ## Current status
 
-This package package is distributed in PyPI since version 0.1.0. It can be used by end users, but should be considered at beta quality because it still lacks extensive testing and documentation. Its full source is available from [GitHUB](https://github.com/s-ball/pyimgren).
+This package package is distributed in PyPI since version 0.1.0. It can be used by end users, but should be considered at beta quality because it still lacks extensive testing. Its full source is available from [GitHUB](https://github.com/s-ball/pyimgren).
 
 ## Goals
 
