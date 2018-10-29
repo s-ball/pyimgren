@@ -7,7 +7,7 @@ As a Python module
 Simple usage
 ************
 
-You only have to import :mod:`pyimgren` and create a :class:`~.Renamer`::
+You only have to import :mod:`pyimgren` and create a :class:`~pyimgren.pyimgren.Renamer`::
 
     import pyimgren
 
@@ -24,7 +24,7 @@ You can then use the :meth:`~.rename` and :meth:`~.back` methods to rename pictu
 Advanced usage
 **************
 
-All messages from the :mod:`pyimgren` module go through the `logging` module. If you want debug messages to be actually printed, you **must** configure a non default handler processing that level before using :meth:`~.rename` and :meth:`~.back` methods with a `debug=True` parameter::
+All messages from the :mod:`pyimgren` module go through the :mod:`logging` module. If you want debug messages to be actually printed, you **must** configure a non default handler processing that level before using :meth:`~.rename` and :meth:`~.back` methods with a `debug=True` parameter::
 
     log = logging.getLogger('pyimgren')
     log.setLevel(logging.DEBUG)
@@ -36,12 +36,12 @@ You can automatically process sub folders. If `thumbnails` is a subfolder of the
 
     ren.rename("thumbnails")
 
-This will automatically start a new :class:`~.Renamer` in `thumbnails` with the exact same options as `ren` and call :meth:`~.rename` on it. But **beware**:
+This will automatically start a new :class:`~.Renamer` in ``thumbnails`` with the exact same options as ``ren`` and call :meth:`~.rename` on it. But **beware**:
 
-* this will process all files matching the `src_mask` parameter of `ren`
-* this will create a `names.log` file (or more exactly a file for which the name is the value of the `ref_file` parameter) in the `thumbnails` directory.
+* this will process all files matching the ``src_mask`` parameter of ``ren``
+* this will create a ``names.log`` file (or more exactly a file for which the name is the value of the ``ref_file`` parameter) in the ``thumbnails`` directory.
 
-Long story made short, it can make sense and is actually used in the command line interface, but it does not allow to process folders that are not descendant from the `ren` folder, nor to specify a limited list of files.
+Long story made short, it can make sense and is actually used in the command line interface, but it does not allow to process folders that are not descendant from the ``ren`` folder, nor to specify a limited list of files.
 
 .. _cmd_line:
 
@@ -79,14 +79,14 @@ Syntax:
       -D, --debug           print a line per rename
       -X, --dry_run         process normally except no rename occurs
 
-This internally starts a :class:`~.Renamer` with the options passed as parameter. If option `-D|--debug` is present a `StreamHandler` is configured to process Debug level message in the `logging` module. Then, the :class:`~.Renamer` runs its :meth:`rename` method if the `-b|--back` option is not present, else the :meth:`back` method.
+This internally starts a :class:`~.Renamer` with the options passed as parameter. If option ``-D|--debug`` is present a :class:`StreamHandler` is configured to process Debug level message in the :mod:`logging` module. Then, the :class:`~.Renamer` runs its :meth:`~.rename` method if the ``-b|--back`` option is not present, else the :meth:`~.back` method.
 
 .. _py_launch:
 
 Special case
 ************
 
-On Windows, the Python script directories are commonly not in the PATH, and users use the `py` launcher to start the interpretor or the scripts. In that case, the `pyimgren` package can be started from the command line as a module:
+On Windows, the Python script directories are commonly not in the PATH, and users use the :program:`py` launcher to start the interpretor or the scripts. In that case, the ``pyimgren`` package can be started from the command line as a module:
 
 .. code-block:: none
 

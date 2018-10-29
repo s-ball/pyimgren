@@ -9,7 +9,7 @@ To use it, you must first clone the repository, then checkout the most relevant 
     cd pyimgren
     git checkout 0.3.0
 
-Then you should run `setup.py test` (referently in a virtual environment) to control that all works fine in your environment::
+Then you should run the tests (preferently in a virtual environment) to control that all works fine in your environment::
 
     python setup.py test
 

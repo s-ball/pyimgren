@@ -18,15 +18,16 @@
 
 
 # -- Project information -----------------------------------------------------
+import pyimgren
 
 project = 'pyimgren'
 copyright = '2018, s-ball'
 author = 's-ball'
 
-# The short X.Y version
-version = '1'
 # The full version, including alpha/beta/rc tags
-release = '1'
+release = pyimgren.__version__
+# The short X.Y version
+version = '.'.join(release.split('.')[:2])
 
 
 # -- General configuration ---------------------------------------------------

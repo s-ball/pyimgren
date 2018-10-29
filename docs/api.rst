@@ -1,8 +1,8 @@
 API reference
 =============
 
-`pyimgren` module
------------------
+:mod:`pyimgren` module
+----------------------
 
 .. module:: pyimgren
 
@@ -10,13 +10,14 @@ This module imports :py:class:`pyimgren.pyimgren.Renamer` . It also defines the 
 
 .. data:: __name__
 
-        the name of the package ``pyimgren``
+        the name of the package (``pyimgren``)
 
-.. data:: __version__:
+.. data:: __version__
+
         the actual version of the package
 
-`pyimgren.pymgren` module
--------------------------
+:mod:`pyimgren.pymgren` module
+------------------------------
 
 .. automodule:: pyimgren.pyimgren
     :members:
