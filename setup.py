@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages
+from pkg_resources import parse_version
 import os.path
 import re
 
@@ -11,11 +12,14 @@ with open(os.path.join(os.path.dirname(__file__), NAME,
     m = re.match(r"\s*__version__\s*=\s*['\"]([^'\"]+)['\"]", ver_line)
     VERSION = m.group(1)
 
+# Base version (removes any pre, post, a, b or rc element)
+BASE = parse_version(VERSION).base_version
+
 # In long description, replace "master" in the build status badges
 #  with the current version we are building
 with open('README.md') as fd:
-    long_description = next(fd).replace('master', VERSION)
-    long_description += next(fd).replace('latest', VERSION)
+    long_description = next(fd).replace('master', BASE)
+    long_description += next(fd).replace('latest', BASE)
     long_description += ''.join(fd)
 
 setup(
@@ -32,8 +36,8 @@ setup(
     url = "https://github.com/s-ball/pyimgren",
     license = "MIT License",
     project_urls = {
-        "Home": "https://github.com/s-ball/pyimgren",
-        "Doc.": "https://readthedocs.org/projects/pyimgren/" + VERSION,
+        "Documentation":
+            "https://readthedocs.org/projects/pyimgren/" + BASE,
         },
     classifiers = [
         'Development Status :: 4 - Beta',
