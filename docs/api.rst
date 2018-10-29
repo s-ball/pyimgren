@@ -14,7 +14,7 @@ This module imports :py:class:`pyimgren.pyimgren.Renamer` . It also defines the 
 
 .. data:: __version__
 
-        the actual version of the package
+        the actual version of the package (|release|)
 
 :mod:`pyimgren.pymgren` module
 ------------------------------

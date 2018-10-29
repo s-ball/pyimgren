@@ -56,7 +56,7 @@ Parameters:
               "%Y%m%d_%H%M%S")
     ext_mask: the extension of the new name
     ref_file: the name of a file that will remember the old names
-             (default names.log)
+              (default names.log)
     debug   : a boolean flag that will cause a line to be printed for
               each rename when true
     dummy   : a boolean flag that will cause a "dry run", meaning that
@@ -72,7 +72,8 @@ and the original ones, in order to be able to rename them back.
 Typical use::
 
     conv = Renamer(path)
-    conv.rename() # to convert all files with selected pattern to "date" names
+    conv.rename()   # to convert all files with selected pattern to
+                    #  "date" names
     conv.back()
 
 note:
@@ -87,19 +88,23 @@ note:
         self.folder, self.src_mask, self.dst_mask, self.ref_file = (
             folder, src_mask, dst_mask, ref_file)
         self.ext_mask, self.debug, self.dummy = ext_mask, debug, dummy
-        self._log = logging.getLogger('pyimgren')
+        self._log = logging.getLogger("pyimgren")
     def rename(self, *pictures):
         """Rename pictures in folder (by default the pictures with the
 src_mask pattern)
 
 Parameters:
     pictures: an iterable of paths. If a path is a folder, a new Renamer
-        is started in that folder with current parameters to rename all files
-        matching src_mask. If it is a file (that must be in the Renamer folder),
-        that file will be renamed regardless of src_mask. If it contains
-        wildcard characters (* and ?), all files matching that pattern will be
-        renamed."""
-        names = self._load_names()
+        is started in that folder with current parameters to rename all
+        files matching src_mask. If it is a file (that must be in the
+        Renamer folder), that file will be renamed regardless of
+        src_mask. If it contains wildcard characters (* and ?), all
+        files matching that pattern will berenamed.
+
+Uses load_names to load the names.log file, and get_new_name to avoid
+collisions in file names.
+"""
+        names = self.load_names()
         if len(pictures) == 0:
             pictures = [self.src_mask]
         for pict in pictures:
@@ -119,18 +124,18 @@ Parameters:
                         sub.rename()
                     else:  # it is a file: must be in folder
                         rel = os.path.relpath(file, self.folder)
-                        if rel.startswith('..'):
+                        if rel.startswith(".."):
                             self._log.warning("%s is not in %s", file,
                                            self.folder)
                             continue
-                        if os.path.dirname(rel) != '':
+                        if os.path.dirname(rel) != "":
                             self._log.warning("%s is not directly in %s",
                                            file, self.folder)
                             continue
                             
                         dat = exif_dat(file)
                         if dat is not None:
-                            new_name = self._get_new_name(
+                            new_name = self.get_new_name(
                                 dat.strftime(self.dst_mask))
                             if self.debug:
                                 self._log.debug("%s -> %s", rel, new_name)
@@ -143,18 +148,20 @@ Parameters:
                 os.path.join(self.folder, self.ref_file),
                 "w", encoding="utf-8") as fd:
                 for name, old in names.items():
-                    fd.write(u"{}:{}\n".format(os.path.normcase(name), old))
+                    fd.write("{}:{}\n".format(os.path.normcase(name), old))
     def back(self, *pictures):
         """Rename pictures back to their initial name in folder
 (by default all pictures known in ref file)
 
 Parameters:
     pictures: an iterable of names. If one name exists in the local,
-        ref_file, that file will be renamed back. If it contains wildcard
-        characters (* and ?), all files matching that pattern will be
-        processed."""
+        ref_file, that file will be renamed back. If it contains
+        wildcard characters (* and ?), all files matching that
+        pattern will be processed.
 
-        names = self._load_names()
+Uses load_names to load the names.log file."""
+
+        names = self.load_names()
         if len(pictures) == 0:
             files = [os.path.join(self.folder, i) for i in names.keys()]
         else:
@@ -183,15 +190,26 @@ Parameters:
                 if self.debug: self._log.debug("%s -> %s", rel, orig)
                 if not self.dummy:
                     os.rename(file, os.path.join(self.folder, orig))
-    def _load_names(self):
+    def load_names(self):
+        """Returns:
+    OrderedDict:
+        the keys of the dict are the new names of the
+        renamed pictures and the values are the original names
+
+Raises:
+    NamesLogException:
+        the attributes of the NamesLogException are the number
+        of the offending line and its content if a line in
+        names.log contains no colon (:)
+"""
         names = collections.OrderedDict()
         numlig = 0
         try:
             with io.open(os.path.join(self.folder, self.ref_file),
-                         encoding='utf-8') as fd:
+                         encoding="utf-8") as fd:
                 for line in fd:
                     numlig += 1
-                    row = [i.strip() for i in line.split(u":")[:2]]
+                    row = [i.strip() for i in line.split(":")[:2]]
                     names[row[0]] = row[1]
         except FileNotFoundError:
             pass
@@ -199,14 +217,32 @@ Parameters:
             raise NamesLogException(numlig,line).with_traceback(
                 sys.exc_info()[2]) from e
         return names
-    def _get_new_name(self, name):
+    def get_new_name(self, name):
+        """Finds the final name of a picture if a file with that name
+    already exists.
+
+Parameters:
+    name: the name (without the extension which shall be ext_mask)
+
+Returns:
+    str:
+        a name composed with
+            * the value of name
+            * a suffix between a and zz until a file of that name does
+              not exist in the directory
+            * ext_mask
+
+Raises:
+    RuntimeErrorException:
+        if all files from a to zz already exist
+"""        
         if os.path.exists(os.path.join(self.folder, name) + self.ext_mask):
-            for i in range(ord('a'), ord('z') + 1):
+            for i in range(ord("a"), ord("z") + 1):
                 n = name + chr(i) + self.ext_mask
                 if not os.path.exists(os.path.join(self.folder, n)):
                     return n
-            for i in range(ord('a'), ord('z') + 1):
-                for j in range(ord('a'), ord('z') + 1):
+            for i in range(ord("a"), ord("z") + 1):
+                for j in range(ord("a"), ord("z") + 1):
                     n = name + chr(i) + chr(j) + self.ext_mask
                     if not os.path.exists(os.path.join(self.folder, n)):
                           return n
@@ -222,8 +258,9 @@ Parameters:
     file: the name of an image file that shall contain an exif tag
 
 Returns:
-    the date when the picture was taken or stored by the camera found
-    in the exif tag or None.
+    datetime.datetime:
+        the date when the picture was taken or stored by the camera found
+        in the exif tag or None.
 
 Raises:
     ValueError: raised if the file contains no exif tag or if of an
@@ -238,5 +275,5 @@ Raises:
         dt = exif[i]
         if dt is not None: break
     if dt is None: return None
-    return datetime.datetime.strptime(dt.decode('ascii'),
+    return datetime.datetime.strptime(dt.decode("ascii"),
                                       "%Y:%m:%d %H:%M:%S")
