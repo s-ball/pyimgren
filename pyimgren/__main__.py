@@ -1,3 +1,6 @@
+# MIT License
+# Copyright (c) 2018 s-ball
+
 from . import __version__, Renamer, __name__ as prog
 import argparse
 import logging

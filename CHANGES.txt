@@ -1,0 +1,32 @@
+RELEASE 0.4.0:
+    Make method load_names and get_new_name public.
+    Add some cleaning to the code, and docstrings in tests.
+    Fix display of license file from README.
+    Use Read the Docs to display the sphinx documentation.
+    Add a badge showing doc. state on README.
+    Add this CHANGES.txt file.
+
+RELEASE 0.3.1: 2018-10-29
+    Add Sphinx documentation for the package.
+    Allow files argument from the command line script.
+    Add integration tests using pyfakefs.
+
+RELEASE 0.3.0: 2018-10-23
+    Methods rename and back of Renamer now accept a list of files.
+    pyimgren module relies on logging module for all its messages.
+
+RELEASE 0.2.1: 2018-10-14
+    Add a number of tests for a total coverage of 95%
+
+RELEASE 0.2.0: 2018-10-13 (not released on PyPI)
+    The package can now be started as a script.
+    Drop support for Python 3.2
+    Only run tests for Python >= 3.3 (3.2 was broken on Travis)
+    Add badges for Travis and AppVeyor on README
+    Version is now stored in a version.py file as __version__ at first line.
+
+RELEASE 0.1.0: 2018-10-09
+    First released version
+    No documentation but uses Travis-CI and AppVeyor as CI backends to
+    automatically run tests for Python >=3.2
+    Tell CI to only test for Python 3.

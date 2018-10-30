@@ -21,7 +21,7 @@ You can then use the :meth:`~.rename` and :meth:`~.back` methods to rename pictu
     ...
     ren.back("20160910*.jpg")  # only rename back pictures taken on 10/09/2016
 
-Advanced usage
+Mid-level usage
 **************
 
 All messages from the :mod:`pyimgren` module go through the :mod:`logging` module. If you want debug messages to be actually printed, you **must** configure a non default handler processing that level before using :meth:`~.rename` and :meth:`~.back` methods with a `debug=True` parameter::
@@ -42,6 +42,29 @@ This will automatically start a new :class:`~.Renamer` in ``thumbnails`` with th
 * this will create a ``names.log`` file (or more exactly a file for which the name is the value of the ``ref_file`` parameter) in the ``thumbnails`` directory.
 
 Long story made short, it can make sense and is actually used in the command line interface, but it does not allow to process folders that are not descendant from the ``ren`` folder, nor to specify a limited list of files.
+
+Advanced usage
+**************
+
+If you want to build a complete front end for :mod:`pyimgren`, you will probably be interested by the others methods from :class:`~.Renamer` and the function :func:`~.exif_dat`.
+
+This last one tries its best to extract an exif timestamp from a file and returns ``None`` if it could not find one. You can use it to easily build a dictionary ``{file_name: exif_timestamp}`` from a list of picture names::
+
+    dd = { file: exif_dat(file) for file in files }
+
+It is guaranteed to never raise an exception.
+
+The other methods from :class:`~.Renamer`, namely :meth:`~.load_names` and :meth:`~.get_new_name` respectively load the names of pictures which have been renamed (both new name and original one), and find what would be the new name of a file with respect to the ``a`` to ``zz`` suffixes. Examples::
+
+    # build a list of all files in the folder with their original name
+    names = ren.load(names).items()
+
+or::
+
+    file_name = ...
+    dat = exif_dat(file_name)
+    if dat is not None:
+        new_name = get_new_name(dat.strftime(ren.dst_mask) + ren.dst_ext)
 
 .. _cmd_line:
 

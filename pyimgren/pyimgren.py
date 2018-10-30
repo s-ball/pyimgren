@@ -1,3 +1,8 @@
+"""Implementation of the package"""
+
+# MIT License
+# Copyright (c) 2018 s-ball
+
 import os.path
 import glob
 import datetime
@@ -260,11 +265,7 @@ Parameters:
 Returns:
     datetime.datetime:
         the date when the picture was taken or stored by the camera found
-        in the exif tag or None.
-
-Raises:
-    ValueError: raised if the file contains no exif tag or if of an
-        unsupported type.
+        in the exif tag or None if no date could be found.
 """
     try:
         exif = piexif.load(file)["Exif"]
