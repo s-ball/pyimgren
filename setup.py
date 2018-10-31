@@ -38,6 +38,8 @@ setup(
     project_urls = {
         "Documentation":
             "https://pyimgren.readthedocs.io/en/{}/".format(BASE),
+        "Changelog":
+            "https://github.com/s-ball/pyimgren/blob/master/CHANGES.txt"
         },
     classifiers = [
         "Development Status :: 4 - Beta",
