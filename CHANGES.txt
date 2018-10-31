@@ -1,6 +1,6 @@
 RELEASE 0.4.1: 2018-10-31
     Fix documentation URL display on PyPI and add classifiers.
-    Make method load_names and get_new_name public.
+    Make log a public attribute of the Renamer class.
 
 RELEASE 0.4.0: 2018-10-31
     Make method load_names and get_new_name public.
