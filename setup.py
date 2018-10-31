@@ -37,15 +37,22 @@ setup(
     license = "MIT License",
     project_urls = {
         "Documentation":
-            "https://readthedocs.org/projects/pyimgren/" + BASE,
+            "https://pyimgren.readthedocs.io/en/{}/".format(BASE),
         },
     classifiers = [
         "Development Status :: 4 - Beta",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
         "Environment :: Console",
         "Intended Audience :: End Users/Desktop",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
+        "Topic :: Multimedia :: Graphics",
         ],
     python_requires=">=3",
     test_suite = "tests",
