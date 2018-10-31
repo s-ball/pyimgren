@@ -68,20 +68,24 @@ Parameters:
               the folder will be scanned, and debug info eventually printed
               but no file will be renamed
 
-All those parameters become attributes of the object.
 
+    All parameters become attribute of the object with the same name
+
+Attributes:
+    log: an object respecting a logging.Logger interface. By default
+        ``logging.getLogger("pyimgren")``
 
 A file named names.log is created in the folder to store the new names
 and the original ones, in order to be able to rename them back.
 
-Typical use::
+Example::
 
     conv = Renamer(path)
     conv.rename()   # to convert all files with selected pattern to
                     #  "date" names
     conv.back()
 
-note:
+Note:
     This class requires piexif and Python >= 3."""
     
     def __init__(self, folder, src_mask = "DSCF*.jpg",
@@ -93,7 +97,7 @@ note:
         self.folder, self.src_mask, self.dst_mask, self.ref_file = (
             folder, src_mask, dst_mask, ref_file)
         self.ext_mask, self.debug, self.dummy = ext_mask, debug, dummy
-        self._log = logging.getLogger("pyimgren")
+        self.log = logging.getLogger("pyimgren")
     def rename(self, *pictures):
         """Rename pictures in folder (by default the pictures with the
 src_mask pattern)
@@ -115,7 +119,7 @@ collisions in file names.
         for pict in pictures:
             files = glob.glob(os.path.join(self.folder, pict))
             if len(files) == 0:
-                self._log.warning("{} not found".format(pict))
+                self.log.warning("{} not found".format(pict))
             else:
                 for file in files:
                     if os.path.isdir(file):
@@ -125,16 +129,16 @@ collisions in file names.
                                       self.ref_file,
                                       self.debug,
                                       self.dummy)
-                        sub._log = self._log
+                        sub.log = self.log
                         sub.rename()
                     else:  # it is a file: must be in folder
                         rel = os.path.relpath(file, self.folder)
                         if rel.startswith(".."):
-                            self._log.warning("%s is not in %s", file,
+                            self.log.warning("%s is not in %s", file,
                                            self.folder)
                             continue
                         if os.path.dirname(rel) != "":
-                            self._log.warning("%s is not directly in %s",
+                            self.log.warning("%s is not directly in %s",
                                            file, self.folder)
                             continue
                             
@@ -143,7 +147,7 @@ collisions in file names.
                             new_name = self.get_new_name(
                                 dat.strftime(self.dst_mask))
                             if self.debug:
-                                self._log.debug("%s -> %s", rel, new_name)
+                                self.log.debug("%s -> %s", rel, new_name)
                             names[new_name] = rel
                             if not self.dummy:
                                 os.rename(file, os.path.join(self.folder,
@@ -183,16 +187,16 @@ Uses load_names to load the names.log file."""
                               self.ref_file,
                               self.debug,
                               self.dummy)
-                sub._log = self._log
+                sub.log = self.log
                 sub.back()
             else:  # it is a file: must be in names
                 rel = os.path.relpath(file, self.folder)
                 try:
                     orig = names[os.path.normcase(rel)]
                 except KeyError as e:
-                    self._log.warning(UnknownPictureException(rel,self))
+                    self.log.warning(UnknownPictureException(rel,self))
                     continue
-                if self.debug: self._log.debug("%s -> %s", rel, orig)
+                if self.debug: self.log.debug("%s -> %s", rel, orig)
                 if not self.dummy:
                     os.rename(file, os.path.join(self.folder, orig))
     def load_names(self):

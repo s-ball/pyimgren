@@ -116,7 +116,7 @@ c
                                     self.obj.ref_file,
                                     self.obj.debug,
                                     self.obj.dummy)
-            self.assertTrue(sub._log is self.obj._log)
+            self.assertTrue(sub.log is self.obj.log)
             sub.rename.assert_called_once_with()
             
     def test_unknown_picture(self):
@@ -125,7 +125,7 @@ c
         with mock.patch("os.path.isdir", return_value = False), \
              mock.patch("os.path.relpath", return_value = "xy"), \
              mock.patch("glob.glob", return_value = ["xy"]), \
-             mock.patch.object(self.obj, "_log") as log, \
+             mock.patch.object(self.obj, "log") as log, \
              mock.patch.object(self.obj, "load_names",
                 return_value = collections.OrderedDict([("a", "b")])):
         
@@ -150,7 +150,7 @@ c
                                     self.obj.ref_file,
                                     self.obj.debug,
                                     self.obj.dummy)
-            self.assertTrue(sub._log is self.obj._log)
+            self.assertTrue(sub.log is self.obj.log)
             sub.back.assert_called_once_with()
     def test_too_many_files(self):
         """Try to rename more than 700 files with same timestamp"""
@@ -164,7 +164,7 @@ c
 
     def test_inexistant_file(self):
         """Try to rename an inexistant file"""
-        with mock.patch.object(self.obj, "_log") as log:
+        with mock.patch.object(self.obj, "log") as log:
             self.obj.rename("foo")
             self.assertEqual("warning", log.method_calls[0][0])
         

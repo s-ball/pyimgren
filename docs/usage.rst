@@ -22,7 +22,7 @@ You can then use the :meth:`~.rename` and :meth:`~.back` methods to rename pictu
     ren.back("20160910*.jpg")  # only rename back pictures taken on 10/09/2016
 
 Mid-level usage
-**************
+***************
 
 All messages from the :mod:`pyimgren` module go through the :mod:`logging` module. If you want debug messages to be actually printed, you **must** configure a non default handler processing that level before using :meth:`~.rename` and :meth:`~.back` methods with a `debug=True` parameter::
 
