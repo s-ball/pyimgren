@@ -167,4 +167,56 @@ c
         with mock.patch.object(self.obj, "log") as log:
             self.obj.rename("foo")
             self.assertEqual("warning", log.method_calls[0][0])
+
         
+class MergeTest(unittest.TestCase):
+    """Tests for the merge method"""
+    
+    @classmethod
+    def setUpClass(cls):
+        cls.folder = os.path.dirname(__file__)
+
+    def setUp(self):
+        self.obj = pyimgren.Renamer(self.folder)
+
+    def test_incorrect_files(self):
+        """A file containing a folder should issue a warning and not copy."""
+        with mock.patch("pyimgren.pyimgren._copy") as copy, \
+             mock.patch("glob.glob", side_effect=lambda x: [x]), \
+             mock.patch("pyimgren.pyimgren._move") as move, \
+             mock.patch.object(self.obj.log, "warning") as warning:
+            self.obj.merge("/foo", "fee/bar")
+            self.assertEqual(1, warning.call_count)
+            move.assert_not_called()
+            copy.assert_not_called()
+            
+
+    def test_copy_called(self):
+        """merge calls _copy and not _move."""
+        with mock.patch("pyimgren.pyimgren._copy") as copy, \
+             mock.patch("glob.glob", side_effect=lambda x: [x]), \
+             mock.patch("pyimgren.pyimgren._move") as move, \
+             mock.patch("pyimgren.pyimgren.exif_dat",
+                        return_value=datetime.datetime(2016, 6, 4, 15, 9, 10)):
+            self.obj.merge(self.folder, "foo", "bar")
+            self.assertEqual(2, copy.call_count)
+            copy.assert_any_call(os.path.join(self.folder, "foo"),
+                                          self.folder, "20160604_150910.jpg")
+            copy.assert_called_with(os.path.join(self.folder, "bar"),
+                                          self.folder, "20160604_150910.jpg")
+            move.assert_not_called()
+            
+    def test_ignore_dir(self):
+        """merge should ignore directories and warn."""
+        with mock.patch("pyimgren.pyimgren._copy") as copy, \
+             mock.patch("glob.glob", side_effect=lambda x: [x]), \
+             mock.patch("pyimgren.pyimgren.exif_dat",
+                        return_value=datetime.datetime(2016, 6, 4, 15, 9, 10)),\
+             mock.patch("os.path.isdir", side_effect= [True, False ]), \
+             mock.patch.object(self.obj.log, "warning") as warning:
+            self.obj.merge(self.folder, "foo", "bar")
+            self.assertEqual(1, copy.call_count)
+            copy.assert_called_once_with(os.path.join(self.folder, "bar"),
+                                          self.folder, "20160604_150910.jpg")
+            self.assertEqual(1, warning.call_count)
+   

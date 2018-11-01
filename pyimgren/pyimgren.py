@@ -196,7 +196,8 @@ class Renamer:
             RuntimeErrorException:
                 if all files from a to zz already exist
         """
-        pass
+        names = collections.OrderedDict()
+        self._process(names, files, src_folder, _copy, _warndir)
     
     def load_names(self):
         """Load new and original names from a names.log file.
@@ -313,8 +314,8 @@ def _subdir(ren, file):
 def _copy(file, folder, new_name):
     pass
 
-def _reject(ren, file):
-    pass
+def _warndir(ren, file):
+    ren.log.warning("Merge cannot process {}: is a directory", file)
 
 def exif_dat(file):
     """Extract the timestamp of a picture file from the exif tags.
