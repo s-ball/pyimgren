@@ -12,6 +12,7 @@ import collections
 import io
 import logging
 import os.path
+import shutil
 
 
 class PyimgrenException(Exception):
@@ -48,6 +49,19 @@ class UnknownPictureException(PyimgrenException):
     def __str__(self):
         return "File {} in folder {} not found in {}".format(
             self.file, self.folder, self.ref_file)
+
+class MergeSameDirException(PyimgrenException):
+    """Raised when trying to merge one directory into itself.
+
+    Attributes:
+        folder: name of the directory
+        ren: name of the Renamer folder
+    """
+    def __init__(self, folder):
+        self.folder = folder
+
+    def __str__(self):
+        return "Cannot merge {} into itself".format(self.folder)
 
 
 class Renamer:
@@ -196,6 +210,8 @@ class Renamer:
             RuntimeErrorException:
                 if all files from a to zz already exist
         """
+        if os.path.samefile(self.folder, src_folder):
+            raise MergeSameDirException(self.folder)
         names = collections.OrderedDict()
         self._process(names, files, src_folder, _copy, _warndir)
     
@@ -312,7 +328,7 @@ def _subdir(ren, file):
     sub.rename()
 
 def _copy(file, folder, new_name):
-    pass
+    shutil.copy(file, os.path.join(folder, new_name))
 
 def _warndir(ren, file):
     ren.log.warning("Merge cannot process {}: is a directory", file)

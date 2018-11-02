@@ -183,13 +183,13 @@ class MergeTest(unittest.TestCase):
         """A file containing a folder should issue a warning and not copy."""
         with mock.patch("pyimgren.pyimgren._copy") as copy, \
              mock.patch("glob.glob", side_effect=lambda x: [x]), \
+             mock.patch("os.path.samefile", return_value = False), \
              mock.patch("pyimgren.pyimgren._move") as move, \
              mock.patch.object(self.obj.log, "warning") as warning:
             self.obj.merge("/foo", "fee/bar")
             self.assertEqual(1, warning.call_count)
             move.assert_not_called()
             copy.assert_not_called()
-            
 
     def test_copy_called(self):
         """merge calls _copy and not _move."""
@@ -198,11 +198,11 @@ class MergeTest(unittest.TestCase):
              mock.patch("pyimgren.pyimgren._move") as move, \
              mock.patch("pyimgren.pyimgren.exif_dat",
                         return_value=datetime.datetime(2016, 6, 4, 15, 9, 10)):
-            self.obj.merge(self.folder, "foo", "bar")
+            self.obj.merge(os.path.join(self.folder, ".."), "foo", "bar")
             self.assertEqual(2, copy.call_count)
-            copy.assert_any_call(os.path.join(self.folder, "foo"),
+            copy.assert_any_call(os.path.join(self.folder, "..", "foo"),
                                           self.folder, "20160604_150910.jpg")
-            copy.assert_called_with(os.path.join(self.folder, "bar"),
+            copy.assert_called_with(os.path.join(self.folder, "..", "bar"),
                                           self.folder, "20160604_150910.jpg")
             move.assert_not_called()
             
@@ -214,9 +214,14 @@ class MergeTest(unittest.TestCase):
                         return_value=datetime.datetime(2016, 6, 4, 15, 9, 10)),\
              mock.patch("os.path.isdir", side_effect= [True, False ]), \
              mock.patch.object(self.obj.log, "warning") as warning:
-            self.obj.merge(self.folder, "foo", "bar")
+            self.obj.merge(os.path.join(self.folder, ".."), "foo", "bar")
             self.assertEqual(1, copy.call_count)
-            copy.assert_called_once_with(os.path.join(self.folder, "bar"),
+            copy.assert_called_once_with(os.path.join(self.folder, "..", "bar"),
                                           self.folder, "20160604_150910.jpg")
             self.assertEqual(1, warning.call_count)
    
+    def test_merge_self(self):
+        """merge should raise when merging its own folder"""
+        self.assertRaises(pyimgren.pyimgren.PyimgrenException,
+                          self.obj.merge,
+                          self.folder)

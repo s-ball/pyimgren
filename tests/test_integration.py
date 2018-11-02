@@ -91,6 +91,43 @@ receive"""
         new_names = sorted(names.keys())
         self.assertEqual(new_names[1][:-4], new_names[0][:-4] + "a")
 
+
+class MergeTest(TestCase):
+    """Tests for the merge feature."""
+
+    def setUp(self):
+        self.setUpPyfakefs()
+        self.fs.add_real_directory(os.path.dirname(__file__),
+                                   target_path = "/orig")
+        self.fs.create_dir("/test")
+        self.ren = Renamer("/test")
+        self.fs.create_dir("/src")
+
+    def test_simple_merge(self):
+        """Merge a single file by giving its name and control that:
+            * the original file not been touched
+            * no names.log was created
+            * a new file exists in /test
+        """
+        shutil.copyfile("/orig/DSCF9762.JPG", "/src/foo")
+        self.ren.merge("/src", "foo")
+        self.assertTrue(os.path.exists("/src/foo"))
+        self.assertFalse(os.path.exists("/test/names.log"))
+        files = os.listdir("/test")
+        self.assertEqual(1, len(files))
+
+    def test_multiple_merge(self):
+        """Merge 2 files with the same exif timestamp.
+
+        Controls that second has same base name than first one + 'a'
+        """
+        shutil.copyfile("/orig/DSCF9762.JPG", "/src/foo")
+        shutil.copyfile("/orig/DSCF9762.JPG", "/src/bar")
+        self.ren.merge("/src", "foo", "bar")
+        files = sorted(os.listdir("/test"))
+        self.assertEqual(2, len(files))
+        self.assertEqual(files[1][:-4], files[0][:-4] + "a")
+    
 if __name__ == "__main__":
     import unittest
     unittest.main(verbosity = 2)
