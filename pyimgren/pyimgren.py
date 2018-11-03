@@ -90,7 +90,7 @@ class Renamer:
                   but no file will be renamed
 
 
-        All parameters become attribute of the object with the same name
+    All parameters become attribute of the object with the same name
 
     Attributes:
         log: an object respecting a logging.Logger interface. By default
@@ -206,6 +206,7 @@ class Renamer:
 
         If a name matches the directory, the directory is ignored and a warning
         is issued.
+        
         Raises:
             RuntimeErrorException:
                 if all files from a to zz already exist

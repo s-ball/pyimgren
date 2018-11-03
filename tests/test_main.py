@@ -10,40 +10,47 @@ class TestMain(unittest.TestCase):
         """Controls decoding of various params"""
         self.parser = set_parser()
         self.parser.prog = "pyimgren"
-        args_list = {"-D --back fold":
+        args_list = {"-D -f fold back":
                      {"folder": "fold", "src_mask": "DSCF*.jpg",
                       "dst_mask": "%Y%m%d_%H%M%S",
                       "ext_mask": ".jpg", "ref_file": "names.log",
-                      "debug": True, "dummy": False, "back": True,
+                      "debug": True, "dummy": False, "subcommand": "back",
                       "files": []
                       },
-                     "--ext=.jpeg -X fold":
+                     "--ext=.jpeg -X -f fold rename":
                      {"folder": "fold", "src_mask": "DSCF*.jpg",
                       "dst_mask": "%Y%m%d_%H%M%S",
                       "ext_mask": ".jpeg", "ref_file": "names.log",
-                      "debug": False, "dummy": True, "back": False,
+                      "debug": False, "dummy": True, "subcommand": "rename",
                       "files": []
                       },
-                     """--src=IMG*.* --dst=%Y%m%d%H%M%S fold""":
+                     """--src=IMG*.* --dst=%Y%m%d%H%M%S -f fold rename""":
                      {"folder": "fold", "src_mask": "IMG*.*",
                       "dst_mask": "%Y%m%d%H%M%S",
                       "ext_mask": ".jpg", "ref_file": "names.log",
-                      "debug": False, "dummy": False, "back": False,
+                      "debug": False, "dummy": False, "subcommand": "rename",
                       "files": []
                       },
-                     "-r names.txt fold":
+                     "-r names.txt --folder=fold rename":
                      {"folder": "fold", "src_mask": "DSCF*.jpg",
                       "dst_mask": "%Y%m%d_%H%M%S",
                       "ext_mask": ".jpg", "ref_file": "names.txt",
-                      "debug": False, "dummy": False, "back": False,
+                      "debug": False, "dummy": False, "subcommand": "rename",
                       "files": []
                       },
-                     "-r names.txt fold foo bar":
+                     "-r names.txt -f fold rename foo bar":
                      {"folder": "fold", "src_mask": "DSCF*.jpg",
                       "dst_mask": "%Y%m%d_%H%M%S",
                       "ext_mask": ".jpg", "ref_file": "names.txt",
-                      "debug": False, "dummy": False, "back": False,
+                      "debug": False, "dummy": False, "subcommand": "rename",
                       "files": ["foo", "bar"]
+                      },
+                     "merge fold foo bar":
+                     {"folder": ".", "src_mask": "DSCF*.jpg",
+                      "dst_mask": "%Y%m%d_%H%M%S",
+                      "ext_mask": ".jpg", "ref_file": "names.log",
+                      "debug": False, "dummy": False, "subcommand": "merge",
+                      "files": ["foo", "bar"], "src_folder": "fold"
                       },
                      }
         for (args, v) in args_list.items():
@@ -54,7 +61,7 @@ class TestMain(unittest.TestCase):
     def test_main_rename(self):
         """Controls script call as rename"""
         with patch("pyimgren.__main__.Renamer") as patcher:
-            sys.argv = [ "pyimgren", "-D", "tests" ]
+            sys.argv = [ "pyimgren", "-D", "-f", "tests", "rename" ]
             ren = patcher("f")
             patcher.side_effect = [ren, Exception("Only one Renamer") ]
             main()
@@ -69,7 +76,7 @@ class TestMain(unittest.TestCase):
     def test_main_back(self):
         """Controls script call as back"""
         with patch("pyimgren.__main__.Renamer") as patcher:
-            sys.argv = [ "pyimgren", "-Xb", "foo" ]
+            sys.argv = [ "pyimgren", "-Xf", "foo", "back" ]
             ren = patcher("f")
             patcher.side_effect = [ren, Exception("Only one Renamer") ]
             main()
@@ -84,7 +91,7 @@ class TestMain(unittest.TestCase):
     def test_main_params(self):
         """Controls passing of script options"""
         with patch("pyimgren.__main__.Renamer") as patcher:
-            sys.argv = [ "pyimgren", "-Xb", "foo" ]
+            sys.argv = [ "pyimgren", "-Xf", "foo", "back" ]
             ren = patcher("f")
             patcher.side_effect = [ren, Exception("Only one Renamer") ]
             main()
@@ -93,3 +100,19 @@ class TestMain(unittest.TestCase):
         self.assertTrue(ren.dummy)
         self.assertFalse(ren.debug)
         self.assertEqual("foo", ren.folder)
+
+    def test_main_merge(self):
+        """Controls script call as merge"""
+        with patch("pyimgren.__main__.Renamer") as patcher:
+            sys.argv = [ "pyimgren", "-D", "-f", "tests", "merge", "/folder" ]
+            ren = patcher("f")
+            patcher.side_effect = [ren, Exception("Only one Renamer") ]
+            main()
+            ren.merge.assert_called_once_with("/folder")
+            ren.rename.assert_not_called()
+            call = pyimgren.__main__.Renamer.call_args
+        kwargs = call[1]
+        self.assertEqual(True, kwargs["debug"])
+        self.assertEqual(False, kwargs["dummy"])
+        self.assertEqual("tests", kwargs["folder"])
+        
