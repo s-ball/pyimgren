@@ -21,10 +21,14 @@ You can then use the :meth:`~.rename` and :meth:`~.back` methods to rename pictu
     ...
     ren.back("20160910*.jpg")  # only rename back pictures taken on 10/09/2016
 
+You can also merge files from a different directory. It makes sense when you want to pick pictures from another camera::
+
+    ren.merge("e:\dcim", "IMG*.JPG")
+
 Mid-level usage
 ***************
 
-All messages from the :mod:`pyimgren` module go through the :mod:`logging` module. If you want debug messages to be actually printed, you **must** configure a non default handler processing that level before using :meth:`~.rename` and :meth:`~.back` methods with a `debug=True` parameter::
+All messages from the :mod:`pyimgren` module go through the :mod:`logging` module. If you want debug messages to be actually printed, you **must** configure a non default handler processing that level before using :meth:`~.rename`, :meth:`~.back` and :meth:`~.merge`, methods with a `debug=True` parameter::
 
     log = logging.getLogger('pyimgren')
     log.setLevel(logging.DEBUG)
@@ -77,20 +81,23 @@ Syntax:
 
 .. code-block:: none
 
-    usage: pyimgren [-h] [-v] [-b] [-s SRC_MASK] [-d DST_MASK] [-e EXT_MASK]
-                    [-r REF_FILE] [-D] [-X]
-                    folder [files [files ...]]
+    usage: pyimgren [-h] [-v] [--folder FOLDER] [-s SRC_MASK] [-d DST_MASK]
+                    [-e EXT_MASK] [-r REF_FILE] [-D] [-X]
+                    {rename,back,merge} ...
 
     Rename pictures according to their exif timestamp
 
     positional arguments:
-      folder                folder containing files to rename
-      files                 files of sub folders to process (optional)
+      {rename,back,merge}   sub-commands
+        rename              rename files by using their exif timestamp
+        back                rename files back to their original name
+        merge               merge files from a different folder
 
     optional arguments:
       -h, --help            show this help message and exit
       -v, --version         show program's version number and exit
-      -b, --back            restore original names
+      --folder FOLDER, -f FOLDER
+                            folder containing files to rename
       -s SRC_MASK, --src_mask SRC_MASK
                             pattern to select the files to rename
       -d DST_MASK, --dst_mask DST_MASK
@@ -101,6 +108,31 @@ Syntax:
                             a file to remember the old names
       -D, --debug           print a line per rename
       -X, --dry_run         process normally except no rename occurs
+
+and for sub-commands:
+
+.. code-block:: none
+
+    usage: pyimgren {rename|back} [-h] [files [files ...]]
+
+    positional arguments:
+      files       files to process (default: content of ref_file)
+
+    optional arguments:
+      -h, --help  show this help message and exit
+
+or:
+
+.. code-block:: none
+
+    usage: pyimgren merge [-h] folder [files [files ...]]
+
+    positional arguments:
+      folder      folder from where merge picture files
+      files       files to process (default: src_mask)
+
+    optional arguments:
+      -h, --help  show this help message and exit
 
 This internally starts a :class:`~.Renamer` with the options passed as parameter. If option ``-D|--debug`` is present a :class:`StreamHandler` is configured to process Debug level message in the :mod:`logging` module. Then, the :class:`~.Renamer` runs its :meth:`~.rename` method if the ``-b|--back`` option is not present, else the :meth:`~.back` method.
 
@@ -113,8 +145,8 @@ On Windows, the Python script directories are commonly not in the PATH, and user
 
 .. code-block:: none
 
-    usage: py [py options] -m pyimgren [-h] [-v] [-b] [-s SRC_MASK]
-                    [-d DST_MASK] [-e EXT_MASK] [-r REF_FILE] [-D] [-X]
-                    folder [files [files ...]]
+    usage: pyimgren [-h] [-v] [--folder FOLDER] [-s SRC_MASK] [-d DST_MASK]
+                    [-e EXT_MASK] [-r REF_FILE] [-D] [-X]
+                    {rename,back,merge} ...
 
 The parameters are exactly the same they were for the script.

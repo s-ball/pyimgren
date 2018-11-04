@@ -22,7 +22,9 @@ The central class of the package is :class:`~pyimgren.pyimgren.Renamer`. It norm
 * rename files from the folder given by their names of by patterns to a name contructed with the date from the exif tag, the ``strftime`` format string and the extension. When more than one file should get the same name, all by the following are given names postfixed with ``a`` to ``zz`` before the extension.
   For example with a ``"%Y%m%d"`` mask and a ``".jpeg"`` extension, 3 pictures from the 10 september 2016 will be given the names ``"20160910.jpeg"`` and ``"20160910a.jpeg"``.
 
-* rename back files from the folder to their original names. For that it creates a special file in the folder (by default ``names.log``) to record the new and original names. Optionally it can operate on a limited set of the renamed pictures.
+* rename back files from the folder to their original names. For that ``rename`` creates a special file in the folder (by default ``names.log``) to record the new and original names. Optionally it can operate on a limited set of the renamed pictures.
+
+* merge files from a different directory. File are directly copied from their original folder with their final name based on their exif timestamp.
 
 Dependencies
 ------------

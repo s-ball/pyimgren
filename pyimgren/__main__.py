@@ -25,19 +25,24 @@ def set_parser():
                         help = "print a line per rename")
     parser.add_argument("-X", "--dry_run", action="store_true", dest="dummy",
                         help = "process normally except no rename occurs")
-    subparser = parser.add_subparsers(dest='subcommand')
-    ren = subparser.add_parser("rename")
+
+    # subcommands configuration (rename, back, merge)
+    subparser = parser.add_subparsers(dest='subcommand', help="sub-commands")
+    ren = subparser.add_parser("rename", help=
+                               "rename files by using their exif timestamp")
     ren.add_argument("files", nargs="*",
                       help = "files to process (default: src_mask)")
-    back = subparser.add_parser("back")
+    back = subparser.add_parser("back",
+                                help="rename files back to their original name")
     back.add_argument("files", nargs="*",
                        help = "files to process (default: content of ref_file)")
-    merge = subparser.add_parser("merge")
+    merge = subparser.add_parser("merge",
+                                 help="merge files from a different folder")
     merge.add_argument("src_folder", metavar="folder",
                         help = "folder from where merge picture files")
     merge.add_argument("files", nargs="*",
                       help = "files to process (default: src_mask)")
-    # parser.set_defaults(subcommand="rename")
+    # parser.set_defaults(subcommand="rename") # uncomment to have a default
     return parser
 
 def main():

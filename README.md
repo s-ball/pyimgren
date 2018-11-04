@@ -77,6 +77,59 @@ conv.back()      # if you want to revert to original names
 The pip installation install a `pyimgren` script (`pyimgren.exe` on Windows) in the Scripts directory. It can then be directly used (provided the Script directory be in the path) with the following syntax:
 
 ```
+usage: pyimgren [-h] [-v] [--folder FOLDER] [-s SRC_MASK] [-d DST_MASK]
+                [-e EXT_MASK] [-r REF_FILE] [-D] [-X]
+                {rename,back,merge} ...
+
+Rename pictures according to their exif timestamp
+
+positional arguments:
+  {rename,back,merge}   sub-commands
+    rename              rename files by using their exif timestamp
+    back                rename files back to their original name
+    merge               merge files from a different folder
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --version         show program's version number and exit
+  --folder FOLDER, -f FOLDER
+                        folder containing files to rename
+  -s SRC_MASK, --src_mask SRC_MASK
+                        pattern to select the files to rename
+  -d DST_MASK, --dst_mask DST_MASK
+                        format for the new file name
+  -e EXT_MASK, --ext EXT_MASK
+                        extension for the new file name
+  -r REF_FILE, --ref_file REF_FILE
+                        a file to remember the old names
+  -D, --debug           print a line per rename
+  -X, --dry_run         process normally except no rename occurs
+```
+
+The sub commands have the following syntax:
+
+```
+usage: pyimgren [global_options ...] {back|rename} [-h] [files [files ...]]
+
+positional arguments:
+  files       files to process (default: content of ref_file)
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+
+and
+
+```
+usage: pyimgren [global_options ...] merge [-h] folder [files [files ...]]
+
+positional arguments:
+  folder      folder from where merge picture files
+  files       files to process (default: src_mask)
+
+optional arguments:
+  -h, --help  show this help message and exit
+
 usage: pyimgren [-h] [-v] [-b] [-s SRC_MASK] [-d DST_MASK] [-e EXT_MASK]
                 [-r REF_FILE] [-D] [-X]
                 folder [files [files ...]]
@@ -108,9 +161,10 @@ optional arguments:
 It can be use as a Python module, which allows to use it in Windows even if the Scripts directory is not in the path thanks to the `py` launcher with same syntax as the script:
 
 ```
-usage: python -m pyimgren [-h] [-v] [-b] [-s SRC_MASK] [-d DST_MASK]
+usage: pyimgren [-h] [-v] [--folder FOLDER] [-s SRC_MASK] [-d DST_MASK]
                 [-e EXT_MASK] [-r REF_FILE] [-D] [-X]
-                folder [files [files ...]]
+                {rename,back,merge} ...
+
 ```
 
 or when using the Windows launcher `py -m pyimgren ...`
