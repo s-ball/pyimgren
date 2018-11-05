@@ -55,11 +55,11 @@ the file is actually back"""
    * the main folder was not touched
    * the rename occured in the sub folder"""
         self.fs.create_dir("/test/sub")
-        shutil.copyfile("/orig/DSCF9762.JPG", "/test/DSCF9762.jpg")
-        shutil.copyfile("/orig/DSCF9762.JPG", "/test/sub/DSCF9762.jpg")
+        shutil.copyfile("/orig/DSCF9762.JPG", "/test/DSCF9762.JPG")
+        shutil.copyfile("/orig/DSCF9762.JPG", "/test/sub/DSCF9762.JPG")
         self.ren.rename("sub")
-        self.assertTrue(os.path.exists("/test/DSCF9762.jpg"))
-        self.assertFalse(os.path.exists("/test/sub/DSCF9762.jpg"))
+        self.assertTrue(os.path.exists("/test/DSCF9762.JPG"))
+        self.assertFalse(os.path.exists("/test/sub/DSCF9762.JPG"))
         self.assertTrue(os.path.exists("/test/sub/names.log"))
         self.assertFalse(os.path.exists("/test/names.log"))
 
@@ -67,12 +67,12 @@ the file is actually back"""
         """Call rename then back on a subfolder and controls that the image
 file is back in the sub folder"""
         self.fs.create_dir("/test/sub")
-        shutil.copyfile("/orig/DSCF9762.JPG", "/test/DSCF9762.jpg")
-        shutil.copyfile("/orig/DSCF9762.JPG", "/test/sub/DSCF9762.jpg")
+        shutil.copyfile("/orig/DSCF9762.JPG", "/test/DSCF9762.JPG")
+        shutil.copyfile("/orig/DSCF9762.JPG", "/test/sub/DSCF9762.JPG")
         self.ren.rename("sub")
         self.ren.back("sub")
-        self.assertTrue(os.path.exists("/test/DSCF9762.jpg"))
-        self.assertTrue(os.path.exists("/test/sub/DSCF9762.jpg"))
+        self.assertTrue(os.path.exists("/test/DSCF9762.JPG"))
+        self.assertTrue(os.path.exists("/test/sub/DSCF9762.JPG"))
         self.assertTrue(os.path.exists("/test/sub/names.log"))
         self.assertFalse(os.path.exists("/test/names.log"))
 
