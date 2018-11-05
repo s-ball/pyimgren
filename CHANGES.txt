@@ -1,3 +1,6 @@
+RELEASE 0.5.0: 2018-11-05
+    It is possible to directly merge pictures from a different folder.
+
 RELEASE 0.4.1: 2018-10-31
     Fix documentation URL display on PyPI and add classifiers.
     Make log a public attribute of the Renamer class.
