@@ -110,7 +110,7 @@ class Renamer:
         This class requires piexif and Python >= 3.
     """
     
-    def __init__(self, folder, src_mask = "DSCF*.jpg",
+    def __init__(self, folder, src_mask = "DSCF*.JPG",
                  dst_mask = "%Y%m%d_%H%M%S",
                  ext_mask = ".jpg",
                  ref_file = "names.log",

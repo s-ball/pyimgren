@@ -136,6 +136,19 @@ or:
 
 This internally starts a :class:`~.Renamer` with the options passed as parameter. If option ``-D|--debug`` is present a :class:`StreamHandler` is configured to process Debug level message in the :mod:`logging` module. Then, the :class:`~.Renamer` runs its :meth:`~.rename` method if the ``-b|--back`` option is not present, else the :meth:`~.back` method.
 
+Default values:
+***************
+
+All (global) options have default values::
+
+    folder:         current directory (.)
+    SRC_MASK:       DSCF*.JPG
+    DST_MASK:       %Y%m%d_%H%M%S
+    EXT_MASK:       .jpg
+    REF_FILE:       names.log
+
+Options ``debug`` and ``dry_run`` are inactive by default.
+
 .. _py_launch:
 
 Special case
