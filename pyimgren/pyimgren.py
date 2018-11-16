@@ -30,7 +30,7 @@ class NamesLogException(PyimgrenException):
         self.numlig = numlig
         self.line = line
     def __str__(self):
-        return "Error in name log file line {}: >{}<".format(
+        return _("Error in name log file line {}: >{}<").format(
             self.numlig, repr(self.line))
 
 
@@ -61,7 +61,7 @@ class MergeSameDirException(PyimgrenException):
         self.folder = folder
 
     def __str__(self):
-        return "Cannot merge {} into itself".format(self.folder)
+        return _("Cannot merge {} into itself").format(self.folder)
 
 
 class Renamer:
@@ -275,7 +275,7 @@ class Renamer:
                     n = name + chr(i) + chr(j) + self.ext_mask
                     if not os.path.exists(os.path.join(self.folder, n)):
                           return n
-            raise RuntimeError("Too many files for {}".format(
+            raise RuntimeError(_("Too many files for {}").format(
                 name + self.ext_mask))
         return name + self.ext_mask
 
@@ -286,7 +286,7 @@ class Renamer:
         for pict in pictures:
             files = glob.glob(os.path.join(src_folder, pict))
             if len(files) == 0:
-                self.log.warning("{} not found".format(pict))
+                self.log.warning(_("{} not found").format(pict))
             else:
                 for file in files:
                     if os.path.isdir(file):
@@ -294,11 +294,11 @@ class Renamer:
                     else:  # it is a file: must be in folder
                         rel = os.path.relpath(file, src_folder)
                         if rel.startswith(".."):
-                            self.log.warning("%s is not in %s", file,
+                            self.log.warning(_("%s is not in %s"), file,
                                            src_folder)
                             continue
                         if os.path.dirname(rel) != "":
-                            self.log.warning("%s is not directly in %s",
+                            self.log.warning(_("%s is not directly in %s"),
                                            file, src_folder)
                             continue
                             
@@ -332,7 +332,7 @@ def _copy(file, folder, new_name):
     shutil.copy(file, os.path.join(folder, new_name))
 
 def _warndir(ren, file):
-    ren.log.warning("Merge cannot process {}: is a directory", file)
+    ren.log.warning(_("Merge cannot process {}: is a directory"), file)
 
 def exif_dat(file):
     """Extract the timestamp of a picture file from the exif tags.

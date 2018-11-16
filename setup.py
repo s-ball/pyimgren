@@ -2,6 +2,7 @@ from setuptools import setup, find_packages
 from pkg_resources import parse_version
 import os.path
 import re
+import sys
 
 from io import open
 
@@ -22,6 +23,27 @@ with open("README.md") as fd:
     long_description += next(fd).replace("latest", BASE)
     long_description += "".join(fd)
 
+sys.path.append(os.path.join(os.path.dirname(__file__), "tools_i18n"))
+import msgfmt
+from setuptools.command.build_py import build_py as _build
+
+class Builder(_build):
+    def run(self):
+        self.__mo_files = []
+        po = re.compile(r"(.*)_(.*).po")
+        for file in os.listdir("locale"):
+            m = po.match(file)
+            if m:
+                path = os.path.join(self.build_lib, NAME, "locale",
+                                 m.group(2), "LC_MESSAGES")
+                os.makedirs(path, exist_ok=True)
+                mofile = os.path.join(path, m.group(1) + ".mo")
+                msgfmt.make(os.path.join("src", file), mofile)
+                self.__mo_files.append(mofile)
+        _build.run(self)
+    def get_outputs(self):
+        return _build.get_outputs(self) + self.__mo_files
+
 setup(
     name=NAME,
     version = VERSION,
@@ -29,7 +51,7 @@ setup(
     long_description = long_description,
     long_description_content_type = "text/markdown",
     packages = find_packages(exclude = ["tests", "docs"]),
-    install_requires = ["piexif"],
+    install_requires = ["piexif", "i18nparse"],
     tests_require = ["pyfakefs"],
     author="s-ball",
     author_email = "s-ball@laposte.net",
@@ -63,5 +85,6 @@ setup(
             "pyimgren=pyimgren.__main__:main",
             ],
         },
-    data_files = [("", ["LICENSE.txt"])],
+    package_data = { "": ["locale/*/*/*.mo"]},
+    cmdclass = {"build_py": Builder},
     )

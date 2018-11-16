@@ -4,48 +4,59 @@
 from . import __version__, Renamer, __name__ as prog
 import argparse
 import logging
+import i18nparse
+import gettext
+import os.path
+import locale
+
+localedir = os.path.join(os.path.dirname(__file__), "locale")
+lang = locale.getdefaultlocale()[0]
+tr = gettext.translation("main", localedir, [lang], fallback=True)
+_ = tr.gettext
 
 def set_parser():
     parser = argparse.ArgumentParser(
         prog = prog,
-        description="Rename pictures according to their exif timestamp")
+        description=_("Rename pictures according to their exif timestamp"))
     parser.add_argument("-v", "--version", action="version",
                         version="%(prog)s " + __version__)
     parser.add_argument("--folder", "-f", default = ".",
-                        help = "folder containing files to rename")
+                        help = _("folder containing files to rename"))
     parser.add_argument("-s", "--src_mask", default="DSCF*.jpg",
-                        help = "pattern to select the files to rename")
+                        help = _("pattern to select the files to rename"))
     parser.add_argument("-d", "--dst_mask", default="%Y%m%d_%H%M%S",
-                        help = "format for the new file name")
+                        help = _("format for the new file name"))
     parser.add_argument("-e", "--ext", default=".jpg", dest="ext_mask",
-                        help = "extension for the new file name")
+                        help = _("extension for the new file name"))
     parser.add_argument("-r", "--ref_file", default="names.log",
-                        help = "a file to remember the old names")
+                        help = _("a file to remember the old names"))
     parser.add_argument("-D", "--debug", action="store_true",
-                        help = "print a line per rename")
+                        help = _("print a line per rename"))
     parser.add_argument("-X", "--dry_run", action="store_true", dest="dummy",
-                        help = "process normally except no rename occurs")
+                        help = _("process normally except no rename occurs"))
 
     # subcommands configuration (rename, back, merge)
-    subparser = parser.add_subparsers(dest='subcommand', help="sub-commands")
+    subparser = parser.add_subparsers(dest='subcommand', help=_("sub-commands"))
     ren = subparser.add_parser("rename", help=
-                               "rename files by using their exif timestamp")
+                               _("rename files by using their exif timestamp"))
     ren.add_argument("files", nargs="*",
-                      help = "files to process (default: src_mask)")
+                      help = _("files to process (default: src_mask)"))
     back = subparser.add_parser("back",
-                                help="rename files back to their original name")
+                            help=_("rename files back to their original name"))
     back.add_argument("files", nargs="*",
-                       help = "files to process (default: content of ref_file)")
+                    help = _("files to process (default: content of ref_file)"))
     merge = subparser.add_parser("merge",
-                                 help="merge files from a different folder")
+                                 help=_("merge files from a different folder"))
     merge.add_argument("src_folder", metavar="folder",
-                        help = "folder from where merge picture files")
+                        help = _("folder from where merge picture files"))
     merge.add_argument("files", nargs="*",
-                      help = "files to process (default: src_mask)")
+                      help = _("files to process (default: src_mask)"))
     # parser.set_defaults(subcommand="rename") # uncomment to have a default
     return parser
 
 def main():
+    locale.setlocale(locale.LC_ALL, "")
+    i18nparse.activate()
     parser = set_parser()
     params = parser.parse_args()
     files = params.files

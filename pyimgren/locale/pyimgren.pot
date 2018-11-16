@@ -1,0 +1,49 @@
+# Translations template for pyimgren.
+# Copyright (C) 2018 s-ball
+# This file is distributed under the same license as the pyimgren project.
+# FIRST AUTHOR <s-ball@laposte.net>, 2018.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: pyimgren 0.6.0.dev1\n"
+"Report-Msgid-Bugs-To: s-ball@laposte.net\n"
+"POT-Creation-Date: 2018-11-16 17:03+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.6.0\n"
+
+#: pyimgren/pyimgren.py:33
+msgid "Error in name log file line {}: >{}<"
+msgstr ""
+
+#: pyimgren/pyimgren.py:64
+msgid "Cannot merge {} into itself"
+msgstr ""
+
+#: pyimgren/pyimgren.py:278
+msgid "Too many files for {}"
+msgstr ""
+
+#: pyimgren/pyimgren.py:289
+msgid "{} not found"
+msgstr ""
+
+#: pyimgren/pyimgren.py:297
+#, python-format
+msgid "%s is not in %s"
+msgstr ""
+
+#: pyimgren/pyimgren.py:301
+#, python-format
+msgid "%s is not directly in %s"
+msgstr ""
+
+#: pyimgren/pyimgren.py:335
+msgid "Merge cannot process {}: is a directory"
+msgstr ""
+

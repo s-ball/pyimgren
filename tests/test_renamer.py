@@ -3,7 +3,7 @@ try:
     from unittest import mock
 except:
     import mock
-import pyimgren.pyimgren
+import pyimgren
 import os.path
 import io
 import collections

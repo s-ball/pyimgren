@@ -1,0 +1,78 @@
+# Translations template for pyimgren.
+# Copyright (C) 2018 ORGANIZATION
+# This file is distributed under the same license as the pyimgren project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pyimgren 0.6.0.dev1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2018-11-16 11:46+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.6.0\n"
+
+#: pyimgren/__main__.py:20
+msgid "Rename pictures according to their exif timestamp"
+msgstr "Renomme des images en fonction de leur date exif"
+
+#: pyimgren/__main__.py:24
+msgid "folder containing files to rename"
+msgstr "dossier contenant les fichiers à renommer"
+
+#: pyimgren/__main__.py:26
+msgid "pattern to select the files to rename"
+msgstr "modèle des fichiers à renommer"
+
+#: pyimgren/__main__.py:28
+msgid "format for the new file name"
+msgstr "format des nouveaux noms des fichiers"
+
+#: pyimgren/__main__.py:30
+msgid "extension for the new file name"
+msgstr "extension des nouveaux noms des fichiers"
+
+#: pyimgren/__main__.py:32
+msgid "a file to remember the old names"
+msgstr "un fichier pour enregistrer les anciens noms"
+
+#: pyimgren/__main__.py:34
+msgid "print a line per rename"
+msgstr "affiche une ligne par fichier renommé"
+
+#: pyimgren/__main__.py:36
+msgid "process normally except no rename occurs"
+msgstr "fonctionne normallement mais ne renomme aucun fichier"
+
+#: pyimgren/__main__.py:39
+msgid "sub-commands"
+msgstr "sous-commandes"
+
+#: pyimgren/__main__.py:41
+msgid "rename files by using their exif timestamp"
+msgstr "renomme des fichiers en fonction de leur date exif"
+
+#: pyimgren/__main__.py:43 pyimgren/__main__.py:53
+msgid "files to process (default: src_mask)"
+msgstr "fichiers à traiter (par défaut : src_mask)"
+
+#: pyimgren/__main__.py:45
+msgid "rename files back to their original name"
+msgstr "renomme les fichiers avec leur nom d'origine"
+
+#: pyimgren/__main__.py:47
+msgid "files to process (default: content of ref_file)"
+msgstr "fichier à traiter (par défaut le contenu de ref_file)"
+
+#: pyimgren/__main__.py:49
+msgid "merge files from a different folder"
+msgstr "fusionne des fichiers provenant d'un autre dossier"
+
+#: pyimgren/__main__.py:51
+msgid "folder from where merge picture files"
+msgstr "dossier à partir d'où fusionner les fichiers image"
+
