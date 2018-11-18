@@ -18,6 +18,9 @@ Even if we can find here and there programs that allow for batch renaming of suc
 * few additional module requirements: only [piexif](https://github.com/hMatoba/Piexif) is required at installation time
 * portability: this is a pure Python package and is tested with Travis-CI (linux) and AppVeyor (Windows) for versions 3.3 to 3.6 (3.7 for AppVeyor only).
 
+## Localization
+The package supports gettext type localization, and provides a French translation.
+
 ## Usage:
 
 #### As a Python module

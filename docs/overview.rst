@@ -33,10 +33,17 @@ This package has few requirements:
 
 * a Python >= 3 (only tested with >= 3.3)
 * the piexif_ package available from Pypi and automatically installed in a `pip` installation.
+* the i18nparse_ package available from PyPI, and automatically installed too (since 0.6)
+
+Localization
+------------
+
+This package supports gettext type localization, and provides French messages in addition to English.
 
 Limits
 ------
 
-At this time, there is no GUI interface, and neither this document nor the program has been translated to another language than English.
+At this time, there is no GUI interface.
 
 .. _piexif:  https://github.com/hMatoba/Piexif
+.. _i18nparse: https://github.com/s-ball/i18nparse
