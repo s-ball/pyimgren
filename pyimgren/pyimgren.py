@@ -14,6 +14,7 @@ import logging
 import os.path
 import shutil
 
+_ = lambda x: x
 
 class PyimgrenException(Exception):
     """Base for pyimgren exceptions"""

@@ -30,15 +30,16 @@ from setuptools.command.build_py import build_py as _build
 class Builder(_build):
     def run(self):
         self.__mo_files = []
-        po = re.compile(r"(.*)_(.*).po")
-        for file in os.listdir("locale"):
+        po = re.compile(r"(.*)_(.*).po$")
+        src = os.path.join(NAME, "locale")
+        for file in os.listdir(src):
             m = po.match(file)
-            if m:
+            if m and (file[0] != '.'):
                 path = os.path.join(self.build_lib, NAME, "locale",
                                  m.group(2), "LC_MESSAGES")
                 os.makedirs(path, exist_ok=True)
                 mofile = os.path.join(path, m.group(1) + ".mo")
-                msgfmt.make(os.path.join("src", file), mofile)
+                msgfmt.make(os.path.join(src, file), mofile)
                 self.__mo_files.append(mofile)
         _build.run(self)
     def get_outputs(self):

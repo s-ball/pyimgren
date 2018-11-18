@@ -1,0 +1,8 @@
+include LICENSE.txt
+include README.md
+exclude *~
+include CHANGES.txt
+include tools_i18n/*
+include pyimgren/locale/*.po
+include pyimgren/locale/*.pot
+exclude pyimgren/locale/*/*/*.mo

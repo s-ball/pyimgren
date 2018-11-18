@@ -8,18 +8,25 @@ import i18nparse
 import gettext
 import os.path
 import locale
+from . import nls_init as ext_init
 
-localedir = os.path.join(os.path.dirname(__file__), "locale")
-lang = locale.getdefaultlocale()[0]
-tr = gettext.translation("main", localedir, [lang], fallback=True)
-_ = tr.gettext
+_ = lambda x: x
+
+def nls_init():
+    global _
+    localedir = os.path.join(os.path.dirname(__file__), "locale")
+    lang = locale.getdefaultlocale()[0]
+    tr = gettext.translation("main", localedir, [lang], fallback=True)
+    _ = tr.gettext
+    ext_init()
 
 def set_parser():
     parser = argparse.ArgumentParser(
         prog = prog,
         description=_("Rename pictures according to their exif timestamp"))
     parser.add_argument("-v", "--version", action="version",
-                        version="%(prog)s " + __version__)
+                        version="%(prog)s " + __version__,
+                        help=_("show program's version number and exit"))
     parser.add_argument("--folder", "-f", default = ".",
                         help = _("folder containing files to rename"))
     parser.add_argument("-s", "--src_mask", default="DSCF*.jpg",
@@ -57,6 +64,7 @@ def set_parser():
 def main():
     locale.setlocale(locale.LC_ALL, "")
     i18nparse.activate()
+    nls_init()
     parser = set_parser()
     params = parser.parse_args()
     files = params.files

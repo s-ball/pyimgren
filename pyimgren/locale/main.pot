@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: pyimgren 0.6.0.dev1\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-11-16 11:46+0100\n"
+"Project-Id-Version: pyimgren 0.6.0\n"
+"Report-Msgid-Bugs-To: <s-ball@laposte.net>\n"
+"POT-Creation-Date: 2018-11-18 21:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,63 +17,67 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.6.0\n"
 
-#: pyimgren/__main__.py:20
+#: __main__.py:22 __main__.py:26 __main__.py:29
 msgid "Rename pictures according to their exif timestamp"
 msgstr ""
 
-#: pyimgren/__main__.py:24
+#: __main__.py:32
+msgid "show program's version number and exit"
+msgstr ""
+
+#: __main__.py:34
 msgid "folder containing files to rename"
 msgstr ""
 
-#: pyimgren/__main__.py:26
+#: __main__.py:36
 msgid "pattern to select the files to rename"
 msgstr ""
 
-#: pyimgren/__main__.py:28
+#: __main__.py:38
 msgid "format for the new file name"
 msgstr ""
 
-#: pyimgren/__main__.py:30
+#: __main__.py:40
 msgid "extension for the new file name"
 msgstr ""
 
-#: pyimgren/__main__.py:32
+#: __main__.py:42
 msgid "a file to remember the old names"
 msgstr ""
 
-#: pyimgren/__main__.py:34
+#: __main__.py:44
 msgid "print a line per rename"
 msgstr ""
 
-#: pyimgren/__main__.py:36
+#: __main__.py:46
 msgid "process normally except no rename occurs"
 msgstr ""
 
-#: pyimgren/__main__.py:39
+#: __main__.py:49
 msgid "sub-commands"
 msgstr ""
 
-#: pyimgren/__main__.py:41
+#: __main__.py:51
 msgid "rename files by using their exif timestamp"
 msgstr ""
 
-#: pyimgren/__main__.py:43 pyimgren/__main__.py:53
+#: __main__.py:53 __main__.py:63
 msgid "files to process (default: src_mask)"
 msgstr ""
 
-#: pyimgren/__main__.py:45
+#: __main__.py:55
 msgid "rename files back to their original name"
 msgstr ""
 
-#: pyimgren/__main__.py:47
+#: __main__.py:57
 msgid "files to process (default: content of ref_file)"
 msgstr ""
 
-#: pyimgren/__main__.py:49
+#: __main__.py:59
 msgid "merge files from a different folder"
 msgstr ""
 
-#: pyimgren/__main__.py:51
+#: __main__.py:61
 msgid "folder from where merge picture files"
 msgstr ""
 

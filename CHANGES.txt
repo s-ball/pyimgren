@@ -1,3 +1,6 @@
+RELEASE 0.6.0: 2018-11-18
+    Supports a French locale in addition to English.
+
 RELEASE 0.5.0: 2018-11-05
     It is possible to directly merge pictures from a different folder.
 
