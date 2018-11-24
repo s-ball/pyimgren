@@ -1,0 +1,187 @@
+# French translation for pyimgren documentation
+# Copyright (C) 2018, s-ball
+# This file is distributed under the same license as the pyimgren package.
+# s-ball < s-ball@laposte.net>, 2018.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: pyimgren 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-24 12:58+0100\n"
+"PO-Revision-Date: 2018-11-24 22:34+0100\n"
+"Last-Translator: s-ball < s-ball@laposte.net>\n"
+"Language-Team: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.6.0\n"
+
+#: ../../overview.rst:2
+msgid "Overview"
+msgstr "Présentation"
+
+#: ../../overview.rst:5
+msgid "Goal"
+msgstr "Objectif"
+
+#: ../../overview.rst:7
+msgid ""
+"Digital cameras name their pictures in a sequential manner. When you want"
+" to put pictures from several cameras in the same folder, they will be "
+"sorted by camera instead of by picture date and time."
+msgstr ""
+"Les appareils photos numériques nomment les images de façon"
+" séquentielle. Quand vous voulez mettre les images provenant de plusieurs "
+"appareils dans le même dossier, elles seront triées par appareil et non"
+" en fonction de leur date et heure."
+
+#: ../../overview.rst:9
+msgid ""
+"Even if we can find here and there programs that allow for batch renaming"
+" of such pictures, I could not find a portable Python module for that. So"
+" the goals of this project are:"
+msgstr ""
+"Même s'il est possible de trouver ici ou là des programmes qui"
+" permettent de faire du renommage par lot de ces images, je n'ai pas réussi"
+" à trouver un module Python portable pour cela. Donc les objectifs de ce"
+" projet sont:"
+
+#: ../../overview.rst:11
+msgid "few dependencies: a Python 3 (tested for >= 3.3)"
+msgstr "peu de dépendances : un Python 3 (testé avec >= 3.3)"
+
+#: ../../overview.rst:12
+msgid ""
+"few additional module requirements: only piexif_ is required at "
+"installation time"
+msgstr ""
+"peu d'exigences en modules additionels : seulement piexif_ est"
+" nécessaire à l'installation"
+
+#: ../../overview.rst:13
+msgid ""
+"portability: this is a pure Python package and is tested with Travis-CI "
+"(linux) and AppVeyor (Windows) for versions 3.3 to 3.6 (3.7 for AppVeyor "
+"only)."
+msgstr ""
+"Portabilité : c'est un paquet Python pur, testé avec Travis-CI (linux)"
+" et AppVeyor (Windows) pour les versions 3.0 à 3.6 (3.7 seulement avec"
+" Appveyor)."
+
+
+#: ../../overview.rst:15
+msgid ""
+"It is intended to be an importable package that can be included in other "
+"Python project, as well as a command line utility that can be launched "
+"from a shell."
+msgstr ""
+"Il a vocation à être un paquet importable qui peut être inclus dans"
+" d'autres projets Python, ainsi qu'un utilitaire en ligne de commande qui"
+" peut être lancé depuis un shell"
+
+#: ../../overview.rst:18
+msgid "Features"
+msgstr "Fonctionnalités"
+
+#: ../../overview.rst:20
+msgid ""
+"The central class of the package is :class:`~pyimgren.pyimgren.Renamer`. "
+"It normally acts on a single folder passed at initialization time. It "
+"should be given a ``strftime`` format string and an extension (starting "
+"with a dot like ``.jpg``). It can then:"
+msgstr ""
+"La classe centrale du paquet est :class:`~pyimgren.pyimgren.Renamer`."
+" Elle agit normalement sur un dossier unique indiqué à l'initialisation. Il"
+" est possible de lui donner une chaîne en format ``strftime`` et une"
+" extension (commençant par un point comme ``.jpg``). Elle peut alors :"
+
+#: ../../overview.rst:22
+#, python-format
+msgid ""
+"rename files from the folder given by their names of by patterns to a "
+"name contructed with the date from the exif tag, the ``strftime`` format "
+"string and the extension. When more than one file should get the same "
+"name, all by the following are given names postfixed with ``a`` to ``zz``"
+" before the extension. For example with a ``\"%Y%m%d\"`` mask and a "
+"``\".jpeg\"`` extension, 3 pictures from the 10 september 2016 will be "
+"given the names ``\"20160910.jpeg\"`` and ``\"20160910a.jpeg\"``."
+msgstr ""
+"renommer les fichiers du dossier désignés par leur nom ou par un modèle "
+"avec un nom construit à partir de la date du champ exif, la chaîne en format "
+"``strftime`` et l'extension. Quand plus d'un fichier devrait recevoir le "
+"même nom, les suivants reçoivent des noms suffixés par ``a`` à ``z`` avant "
+"l'extension. Par exemple, avec un masque ``\"%Y%m%d\"`` et une extension "
+"``\".jpeg\"``, 2 images du 10 septembre 2016 recevront les noms "
+"``\"20160910.jpeg\"`` et ``\"20160910a.jpeg\"``."
+
+#: ../../overview.rst:25
+msgid ""
+"rename back files from the folder to their original names. For that "
+"``rename`` creates a special file in the folder (by default "
+"``names.log``) to record the new and original names. Optionally it can "
+"operate on a limited set of the renamed pictures."
+msgstr ""
+"redonner aux fichiers du dossier leur nom original. Pour cela, ``rename``"
+" crée un fichier spécial dans le dossier (par défaut ``names.log``) pour "
+"enregistrer les noms nouveaux et originaux. En option, il peut agir sur"
+" un ensemble limité des images renommées."
+
+#: ../../overview.rst:27
+msgid ""
+"merge files from a different directory. File are directly copied from "
+"their original folder with their final name based on their exif "
+"timestamp."
+msgstr ""
+"fusionner des fichiers provenant d'un autre répertoire. Les fichiers sont "
+"directement copiés depuis leur dossier d'origine sous leur nom définitif "
+"basé sur leur date et heure exif."
+
+#: ../../overview.rst:30
+msgid "Dependencies"
+msgstr "Dépendances"
+
+#: ../../overview.rst:32
+msgid "This package has few requirements:"
+msgstr "Ce paquet a peu d'exigences"
+
+#: ../../overview.rst:34
+msgid "a Python >= 3 (only tested with >= 3.3)"
+msgstr "un Python >= 3 (testé seulement pour >)3.3)"
+
+#: ../../overview.rst:35
+msgid ""
+"the piexif_ package available from Pypi and automatically installed in a "
+"`pip` installation."
+msgstr ""
+"le paquet piexif_ disponible sur PyPI et installé automatiquement lors"
+" d'une installation par ``pip``."
+
+#: ../../overview.rst:36
+msgid ""
+"the i18nparse_ package available from PyPI, and automatically installed "
+"too (since 0.6)"
+msgstr ""
+"le paquet i18nparse_ disponible sur PyPI, et également installé "
+"automatiquement (à partir de la version 0.6"
+
+#: ../../overview.rst:39
+msgid "Localization"
+msgstr "Localisation"
+
+#: ../../overview.rst:41
+msgid ""
+"This package supports gettext type localization, and provides French "
+"messages in addition to English."
+msgstr ""
+"Ce paquet accepte une localisation de type gettext, et fournit des messages"
+" en français en plus de l'anglais."
+
+#: ../../overview.rst:44
+msgid "Limits"
+msgstr "Limitations"
+
+#: ../../overview.rst:46
+msgid "At this time, there is no GUI interface."
+msgstr "En ce moment, il n'y a pas d'interface graphique"
+

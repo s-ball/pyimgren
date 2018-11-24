@@ -198,7 +198,7 @@ class Renamer:
         Parameters:
             src_folder: the name of the folder containing the files to merge.
                 It cannot contain wildcard characters.
-            *files: file names or patterns containing wilcard characters (? or *)
+            *files: file names or patterns containing wilcard characters (* or?)
                 defining the files to be copied.
 
         The files are not moved but remain in their original folder. As usual,
