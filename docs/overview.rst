@@ -9,7 +9,7 @@ Digital cameras name their pictures in a sequential manner. When you want to put
 Even if we can find here and there programs that allow for batch renaming of such pictures, I could not find a portable Python module for that. So the goals of this project are:
 
 * few dependencies: a Python 3 (tested for >= 3.3)
-* few additional module requirements: only piexif_ is required at installation time
+* few additional module requirements: only piexif_ and i18nparse_ are required at installation time
 * portability: this is a pure Python package and is tested with Travis-CI (linux) and AppVeyor (Windows) for versions 3.3 to 3.6 (3.7 for AppVeyor only).
 
 It is intended to be an importable package that can be included in other Python project, as well as a command line utility that can be launched from a shell.
@@ -35,8 +35,8 @@ This package has few requirements:
 * the piexif_ package available from Pypi and automatically installed in a `pip` installation.
 * the i18nparse_ package available from PyPI, and automatically installed too (since 0.6)
 
-Localization
-------------
+Internationalization
+--------------------
 
 This package supports gettext type localization, and provides French messages in addition to English.
 

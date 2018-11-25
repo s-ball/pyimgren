@@ -134,7 +134,7 @@ or:
     optional arguments:
       -h, --help  show this help message and exit
 
-This internally starts a :class:`~.Renamer` with the options passed as parameter. If option ``-D|--debug`` is present a :class:`StreamHandler` is configured to process Debug level message in the :mod:`logging` module. Then, the :class:`~.Renamer` runs its :meth:`~.rename` method if the ``-b|--back`` option is not present, else the :meth:`~.back` method.
+This internally starts a :class:`~.Renamer` with the options passed as parameter. If option ``-D|--debug`` is present a :class:`StreamHandler` is configured to process Debug level message in the :mod:`logging` module. Then, the :class:`~.Renamer` runs the method corresponding to the sub-command.
 
 Default values:
 ***************
