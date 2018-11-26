@@ -1,3 +1,6 @@
+RELEASE 0.6.1: 2018-11-26
+    French documentation available on ReadTheDocs
+
 RELEASE 0.6.0: 2018-11-18
     Supports a French locale in addition to English.
 
