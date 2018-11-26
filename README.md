@@ -15,7 +15,7 @@ Digital cameras name their pictures in a sequential manner. When you want to put
 Even if we can find here and there programs that allow for batch renaming of such pictures, I could not find a portable Python module for that. So the goals of this project are:
 
 * few dependencies: a Python 3 (tested for >= 3.3)
-* few additional module requirements: only [piexif](https://github.com/hMatoba/Piexif) is required at installation time
+* few additional module requirements: only [piexif](https://github.com/hMatoba/Piexif) and [i18nparse](https://github.com/s-ball/i18nparse) are required at installation time
 * portability: this is a pure Python package and is tested with Travis-CI (linux) and AppVeyor (Windows) for versions 3.3 to 3.6 (3.7 for AppVeyor only).
 
 ## Localization
