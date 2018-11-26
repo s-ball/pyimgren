@@ -2,7 +2,7 @@
 # Copyright (c) 2018 s-ball
 
 from .pyimgren import Renamer
-from .version import __version__
+from .version import version as __version__
 # import .pyimgren
 
 __all__ = ["Renamer", "__version__", "__name__"]
