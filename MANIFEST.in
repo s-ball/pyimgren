@@ -4,7 +4,7 @@ exclude *~
 include CHANGES.txt
 include pyimgren/locale/*.po
 exclude pyimgren/locale/*.pot
-exclude pyimgren/locale/*/*/*.mo
+global-exclude *.mo
 prune docs
 prune pyimgren.egg-info
 global-exclude .*
