@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyimgren 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-24 13:02+0100\n"
+"POT-Creation-Date: 2018-11-26 08:20+0100\n"
 "PO-Revision-Date: 2018-11-25 14:50+0100\n"
 "Last-Translator: s-ball < s-ball@laposte.net>\n"
 "Language-Team: fr\n"
@@ -50,8 +50,9 @@ msgid "Implementation of the package"
 msgstr "Implémentation du paquet"
 
 #: of pyimgren.pyimgren.PyimgrenException:1
-msgid "Bases: :class:`Exception`"
-msgstr ""
+#, fuzzy
+msgid "Bases : :class:`Exception`"
+msgstr "Bases: :class:`Exception`"
 
 #: of pyimgren.pyimgren.PyimgrenException:1
 msgid "Base for pyimgren exceptions"
@@ -60,8 +61,9 @@ msgstr "Classe de base des exceptions de pyimgren"
 #: of pyimgren.pyimgren.MergeSameDirException:1
 #: pyimgren.pyimgren.NamesLogException:1
 #: pyimgren.pyimgren.UnknownPictureException:1
-msgid "Bases: :class:`pyimgren.pyimgren.PyimgrenException`"
-msgstr ""
+#, fuzzy
+msgid "Bases : :class:`pyimgren.pyimgren.PyimgrenException`"
+msgstr "Bases: :class:`pyimgren.pyimgren.PyimgrenException`"
 
 #: of pyimgren.pyimgren.NamesLogException:1
 msgid "Raised when a line in the names.log file cannot be parsed"
@@ -83,7 +85,7 @@ msgstr ""
 
 #: of pyimgren.pyimgren.UnknownPictureException:6
 msgid "name of the unknown image"
-msgstr "nom de l'image inconnus"
+msgstr "nom de l'image inconnue"
 
 #: of pyimgren.pyimgren.UnknownPictureException:10
 msgid "the Renamer object that raised the current error"
@@ -102,8 +104,9 @@ msgid "name of the Renamer folder"
 msgstr "nom du dossier du Renamer"
 
 #: of pyimgren.pyimgren.Renamer:1
-msgid "Bases: :class:`object`"
-msgstr ""
+#, fuzzy
+msgid "Bases : :class:`object`"
+msgstr "Bases: :class:`object`"
 
 #: of pyimgren.pyimgren.Renamer:1
 msgid "Main class of the module."
@@ -118,16 +121,17 @@ msgid ""
 "contains no exif time.."
 msgstr ""
 "Un Renamer sert à renommer des noms d'images produits par un appareil "
-"photo (couramment IMGxxxxx.JPG ou DSCFyyyy.JPG) avec un nom basé sur le"
-" moment où la photographie a été prise (comme le font les smartphones)."
-" Ce moment est récupéré dans les propriétés *Exif* de l'image. L'image "
-"n'est pas renommée si elle ne contient pas une date et heure exif."
+"photo (couramment IMGxxxxx.JPG ou DSCFyyyy.JPG) avec un nom basé sur le "
+"moment où la photographie a été prise (comme le font les smartphones). Ce"
+" moment est récupéré dans les propriétés *Exif* de l'image. L'image n'est"
+" pas renommée si elle ne contient pas une date et heure exif."
 
 #: of pyimgren.pyimgren.Renamer pyimgren.pyimgren.Renamer.back
 #: pyimgren.pyimgren.Renamer.get_new_name pyimgren.pyimgren.Renamer.merge
 #: pyimgren.pyimgren.Renamer.rename pyimgren.pyimgren.exif_dat
-msgid "Parameters"
-msgstr "Parametres"
+#, fuzzy
+msgid "Paramètres"
+msgstr "Paramètres"
 
 #: of pyimgren.pyimgren.Renamer:9
 msgid "the folder where pictures will be renamed"
@@ -146,7 +150,8 @@ msgid ""
 " the new name of a picture (default \"%Y%m%d_%H%M%S\")"
 msgstr ""
 "un format contenant des directives de formattage pour ``strftime``, qui "
-"sera utilisé pour le nouveau nom d'une image (par défaut \"%Y%m%d_%H%M%S\")"
+"sera utilisé pour le nouveau nom d'une image (par défaut "
+"\"%Y%m%d_%H%M%S\")"
 
 #: of pyimgren.pyimgren.Renamer:15
 msgid "the extension of the new name"
@@ -154,16 +159,15 @@ msgstr "l'extension du nouveau nom"
 
 #: of pyimgren.pyimgren.Renamer:16
 msgid "the name of a file that will remember the old names (default names.log)"
-msgstr ""
-"le nom d'un fichier qui enregistrera les anciens noms (default names.log)"
+msgstr "le nom d'un fichier qui enregistrera les anciens noms (default names.log)"
 
 #: of pyimgren.pyimgren.Renamer:18
 msgid ""
 "a boolean flag that will cause a line to be printed for each rename when "
 "true"
 msgstr ""
-"un drapeau bouléen qui fait afficher une ligne par fichier renommé "
-"quand il est vrai"
+"un drapeau bouléen qui fait afficher une ligne par fichier renommé quand "
+"il est vrai"
 
 #: of pyimgren.pyimgren.Renamer:20
 msgid ""
@@ -173,14 +177,12 @@ msgid ""
 msgstr ""
 "un drapeau bouléen qui provoque un fonctionnement à blanc (*dry run*), "
 "c'est à dire que le dossier sera parcouru, et les informations de "
-"déverminage éventuellement affichés mais qu'aucun fichier ne sera "
-"renommé"
+"déverminage (*debug*) éventuellement affichés mais qu'aucun fichier ne "
+"sera renommé"
 
 #: of pyimgren.pyimgren.Renamer:24
 msgid "All parameters become attribute of the object with the same name"
-msgstr ""
-"Tous les paramètres deviennent des attributs de l'object, avec le "
-"même nom"
+msgstr "Tous les paramètres deviennent des attributs de l'object, avec le même nom"
 
 #: of pyimgren.pyimgren.Renamer:28
 msgid ""
@@ -196,7 +198,8 @@ msgid ""
 "and the original ones, in order to be able to rename them back."
 msgstr ""
 "Un fichier nommé names.log est créé dans le dossier pour enregistrer les "
-"nouveaux noms et les anciens, afin de pouvoir leur rendre leur nom original."
+"nouveaux noms et les anciens, afin de pouvoir leur rendre leur nom "
+"d'origine."
 
 #: of pyimgren.pyimgren.Renamer:34
 msgid "Example::"
@@ -211,8 +214,8 @@ msgid ""
 "Rename pictures in folder (by default the pictures with the src_mask "
 "pattern)"
 msgstr ""
-"Renomme les images du dossier (par défaut les images suivant le "
-"modèle src_mask"
+"Renomme les images du dossier (par défaut les images suivant le modèle "
+"src_mask"
 
 #: of pyimgren.pyimgren.Renamer.rename:4
 msgid ""
@@ -222,12 +225,12 @@ msgid ""
 " will be renamed regardless of src_mask. If it contains wildcard "
 "characters (* and ?), all files matching that pattern will berenamed."
 msgstr ""
-"un itérable de chemins. Si un chemin est un dossier, un nouveau "
-"Renamer est lancé dans ce dossier avec les paramètres courrants pour "
-"renommer tous les fichiers correspondant à src_mask. Si c'est un fichier"
-" qui doit être dans le dossier du Renamer), ce fichier est renommé "
-"indépendamment de src_mask. S'il contient des caractères génériques "
-"(* et ?), tous les fichiers correspondant à ce modèle seront renommés."
+"un itérable de chemins. Si un chemin est un dossier, un nouveau Renamer "
+"est lancé dans ce dossier avec les paramètres courrants pour renommer "
+"tous les fichiers correspondant à src_mask. Si c'est un fichier qui doit "
+"être dans le dossier du Renamer), ce fichier est renommé indépendamment "
+"de src_mask. S'il contient des caractères génériques (* et ?), tous les "
+"fichiers correspondant à ce modèle seront renommés."
 
 #: of pyimgren.pyimgren.Renamer.rename:11
 msgid ""
@@ -247,7 +250,8 @@ msgstr "lève"
 #: pyimgren.pyimgren.Renamer.merge:15 pyimgren.pyimgren.Renamer.rename:14
 msgid ":exc:`RuntimeErrorException` -- if all files from a to zz already exist"
 msgstr ""
-":exc:`RuntimeErrorException` -- si tous les fichiers de a à zz existent déjà"
+":exc:`RuntimeErrorException` -- si tous les fichiers de a à zz existent "
+"déjà"
 
 #: of pyimgren.pyimgren.Renamer.back:1
 msgid ""
@@ -263,9 +267,9 @@ msgid ""
 "file will be renamed back. If it contains wildcard characters (* and ?), "
 "all files matching that pattern will be processed."
 msgstr ""
-"un itérable de noms. Si un nom existe dans le fichie ref_file local, ce "
-"fichier retrouvera son nom initial. S'il contient des caractères génériques"
-", tous les fichiers correspondants à ce modèles seront traités."
+"un itérable de noms. Si un nom existe dans le fichier ref_file local, ce "
+"fichier retrouvera son nom initial. S'il contient des caractères "
+"génériques, tous les fichiers correspondants à ce modèles seront traités."
 
 #: of pyimgren.pyimgren.Renamer.back:9
 msgid "Uses load_names to load the names.log file."
@@ -288,8 +292,8 @@ msgid ""
 "file names or patterns containing wilcard characters (* or?) defining the"
 " files to be copied."
 msgstr ""
-"noms de fichiers ou modèles contenant des caractères génériques (* ou ?) "
-" définissant les fichiers à copier."
+"noms de fichiers ou modèles contenant des caractères génériques (* ou ?)"
+"  définissant les fichiers à copier."
 
 #: of pyimgren.pyimgren.Renamer.merge:8
 msgid ""
@@ -297,9 +301,10 @@ msgid ""
 "the copies receive a name based on their exif timestamp encoded by "
 "strftime using dst_mask and dst_ext."
 msgstr ""
-"Les fichiers ne sont pas déplacés mais restent dans leur dossir d'origine."
-" Comme d'habitude, les copies reçoivent un nom basé sur leur date et heure "
-"exif encodé par `strftime` en utilisant dst_mask et dst_ext."
+"Les fichiers ne sont pas déplacés mais restent dans leur dossir "
+"d'origine. Comme d'habitude, les copies reçoivent un nom basé sur leur "
+"date et heure exif encodé par `strftime` en utilisant dst_mask et "
+"dst_ext."
 
 #: of pyimgren.pyimgren.Renamer.merge:12
 msgid ""
@@ -307,7 +312,7 @@ msgid ""
 "is issued."
 msgstr ""
 "Si un nom correspond au répertoire, le répertoire est ignoré et un "
-"message d'avertissement est affiché".
+"message d'avertissement est affiché\""
 
 #: of pyimgren.pyimgren.Renamer.load_names:1
 msgid "Load new and original names from a names.log file."
@@ -315,8 +320,8 @@ msgstr "Charge les noms nouveaux et anciens depuis un fichier names.log."
 
 #: of pyimgren.pyimgren.Renamer.get_new_name
 #: pyimgren.pyimgren.Renamer.load_names pyimgren.pyimgren.exif_dat
-msgid "Returns"
-msgstr "Renvoie"
+msgid "Renvoie"
+msgstr ""
 
 #: of pyimgren.pyimgren.Renamer.load_names:3
 msgid ""
@@ -328,8 +333,8 @@ msgstr ""
 
 #: of pyimgren.pyimgren.Renamer.get_new_name
 #: pyimgren.pyimgren.Renamer.load_names pyimgren.pyimgren.exif_dat
-msgid "Return type"
-msgstr "Type de la valeur renvoyée"
+msgid "Type renvoyé"
+msgstr ""
 
 #: of pyimgren.pyimgren.Renamer.load_names:7
 msgid ""
@@ -337,9 +342,9 @@ msgid ""
 "the number of the offending line and its content if a line in names.log "
 "contains no colon (:)"
 msgstr ""
-":exc:`NamesLogException` -- les attributs de la NamesLogException sont "
-"le numéro de la ligne en erreur et son contenu si une ligne de names.log "
-" ne contient pas de deux point (:)"
+":exc:`NamesLogException` -- les attributs de la NamesLogException sont le"
+" numéro de la ligne en erreur et son contenu si une ligne de names.log  "
+"ne contient pas de deux point (:)"
 
 #: of pyimgren.pyimgren.Renamer.get_new_name:2
 msgid "Finds the final name of a picture if a file with that name"
@@ -359,9 +364,6 @@ msgid ""
 " zz until a file of that name does       not exist in the directory     *"
 " ext_mask"
 msgstr ""
-"un nom composé de        * la valeur du nom      * un suffixe entre a et "
-"zz jusqu'à ce qu'un fichier de ce        nom n'existe pas               *"
-" ext_mask"
 
 #: of pyimgren.pyimgren.Renamer.get_new_name:11
 msgid "a name composed with"
@@ -376,8 +378,8 @@ msgid ""
 "a suffix between a and zz until a file of that name does not exist in the"
 " directory"
 msgstr ""
-"un suffixe entre a et zz jusqu'a ce qu'un fichier de ce nom n'existe"
-" pas dans le répertoire"
+"un suffixe entre a et zz jusqu'a ce qu'un fichier de ce nom n'existe pas "
+"dans le répertoire"
 
 #: of pyimgren.pyimgren.Renamer.get_new_name:12
 msgid "ext_mask"
@@ -385,8 +387,7 @@ msgstr "ext_mask"
 
 #: of pyimgren.pyimgren.exif_dat:1
 msgid "Extract the timestamp of a picture file from the exif tags."
-msgstr ""
-"Extrait la date et l'heure d'un fichier image à partir de ses champs exif."
+msgstr "Extrait la date et l'heure d'un fichier image à partir de ses champs exif."
 
 #: of pyimgren.pyimgren.exif_dat:3
 msgid ""
@@ -397,8 +398,8 @@ msgid ""
 msgstr ""
 "Cette function est un habillage autour du module piexif pour trouver "
 "facilement la date et l'heure à laquelle la photographie a été prise. "
-"Elle essaie d'abord le moment où l'appareil a pris la photographie, puis"
-" le moment où le fichier a été enregistré sur la carte mémoire."
+"Elle essaie d'abord le moment où l'appareil a pris la photographie, puis "
+"le moment où le fichier a été enregistré sur la carte mémoire."
 
 #: of pyimgren.pyimgren.exif_dat:8
 msgid "the name of an image file that shall contain an exif tag"
@@ -409,6 +410,13 @@ msgid ""
 "the date when the picture was taken or stored by the camera found in the "
 "exif tag or None if no date could be found."
 msgstr ""
-"le moment où la photographie a été prise ou enregistrée sur la carte mémoire"
-" indiqué par les champs exif, ou None si ce moment ne peut être déterminé."
+"le moment où la photographie a été prise ou enregistrée sur la carte "
+"mémoire indiqué par les champs exif, ou None si ce moment ne peut être "
+"déterminé."
+
+#~ msgid "Returns"
+#~ msgstr "Renvoie"
+
+#~ msgid "Return type"
+#~ msgstr "Type de la valeur renvoyée"
 
