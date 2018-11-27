@@ -24,7 +24,7 @@ msgstr "Erreur dans le fichier name log ligne {} : >{}<"
 
 #: pyimgren/pyimgren.py:64
 msgid "Cannot merge {} into itself"
-msgstr "Impossible de fusionner {} avec lui-même"
+msgstr "Impossible de fusionner {} avec lui-mÃªme"
 
 #: pyimgren/pyimgren.py:278
 msgid "Too many files for {}"
@@ -32,7 +32,7 @@ msgstr "Trop de fichiers pour {}"
 
 #: pyimgren/pyimgren.py:289
 msgid "{} not found"
-msgstr "{} non trouvé"
+msgstr "{} non trouvÃ©"
 
 #: pyimgren/pyimgren.py:297
 #, python-format
@@ -46,5 +46,5 @@ msgstr "%s n'est pas directement dans %s"
 
 #: pyimgren/pyimgren.py:335
 msgid "Merge cannot process {}: is a directory"
-msgstr "merge ne peut traiter {} : c'est un répertoire"
+msgstr "merge ne peut traiter {} : c'est un rÃ©pertoire"
 
