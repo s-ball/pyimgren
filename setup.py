@@ -1,5 +1,5 @@
-from setuptools import setup, find_packages, get_distribution
-from pkg_resources import parse_version
+from setuptools import setup, find_packages
+from pkg_resources import parse_version, get_distribution
 import os.path
 import re
 import sys
@@ -12,7 +12,7 @@ NAME = "pyimgren"
 # Base version (removes any pre, post, a, b or rc element)
 BASE = "0.0.0"
 try:
-    BASE = get_distribution(NAME).base_version
+    BASE = get_distribution(NAME).parsed_version.base_version
 except:
     # Try to read from version.py file
     import ast
