@@ -31,7 +31,6 @@ except:
 #  with the current version we are building
 with open("README.md") as fd:
     long_description = next(fd).replace("master", BASE)
-    long_description += next(fd).replace("latest", BASE)
     long_description += "".join(fd)
 
 setup(
@@ -50,7 +49,7 @@ setup(
     license = "MIT License",
     project_urls = {
         "Documentation":
-            "https://pyimgren.readthedocs.io/en/{}/".format(BASE),
+            "https://pyimgren.readthedocs.io/en/latest/",
         "Changelog":
             "https://github.com/s-ball/pyimgren/blob/master/CHANGES.txt"
         },
