@@ -4,15 +4,25 @@ import os.path
 import re
 import sys
 
+
 from io import open
 
 NAME = "pyimgren"
 
 # Base version (removes any pre, post, a, b or rc element)
+BASE = "0.0.0"
 try:
     BASE = get_distribution(NAME).base_version
 except:
-    BASE = "0.0.0"
+    # Try to read from version.py file
+    import ast
+    rx = re.compile(r'.*version.*=\s*(.*)')
+    with open(os.path.join(NAME, "version.py")) as fd:
+        for line in fd:
+            m = rx.match(line)
+            if m:
+                BASE = parse_version(ast.literal_eval(m.group(1))).base_version
+                break
 
 # In long description, replace "master" in the build status badges
 #  with the current version we are building
