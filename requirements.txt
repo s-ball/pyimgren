@@ -1,2 +1,2 @@
-# Travis-CI & TRD need pre-installation of mo_installer
-mo_installer
+# Travis-CI requirement pre-installation of mo_installer for Python<3.5
+mo_installer ; python_version < '3.5'
