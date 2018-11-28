@@ -8,3 +8,5 @@ global-exclude *.mo
 prune docs
 prune pyimgren.egg-info
 global-exclude .*
+exclude RTD-requirements.txt
+exclude appveyor.yml
