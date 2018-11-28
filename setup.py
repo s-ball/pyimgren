@@ -15,14 +15,17 @@ try:
     BASE = get_distribution(NAME).parsed_version.base_version
 except:
     # Try to read from version.py file
-    import ast
-    rx = re.compile(r'.*version.*=\s*(.*)')
-    with open(os.path.join(NAME, "version.py")) as fd:
-        for line in fd:
-            m = rx.match(line)
-            if m:
-                BASE = parse_version(ast.literal_eval(m.group(1))).base_version
-                break
+    try:
+        import ast
+        rx = re.compile(r'.*version.*=\s*(.*)')
+        with open(os.path.join(NAME, "version.py")) as fd:
+            for line in fd:
+                m = rx.match(line)
+                if m:
+                    BASE = parse_version(ast.literal_eval(m.group(1))).base_version
+                    break
+    except:
+        pass       # give up here and stick to 0.0.0
 
 # In long description, replace "master" in the build status badges
 #  with the current version we are building
