@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages, get_distribution
 from pkg_resources import parse_version
 import os.path
 import re
