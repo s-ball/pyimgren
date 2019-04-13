@@ -84,6 +84,8 @@ class Renamer:
         ext_mask: the extension of the new name
         ref_file: the name of a file that will remember the old names
                   (default names.log)
+        delta:    a number of minutes to add to the time found in exif data.
+                  This is intended to cope with a camera having a wrong time
         debug   : a boolean flag that will cause a line to be printed for
                   each rename when true
         dummy   : a boolean flag that will cause a "dry run", meaning that
@@ -115,11 +117,13 @@ class Renamer:
                  dst_mask = "%Y%m%d_%H%M%S",
                  ext_mask = ".jpg",
                  ref_file = "names.log",
+                 delta = 0,
                  debug = False,
                  dummy = False):
         self.folder, self.src_mask, self.dst_mask, self.ref_file = (
             folder, src_mask, dst_mask, ref_file)
         self.ext_mask, self.debug, self.dummy = ext_mask, debug, dummy
+        self.delta = delta
         self.log = logging.getLogger("pyimgren")
         
     def rename(self, *pictures):
@@ -303,7 +307,8 @@ class Renamer:
                                            file, src_folder)
                             continue
                             
-                        dat = exif_dat(file)
+                        dat = exif_dat(file) + datetime.timedelta(
+                            minutes=self.delta)
                         if dat is not None:
                             new_name = self.get_new_name(
                                 dat.strftime(self.dst_mask))

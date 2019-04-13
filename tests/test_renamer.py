@@ -93,6 +93,8 @@ c
              mock.patch("pyimgren.pyimgren.exif_dat",
                         side_effect = dates):
             self.obj.rename()
+            dates = [d + datetime.timedelta(minutes=self.obj.delta)
+                     for d in dates]
             for i, n in enumerate(names):
                 nn0 = dates[i].strftime(self.obj.dst_mask) + self.obj.ext_mask
                 nn = os.path.join(self.folder, nn0)
@@ -100,6 +102,11 @@ c
                 self.assertEqual(nn0 + ":" +
                                  os.path.relpath(n, self.folder) + "\n",
                                  fd.write.call_args_list[i][0][0])
+
+    def test_rename_delta(self):
+        """Rename files with 60 minutes delta"""
+        self.obj.delta = 60
+        self.test_rename()
             
     def test_rename_dir(self):
         """Rename a sub-folder"""

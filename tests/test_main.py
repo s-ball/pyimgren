@@ -15,42 +15,50 @@ class TestMain(unittest.TestCase):
                       "dst_mask": "%Y%m%d_%H%M%S",
                       "ext_mask": ".jpg", "ref_file": "names.log",
                       "debug": True, "dummy": False, "subcommand": "back",
-                      "files": []
+                      "files": [], "delta": 0.0
                       },
                      "--ext=.jpeg -X -f fold rename":
                      {"folder": "fold", "src_mask": "DSCF*.jpg",
                       "dst_mask": "%Y%m%d_%H%M%S",
                       "ext_mask": ".jpeg", "ref_file": "names.log",
                       "debug": False, "dummy": True, "subcommand": "rename",
-                      "files": []
+                      "files": [], "delta": 0.0
+                      },
+                     "--ext=.jpeg -X -f fold -x 1.5 rename":
+                     {"folder": "fold", "src_mask": "DSCF*.jpg",
+                      "dst_mask": "%Y%m%d_%H%M%S",
+                      "ext_mask": ".jpeg", "ref_file": "names.log",
+                      "debug": False, "dummy": True, "subcommand": "rename",
+                      "files": [], "delta": 1.5
                       },
                      """--src=IMG*.* --dst=%Y%m%d%H%M%S -f fold rename""":
                      {"folder": "fold", "src_mask": "IMG*.*",
                       "dst_mask": "%Y%m%d%H%M%S",
                       "ext_mask": ".jpg", "ref_file": "names.log",
                       "debug": False, "dummy": False, "subcommand": "rename",
-                      "files": []
+                      "files": [], "delta": 0.0
                       },
                      "-r names.txt --folder=fold rename":
                      {"folder": "fold", "src_mask": "DSCF*.jpg",
                       "dst_mask": "%Y%m%d_%H%M%S",
                       "ext_mask": ".jpg", "ref_file": "names.txt",
                       "debug": False, "dummy": False, "subcommand": "rename",
-                      "files": []
+                      "files": [], "delta": 0.0
                       },
                      "-r names.txt -f fold rename foo bar":
                      {"folder": "fold", "src_mask": "DSCF*.jpg",
                       "dst_mask": "%Y%m%d_%H%M%S",
                       "ext_mask": ".jpg", "ref_file": "names.txt",
                       "debug": False, "dummy": False, "subcommand": "rename",
-                      "files": ["foo", "bar"]
+                      "files": ["foo", "bar"], "delta": 0.0
                       },
                      "merge fold foo bar":
                      {"folder": ".", "src_mask": "DSCF*.jpg",
                       "dst_mask": "%Y%m%d_%H%M%S",
                       "ext_mask": ".jpg", "ref_file": "names.log",
                       "debug": False, "dummy": False, "subcommand": "merge",
-                      "files": ["foo", "bar"], "src_folder": "fold"
+                      "files": ["foo", "bar"], "src_folder": "fold",
+                      "delta": 0.0
                       },
                      }
         for (args, v) in args_list.items():

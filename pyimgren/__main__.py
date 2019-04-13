@@ -37,6 +37,8 @@ def set_parser():
                         help = _("extension for the new file name"))
     parser.add_argument("-r", "--ref_file", default="names.log",
                         help = _("a file to remember the old names"))
+    parser.add_argument("-x", "--delta", default=0., type=float,
+                        help = _("number of minutes to add to exif time"))
     parser.add_argument("-D", "--debug", action="store_true",
                         help = _("print a line per rename"))
     parser.add_argument("-X", "--dry_run", action="store_true", dest="dummy",
