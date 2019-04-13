@@ -82,7 +82,7 @@ Syntax:
 .. code-block:: none
 
     usage: pyimgren [-h] [-v] [--folder FOLDER] [-s SRC_MASK] [-d DST_MASK]
-                    [-e EXT_MASK] [-r REF_FILE] [-D] [-X]
+                    [-x delta] [-e EXT_MASK] [-r REF_FILE] [-D] [-X]
                     {rename,back,merge} ...
 
     Rename pictures according to their exif timestamp
@@ -106,6 +106,7 @@ Syntax:
                             extension for the new file name
       -r REF_FILE, --ref_file REF_FILE
                             a file to remember the old names
+      -x, --delta           number of minutes to add to the exif tag time
       -D, --debug           print a line per rename
       -X, --dry_run         process normally except no rename occurs
 
@@ -146,6 +147,7 @@ All (global) options have default values::
     DST_MASK:       %Y%m%d_%H%M%S
     EXT_MASK:       .jpg
     REF_FILE:       names.log
+    delta:          0.0
 
 Options ``debug`` and ``dry_run`` are inactive by default.
 
@@ -159,7 +161,7 @@ On Windows, the Python script directories are commonly not in the PATH, and user
 .. code-block:: none
 
     usage: pyimgren [-h] [-v] [--folder FOLDER] [-s SRC_MASK] [-d DST_MASK]
-                    [-e EXT_MASK] [-r REF_FILE] [-D] [-X]
+                    [-e EXT_MASK] [-r REF_FILE] [-x delta] [-D] [-X]
                     {rename,back,merge} ...
 
 The parameters are exactly the same they were for the script.
