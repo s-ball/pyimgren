@@ -31,7 +31,9 @@ A Renamer is used to rename image names provided by a camera
 (commonly IMGxxxxx.JPG or DSCFyyyy.JPG into a name based on the time
 when the photography had been taken (as smartphones do). That time is
 extracted from the exif tag of the picture. No rename occurs if the
-picture contains no exif time..
+picture contains no exif time. Optionaly, a number of minutes to add to
+the exif time can be given to process images from a camera that would
+have a wrong time..
 
 A file named names.log is created in the folder to store the new names
 and the original ones, in order to be able to rename them back.
@@ -43,6 +45,7 @@ renamer = Renamer(folder, src_mask = "DSCF*.jpg",
                  dst_mask = "%Y%m%d_%H%M%S",
                  ext_mask = ".jpg",
                  ref_file = "names.log",
+                 delta = 0.0,
                  debug = False,
                  dummy = False)
 ```
@@ -58,6 +61,8 @@ Parameters:
 * ext_mask: the extension of the new name (default ".jpg")
 * ref_file: the name of a file that will remember the old names
           (default "names.log")
+* delta:  a (floating point) number of minutes to add to the exif
+          tag time (default 0.0)
 * debug   : a boolean flag that will cause a line to be printed for
           each rename when true (default False)
 * dummy   : a boolean flag that will cause a "dry run", meaning that
@@ -81,7 +86,7 @@ The pip installation install a `pyimgren` script (`pyimgren.exe` on Windows) in 
 
 ```
 usage: pyimgren [-h] [-v] [--folder FOLDER] [-s SRC_MASK] [-d DST_MASK]
-                [-e EXT_MASK] [-r REF_FILE] [-D] [-X]
+                [-e EXT_MASK] [-r REF_FILE] [-x delta] [-D] [-X]
                 {rename,back,merge} ...
 
 Rename pictures according to their exif timestamp
@@ -105,6 +110,8 @@ optional arguments:
                         extension for the new file name
   -r REF_FILE, --ref_file REF_FILE
                         a file to remember the old names
+  -x delta, --delta delta
+                        minutes to add to the exif tag time
   -D, --debug           print a line per rename
   -X, --dry_run         process normally except no rename occurs
 ```
@@ -134,7 +141,7 @@ optional arguments:
   -h, --help  show this help message and exit
 
 usage: pyimgren [-h] [-v] [-b] [-s SRC_MASK] [-d DST_MASK] [-e EXT_MASK]
-                [-r REF_FILE] [-D] [-X]
+                [-r REF_FILE] [-x delta] [-D] [-X]
                 folder [files [files ...]]
 
 Rename pictures according to their exif timestamp
@@ -155,6 +162,8 @@ optional arguments:
                         extension for the new file name
   -r REF_FILE, --ref_file REF_FILE
                         a file to remember the old names
+  -x delta, --delta delta
+                        minutes to add to the exif tag time
   -D, --debug           print a line per rename
   -X, --dry_run         process normally except no rename occurs
 ```
@@ -165,7 +174,7 @@ It can be use as a Python module, which allows to use it in Windows even if the 
 
 ```
 usage: pyimgren [-h] [-v] [--folder FOLDER] [-s SRC_MASK] [-d DST_MASK]
-                [-e EXT_MASK] [-r REF_FILE] [-D] [-X]
+                [-e EXT_MASK] [-r REF_FILE] [-x delta] [-D] [-X]
                 {rename,back,merge} ...
 
 ```
