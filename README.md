@@ -31,7 +31,7 @@ A Renamer is used to rename image names provided by a camera
 (commonly IMGxxxxx.JPG or DSCFyyyy.JPG into a name based on the time
 when the photography had been taken (as smartphones do). That time is
 extracted from the exif tag of the picture. No rename occurs if the
-picture contains no exif time. Optionaly, a number of minutes to add to
+picture contains no exif time. Optionally, a number of minutes to add to
 the exif time can be given to process images from a camera that would
 have a wrong time..
 
