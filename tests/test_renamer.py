@@ -72,6 +72,7 @@ c
                 self.assertEqual(
                     tuple(map(lambda x: os.path.join(self.folder, x),pair)),
                     os.rename.call_args_list[i][0])
+
     def test_rename(self):
         """Rename 4 files"""
         fd = mock.Mock()
@@ -107,6 +108,25 @@ c
         """Rename files with 60 minutes delta"""
         self.obj.delta = 60
         self.test_rename()
+
+    def test_rename_no_exif_tag(self):
+        """Try to rename files having no exif tag"""
+        fd = mock.Mock()
+        names = [os.path.join(self.folder, i) for i in "abcd"]
+        open_ctx = mock.Mock()
+        open_ctx.__enter__ = mock.Mock(return_value = fd)
+        open_ctx.__exit__ = mock.Mock()
+        dates = [None] * len(names)
+        with mock.patch("os.rename"), \
+             mock.patch.object(self.obj, "load_names",
+                               return_value = collections.OrderedDict()), \
+             mock.patch("io.open", return_value = open_ctx), \
+             mock.patch("glob.glob", return_value = names), \
+             mock.patch("pyimgren.pyimgren.exif_dat",
+                        side_effect = dates):
+            self.obj.rename()
+            os.rename.assert_not_called()
+            fd.write.assert_not_called()
             
     def test_rename_dir(self):
         """Rename a sub-folder"""

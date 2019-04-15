@@ -307,9 +307,9 @@ class Renamer:
                                            file, src_folder)
                             continue
                             
-                        dat = exif_dat(file) + datetime.timedelta(
-                            minutes=self.delta)
+                        dat = exif_dat(file)
                         if dat is not None:
+                            dat += datetime.timedelta(minutes=self.delta)
                             new_name = self.get_new_name(
                                 dat.strftime(self.dst_mask))
                             if self.debug:
