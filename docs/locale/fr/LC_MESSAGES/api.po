@@ -1,15 +1,14 @@
 # French translation for pyimgren documentation
-# Copyright (C) 2018, s-ball
+# Copyright (C) 2018,2019 s-ball
 # This file is distributed under the same license as the pyimgren package.
-# s-ball < s-ball@laposte.net>, 2018.
+# s-ball < s-ball@laposte.net>, 2018,2019.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: pyimgren 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-26 08:20+0100\n"
-"PO-Revision-Date: 2018-11-25 14:50+0100\n"
+"POT-Creation-Date: 2019-04-21 09:45+0200\n"
+"PO-Revision-Date: 2018-04-21 10:06+0100\n"
 "Last-Translator: s-ball < s-ball@laposte.net>\n"
 "Language-Team: fr\n"
 "MIME-Version: 1.0\n"
@@ -50,8 +49,7 @@ msgid "Implementation of the package"
 msgstr "Implémentation du paquet"
 
 #: of pyimgren.pyimgren.PyimgrenException:1
-#, fuzzy
-msgid "Bases : :class:`Exception`"
+msgid "Bases: :class:`Exception`"
 msgstr "Bases: :class:`Exception`"
 
 #: of pyimgren.pyimgren.PyimgrenException:1
@@ -61,8 +59,7 @@ msgstr "Classe de base des exceptions de pyimgren"
 #: of pyimgren.pyimgren.MergeSameDirException:1
 #: pyimgren.pyimgren.NamesLogException:1
 #: pyimgren.pyimgren.UnknownPictureException:1
-#, fuzzy
-msgid "Bases : :class:`pyimgren.pyimgren.PyimgrenException`"
+msgid "Bases: :class:`pyimgren.pyimgren.PyimgrenException`"
 msgstr "Bases: :class:`pyimgren.pyimgren.PyimgrenException`"
 
 #: of pyimgren.pyimgren.NamesLogException:1
@@ -104,8 +101,7 @@ msgid "name of the Renamer folder"
 msgstr "nom du dossier du Renamer"
 
 #: of pyimgren.pyimgren.Renamer:1
-#, fuzzy
-msgid "Bases : :class:`object`"
+msgid "Bases: :class:`object`"
 msgstr "Bases: :class:`object`"
 
 #: of pyimgren.pyimgren.Renamer:1
@@ -129,8 +125,7 @@ msgstr ""
 #: of pyimgren.pyimgren.Renamer pyimgren.pyimgren.Renamer.back
 #: pyimgren.pyimgren.Renamer.get_new_name pyimgren.pyimgren.Renamer.merge
 #: pyimgren.pyimgren.Renamer.rename pyimgren.pyimgren.exif_dat
-#, fuzzy
-msgid "Paramètres"
+msgid "Parameters"
 msgstr "Paramètres"
 
 #: of pyimgren.pyimgren.Renamer:9
@@ -163,13 +158,21 @@ msgstr "le nom d'un fichier qui enregistrera les anciens noms (default names.log
 
 #: of pyimgren.pyimgren.Renamer:18
 msgid ""
+"a number of minutes to add to the time found in exif data. This is "
+"intended to cope with a camera having a wrong time"
+msgstr ""
+"un nombre de minutes à ajouter à l'heure extraite des données exif. Le "
+"but est de gérer le cas où l'appareil photo n'est pas à l'heure"
+
+#: of pyimgren.pyimgren.Renamer:20
+msgid ""
 "a boolean flag that will cause a line to be printed for each rename when "
 "true"
 msgstr ""
 "un drapeau bouléen qui fait afficher une ligne par fichier renommé quand "
 "il est vrai"
 
-#: of pyimgren.pyimgren.Renamer:20
+#: of pyimgren.pyimgren.Renamer:22
 msgid ""
 "a boolean flag that will cause a \"dry run\", meaning that the folder "
 "will be scanned, and debug info eventually printed but no file will be "
@@ -180,11 +183,11 @@ msgstr ""
 "déverminage (*debug*) éventuellement affichés mais qu'aucun fichier ne "
 "sera renommé"
 
-#: of pyimgren.pyimgren.Renamer:24
+#: of pyimgren.pyimgren.Renamer:26
 msgid "All parameters become attribute of the object with the same name"
 msgstr "Tous les paramètres deviennent des attributs de l'object, avec le même nom"
 
-#: of pyimgren.pyimgren.Renamer:28
+#: of pyimgren.pyimgren.Renamer:30
 msgid ""
 "an object respecting a logging.Logger interface. By default "
 "``logging.getLogger(\"pyimgren\")``"
@@ -192,7 +195,7 @@ msgstr ""
 "un object respectant l'interface d'un ``logging.Logger``. Par défaut "
 "``logging.getLogger(\"pyimgren\")``"
 
-#: of pyimgren.pyimgren.Renamer:31
+#: of pyimgren.pyimgren.Renamer:33
 msgid ""
 "A file named names.log is created in the folder to store the new names "
 "and the original ones, in order to be able to rename them back."
@@ -201,11 +204,11 @@ msgstr ""
 "nouveaux noms et les anciens, afin de pouvoir leur rendre leur nom "
 "d'origine."
 
-#: of pyimgren.pyimgren.Renamer:34
+#: of pyimgren.pyimgren.Renamer:36
 msgid "Example::"
 msgstr "Example ::"
 
-#: of pyimgren.pyimgren.Renamer:41
+#: of pyimgren.pyimgren.Renamer:43
 msgid "This class requires piexif and Python >= 3."
 msgstr "Cette classe nécessite piexif et Python >= 3."
 
@@ -320,7 +323,7 @@ msgstr "Charge les noms nouveaux et anciens depuis un fichier names.log."
 
 #: of pyimgren.pyimgren.Renamer.get_new_name
 #: pyimgren.pyimgren.Renamer.load_names pyimgren.pyimgren.exif_dat
-msgid "Renvoie"
+msgid "Returns"
 msgstr ""
 
 #: of pyimgren.pyimgren.Renamer.load_names:3
@@ -333,7 +336,7 @@ msgstr ""
 
 #: of pyimgren.pyimgren.Renamer.get_new_name
 #: pyimgren.pyimgren.Renamer.load_names pyimgren.pyimgren.exif_dat
-msgid "Type renvoyé"
+msgid "Return type"
 msgstr ""
 
 #: of pyimgren.pyimgren.Renamer.load_names:7
@@ -419,4 +422,10 @@ msgstr ""
 
 #~ msgid "Return type"
 #~ msgstr "Type de la valeur renvoyée"
+
+#~ msgid "Renvoie"
+#~ msgstr ""
+
+#~ msgid "Type renvoyé"
+#~ msgstr ""
 

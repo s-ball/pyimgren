@@ -1,15 +1,14 @@
 # French translation for pyimgren documentation
-# Copyright (C) 2018, s-ball
+# Copyright (C) 2018,2019, s-ball
 # This file is distributed under the same license as the pyimgren package.
-# s-ball < s-ball@laposte.net>, 2018.
+# s-ball < s-ball@laposte.net>, 2018,2019.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: pyimgren 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-26 08:20+0100\n"
-"PO-Revision-Date: 2018-11-25 23:34+0100\n"
+"POT-Creation-Date: 2019-04-21 09:45+0200\n"
+"PO-Revision-Date: 2019-04-21 10:05+0100\n"
 "Last-Translator: s-ball < s-ball@laposte.net>\n"
 "Language-Team: fr\n"
 "MIME-Version: 1.0\n"
@@ -96,6 +95,7 @@ msgstr ""
 "extension (commençant par un point comme ``.jpg``). Elle peut alors :"
 
 #: ../../overview.rst:22
+#, python-format
 msgid ""
 "rename files from the folder given by their names of by patterns to a "
 "name contructed with the date from the exif tag, the ``strftime`` format "
@@ -103,7 +103,9 @@ msgid ""
 "name, the following are given names postfixed with ``a`` to ``zz`` before"
 " the extension. For example with a ``\"%Y%m%d\"`` mask and a "
 "``\".jpeg\"`` extension, 3 pictures from the 10 september 2016 will be "
-"given the names ``\"20160910.jpeg\"`` and ``\"20160910a.jpeg\"``."
+"given the names ``\"20160910.jpeg\"`` and ``\"20160910a.jpeg\"``. "
+"Optionally, you can pass a delta in minutes to add to the time extracted "
+"for the exif tag."
 msgstr ""
 "renommer les fichiers du dossier désignés par leur nom ou par un modèle "
 "avec un nom construit à partir de la date du champ exif, la chaîne en "
@@ -111,7 +113,9 @@ msgstr ""
 "recevoir le même nom, les suivants reçoivent des noms suffixés par ``a`` "
 "à ``z`` avant l'extension. Par exemple, avec un masque ``\"%Y%m%d\"`` et "
 "une extension ``\".jpeg\"``, 2 images du 10 septembre 2016 recevront les "
-"noms ``\"20160910.jpeg\"`` et ``\"20160910a.jpeg\"``."
+"noms ``\"20160910.jpeg\"`` et ``\"20160910a.jpeg\"``. "
+"Il est également possible de passer un décalage en minutes à rajouter à "
+"l'heure extraite du champ exif."
 
 #: ../../overview.rst:25
 msgid ""
@@ -181,5 +185,5 @@ msgstr "Limitations"
 
 #: ../../overview.rst:46
 msgid "At this time, there is no GUI interface."
-msgstr "En ce moment, il n'y a pas d'interface graphique"
+msgstr "Pour le moment, il n'y a pas d'interface graphique"
 
