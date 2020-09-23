@@ -125,6 +125,7 @@ class Renamer:
         self.ext_mask, self.debug, self.dummy = ext_mask, debug, dummy
         self.delta = delta
         self.log = logging.getLogger("pyimgren")
+        self.names = None
         
     def rename(self, *pictures):
         """Rename pictures in folder (by default the pictures with the
@@ -185,6 +186,8 @@ class Renamer:
                               self.dummy)
                 sub.log = self.log
                 sub.back()
+            elif not os.path.exists(file) and file not in pictures:
+                continue
             else:  # it is a file: must be in names
                 rel = os.path.relpath(file, self.folder)
                 try:
@@ -195,6 +198,10 @@ class Renamer:
                 if self.debug: self.log.debug("%s -> %s", rel, orig)
                 if not self.dummy:
                     os.rename(file, os.path.join(self.folder, orig))
+                    del self.names[rel]
+        if not self.dummy and os.path.exists(
+                os.path.join(self.folder,self.ref_file)):
+            self._save_names()
                     
     def merge(self, src_folder, *files):
         """Merge files from a different folder.
@@ -218,7 +225,7 @@ class Renamer:
         """
         if os.path.samefile(self.folder, src_folder):
             raise MergeSameDirException(self.folder)
-        names = collections.OrderedDict()
+        names = self.load_names()
         self._process(names, files, src_folder, _copy, _warndir)
     
     def load_names(self):
@@ -235,6 +242,9 @@ class Renamer:
                 of the offending line and its content if a line in
                 names.log contains no colon (:)
         """
+        if self.names is not None:
+            return self.names
+
         names = collections.OrderedDict()
         numlig = 0
         try:
@@ -249,7 +259,15 @@ class Renamer:
         except IndexError as e:
             raise NamesLogException(numlig,line).with_traceback(
                 sys.exc_info()[2]) from e
+        self.names = names
         return names
+
+    def _save_names(self):
+        with io.open(
+                os.path.join(self.folder, self.ref_file),
+                "w", encoding="utf-8") as fd:
+            for name, old in self.names.items():
+                fd.write("{}:{}\n".format(os.path.normcase(name), old))
 
     def get_new_name(self, name):
         """Finds the final name of a picture if a file with that name
@@ -267,22 +285,33 @@ class Renamer:
                     * ext_mask
 
         Raises:
-            RuntimeErrorException:
+            RuntimeError:
                 if all files from a to zz already exist
-        """        
-        if os.path.exists(os.path.join(self.folder, name) + self.ext_mask):
+        """
+        old_names = self.names.values()
+        if os.path.exists(os.path.join(self.folder, name) + self.ext_mask) \
+                or name + self.ext_mask in old_names:
             for i in range(ord("a"), ord("z") + 1):
                 n = name + chr(i) + self.ext_mask
-                if not os.path.exists(os.path.join(self.folder, n)):
+                if not os.path.exists(os.path.join(self.folder, n)) \
+                        and n not in old_names:
                     return n
             for i in range(ord("a"), ord("z") + 1):
                 for j in range(ord("a"), ord("z") + 1):
                     n = name + chr(i) + chr(j) + self.ext_mask
-                    if not os.path.exists(os.path.join(self.folder, n)):
+                    if not os.path.exists(os.path.join(self.folder, n)) \
+                            and n not in old_names:
                           return n
             raise RuntimeError(_("Too many files for {}").format(
                 name + self.ext_mask))
         return name + self.ext_mask
+
+    def get_new_file_name(self, file):
+        try:
+            ext = file.rindex('.')
+            return self.get_new_name(file[:ext])
+        except ValueError:
+            return file
 
     def _process(self, names, pictures, src_folder, file_action, dir_action):
         """Processing common to rename and merge."""
@@ -314,14 +343,17 @@ class Renamer:
                                 dat.strftime(self.dst_mask))
                             if self.debug:
                                 self.log.debug("%s -> %s", rel, new_name)
-                            names[new_name] = rel
                             if not self.dummy:
-                                file_action(file, self.folder, new_name)
+                                file_action(file, self.folder, new_name,
+                                            rel, self)
         return names
 
-def _move(file, folder, new_name):
+
+def _move(file, folder, new_name, rel, renamer):
     """Simply rename a file (full path) in a directory (folder)."""
     os.rename(file, os.path.join(folder, new_name))
+    renamer.names[new_name] = rel
+
 
 def _subdir(ren, file):
     """Start a copy of a Renamer in a new folder (file)."""
@@ -334,11 +366,15 @@ def _subdir(ren, file):
     sub.log = ren.log
     sub.rename()
 
-def _copy(file, folder, new_name):
+
+def _copy(file, folder, new_name, rel, renamer):
     shutil.copy(file, os.path.join(folder, new_name))
+    renamer.names[new_name] = renamer.get_new_file_name(rel)
+
 
 def _warndir(ren, file):
     ren.log.warning(_("Merge cannot process {}: is a directory"), file)
+
 
 def exif_dat(file):
     """Extract the timestamp of a picture file from the exif tags.

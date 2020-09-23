@@ -44,6 +44,7 @@ c
         """find a new name pretending 55 files already exist"""
         with mock.patch("os.path.exists",
                         side_effect = ([True] * 55) + [False]):
+            self.obj.names = {}
             n = self.obj.get_new_name("foo")
             self.assertEqual(56, os.path.exists.call_count)
             self.assertEqual(os.path.join(self.obj.folder, "foobc")
@@ -87,12 +88,11 @@ c
         open_ctx.__enter__ = mock.Mock(return_value = fd)
         open_ctx.__exit__ = mock.Mock()
         with mock.patch("os.rename"), \
-             mock.patch.object(self.obj, "load_names",
-                               return_value = collections.OrderedDict()), \
              mock.patch("io.open", return_value = open_ctx), \
              mock.patch("glob.glob", return_value = names), \
              mock.patch("pyimgren.pyimgren.exif_dat",
                         side_effect = dates):
+            self.obj.names = collections.OrderedDict()
             self.obj.rename()
             dates = [d + datetime.timedelta(minutes=self.obj.delta)
                      for d in dates]
@@ -181,10 +181,11 @@ c
             sub.back.assert_called_once_with()
     def test_too_many_files(self):
         """Try to rename more than 700 files with same timestamp"""
+        self.obj.names = {}
         with mock.patch("os.path.exists", return_value = True):
             try:
                 n = self.obj.get_new_name("foo")
-            except Exception as e:
+            except RuntimeError as e:
                 self.assertTrue("foo" in str(e))
                 return
         self.fail("No exception")
@@ -228,9 +229,11 @@ class MergeTest(unittest.TestCase):
             self.obj.merge(os.path.join(self.folder, ".."), "foo", "bar")
             self.assertEqual(2, copy.call_count)
             copy.assert_any_call(os.path.join(self.folder, "..", "foo"),
-                                          self.folder, "20160604_150910.jpg")
+                                          self.folder, "20160604_150910.jpg",
+                                 'foo', self.obj)
             copy.assert_called_with(os.path.join(self.folder, "..", "bar"),
-                                          self.folder, "20160604_150910.jpg")
+                                          self.folder, "20160604_150910.jpg",
+                                    'bar', self.obj)
             move.assert_not_called()
             
     def test_ignore_dir(self):
@@ -244,7 +247,8 @@ class MergeTest(unittest.TestCase):
             self.obj.merge(os.path.join(self.folder, ".."), "foo", "bar")
             self.assertEqual(1, copy.call_count)
             copy.assert_called_once_with(os.path.join(self.folder, "..", "bar"),
-                                          self.folder, "20160604_150910.jpg")
+                                          self.folder, "20160604_150910.jpg",
+                                         'bar', self.obj)
             self.assertEqual(1, warning.call_count)
    
     def test_merge_self(self):
