@@ -60,19 +60,20 @@ c
     def test_back(self):
         """Rename back 3 files"""
         flist = [("a", "b"), ("c", "d"), ("e", "f")]
-        with mock.patch("os.rename"),mock.patch.object(
-            self.obj, "load_names", return_value =
-            collections.OrderedDict(flist)), mock.patch(
+        with mock.patch("os.rename"), mock.patch(
                 "glob.glob", side_effect = [
                     [ os.path.join(self.folder, i)]
-                    for i,j in flist]):
-            
+                    for i,j in flist]), mock.patch(
+                'os.path.exists', return_value=True), mock.patch.object(
+                self.obj, '_save_names'):
+            self.obj.names = collections.OrderedDict(flist)
             self.obj.back()
             self.assertEqual(3, os.rename.call_count)
             for i, pair in enumerate(flist):
                 self.assertEqual(
                     tuple(map(lambda x: os.path.join(self.folder, x),pair)),
                     os.rename.call_args_list[i][0])
+            self.assertEqual(0, len(self.obj.names))
 
     def test_rename(self):
         """Rename 4 files"""
@@ -153,15 +154,15 @@ c
              mock.patch("os.path.relpath", return_value = "xy"), \
              mock.patch("glob.glob", return_value = ["xy"]), \
              mock.patch.object(self.obj, "log") as log, \
-             mock.patch.object(self.obj, "load_names",
-                return_value = collections.OrderedDict([("a", "b")])):
-        
+             mock.patch.object(self.obj, '_save_names'):
+            self.obj.names = collections.OrderedDict([("a", "b")])
             self.obj.back("xy")
             e = log.method_calls[0][1][0]
             self.assertTrue(isinstance(e,
                             pyimgren.pyimgren.UnknownPictureException))
             self.assertEqual(self.obj.folder, e.folder)
             self.assertEqual(self.obj.ref_file, e.ref_file)
+
     def test_back_dir(self):
         """Rename back a sub-folder"""
         abs_folder = os.path.join(self.folder, "sub")

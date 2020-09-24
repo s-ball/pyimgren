@@ -182,6 +182,24 @@ class TestMultiRenames(TestCase):
         self.assertTrue(os.path.exists('/test/DSCF9762.JPG'))
 
 
+class TestMergeOrig(TestCase):
+    def setUp(self):
+        self.setUpPyfakefs()
+        self.fs.add_real_directory(os.path.dirname(__file__),
+                                   target_path="/orig")
+        self.fs.create_dir("/test")
+        self.fs.create_dir('/test2')
+        shutil.copyfile('/orig/DSCF9762.JPG', '/test/DSCF9762.JPG')
+        shutil.copyfile('/orig/DSCF9762.JPG', '/test2/DSCF9762.JPG')
+        self.ren = Renamer("/test")
+        self.ren.rename('DSCF9762.JPG')
+        self.new_name = next(iter(self.ren.names.keys()))
+
+    def test_file_is_orig(self):
+        self.ren.merge('/test2')
+        self.assertEqual(2, len(self.ren.names))
+        self.assertEqual('DSCF9762.JPG', self.ren.names[self.new_name])
+
 if __name__ == "__main__":
     import unittest
     unittest.main(verbosity=2)

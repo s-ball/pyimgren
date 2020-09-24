@@ -288,30 +288,32 @@ class Renamer:
             RuntimeError:
                 if all files from a to zz already exist
         """
-        old_names = self.names.values()
-        if os.path.exists(os.path.join(self.folder, name) + self.ext_mask) \
-                or name + self.ext_mask in old_names:
+        return self.get_new_file_name(name + self.ext_mask)
+
+    def get_new_file_name(self, file):
+        old_names = [os.path.normcase(name) for name in self.names.values()]
+        name, ext = file.split('.') if '.' in file else (file, '')
+        if ext != '':
+            ext = '.' + ext
+        norm_file = os.path.normcase(file)
+        if os.path.exists(os.path.join(self.folder, file)) \
+                or norm_file in old_names:
             for i in range(ord("a"), ord("z") + 1):
-                n = name + chr(i) + self.ext_mask
+                n = name + chr(i) + ext
+                norm_file = os.path.normcase(n)
                 if not os.path.exists(os.path.join(self.folder, n)) \
-                        and n not in old_names:
+                        and norm_file not in old_names:
                     return n
             for i in range(ord("a"), ord("z") + 1):
                 for j in range(ord("a"), ord("z") + 1):
-                    n = name + chr(i) + chr(j) + self.ext_mask
+                    n = name + chr(i) + chr(j) + ext
+                    norm_file = os.path.normcase(n)
                     if not os.path.exists(os.path.join(self.folder, n)) \
-                            and n not in old_names:
-                          return n
+                            and norm_file not in old_names:
+                        return n
             raise RuntimeError(_("Too many files for {}").format(
-                name + self.ext_mask))
-        return name + self.ext_mask
-
-    def get_new_file_name(self, file):
-        try:
-            ext = file.rindex('.')
-            return self.get_new_name(file[:ext])
-        except ValueError:
-            return file
+                file))
+        return file
 
     def _process(self, names, pictures, src_folder, file_action, dir_action):
         """Processing common to rename and merge."""
