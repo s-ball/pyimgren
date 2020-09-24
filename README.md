@@ -16,7 +16,7 @@ Even if we can find here and there programs that allow for batch renaming of suc
 
 * few dependencies: a Python 3 (tested for >= 3.3)
 * few additional module requirements: only [piexif](https://github.com/hMatoba/Piexif) and [i18nparse](https://github.com/s-ball/i18nparse) are required at installation time
-* portability: this is a pure Python package and is tested with Travis-CI (linux) and AppVeyor (Windows) for versions 3.3 to 3.6 (3.7 for AppVeyor only).
+* portability: this is a pure Python package and is tested with Travis-CI (linux) and AppVeyor (Windows) for versions 3.4 to 3.8.
 
 ## Localization
 The package supports gettext type localization, and provides a French translation.
