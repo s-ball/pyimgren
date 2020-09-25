@@ -66,10 +66,11 @@ file is back in the sub folder"""
         shutil.copyfile("/orig/DSCF9762.JPG", "/test/DSCF9762.JPG")
         shutil.copyfile("/orig/DSCF9762.JPG", "/test/sub/DSCF9762.JPG")
         self.ren.rename("sub")
+        self.assertTrue(os.path.exists("/test/sub/names.log"))
         self.ren.back("sub")
         self.assertTrue(os.path.exists("/test/DSCF9762.JPG"))
         self.assertTrue(os.path.exists("/test/sub/DSCF9762.JPG"))
-        self.assertTrue(os.path.exists("/test/sub/names.log"))
+        self.assertFalse(os.path.exists("/test/sub/names.log"))
         self.assertFalse(os.path.exists("/test/names.log"))
 
     def test_common_timestamp(self):
@@ -107,9 +108,12 @@ class MergeTest(TestCase):
         shutil.copyfile("/orig/DSCF9762.JPG", "/src/foo")
         self.ren.merge("/src", "foo")
         self.assertTrue(os.path.exists("/src/foo"))
-        self.assertFalse(os.path.exists("/test/names.log"))
+        self.assertTrue(os.path.exists("/test/names.log"))
+        new, old = next(iter(self.ren.names.items()))
+        self.assertEqual('foo', old)
+        self.assertTrue(os.path.exists(os.path.join('/test', new)))
         files = os.listdir("/test")
-        self.assertEqual(1, len(files))
+        self.assertEqual(2, len(files))
 
     def test_multiple_merge(self):
         """Merge 2 files with the same exif timestamp.
@@ -120,7 +124,7 @@ class MergeTest(TestCase):
         shutil.copyfile("/orig/DSCF9762.JPG", "/src/bar")
         self.ren.merge("/src", "foo", "bar")
         files = sorted(os.listdir("/test"))
-        self.assertEqual(2, len(files))
+        self.assertEqual(3, len(files))
         self.assertEqual(files[1][:-4], files[0][:-4] + "a")
 
 

@@ -148,12 +148,7 @@ class Renamer:
         """
         names = self.load_names()
         self._process(names, pictures, self.folder, _move, _subdir)
-        if len(names) != 0 and not self.dummy:
-            with io.open(
-                os.path.join(self.folder, self.ref_file),
-                "w", encoding="utf-8") as fd:
-                for name, old in names.items():
-                    fd.write("{}:{}\n".format(os.path.normcase(name), old))
+        self._save_names()
 
     def back(self, *pictures):
         """Rename pictures back to their initial name in folder
@@ -199,9 +194,7 @@ class Renamer:
                 if not self.dummy:
                     os.rename(file, os.path.join(self.folder, orig))
                     del self.names[rel]
-        if not self.dummy and os.path.exists(
-                os.path.join(self.folder,self.ref_file)):
-            self._save_names()
+        self._save_names()
                     
     def merge(self, src_folder, *files):
         """Merge files from a different folder.
@@ -227,7 +220,8 @@ class Renamer:
             raise MergeSameDirException(self.folder)
         names = self.load_names()
         self._process(names, files, src_folder, _copy, _warndir)
-    
+        self._save_names()
+
     def load_names(self):
         """Load new and original names from a names.log file.
 
@@ -263,11 +257,16 @@ class Renamer:
         return names
 
     def _save_names(self):
-        with io.open(
-                os.path.join(self.folder, self.ref_file),
-                "w", encoding="utf-8") as fd:
-            for name, old in self.names.items():
-                fd.write("{}:{}\n".format(os.path.normcase(name), old))
+        if not self.dummy:
+            file = os.path.join(self.folder, self.ref_file)
+            if len(self.names) == 0:
+                if os.path.exists(file):
+                    os.remove(file)
+            else:
+                with io.open(file, "w", encoding="utf-8") as fd:
+                    for name, old in self.names.items():
+                        fd.write("{}:{}\n".format(os.path.normcase(name),
+                                                  old))
 
     def get_new_name(self, name):
         """Finds the final name of a picture if a file with that name

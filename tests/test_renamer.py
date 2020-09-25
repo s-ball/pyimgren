@@ -119,12 +119,11 @@ c
         open_ctx.__exit__ = mock.Mock()
         dates = [None] * len(names)
         with mock.patch("os.rename"), \
-             mock.patch.object(self.obj, "load_names",
-                               return_value = collections.OrderedDict()), \
              mock.patch("io.open", return_value = open_ctx), \
              mock.patch("glob.glob", return_value = names), \
              mock.patch("pyimgren.pyimgren.exif_dat",
                         side_effect = dates):
+            self.obj.names = collections.OrderedDict()
             self.obj.rename()
             os.rename.assert_not_called()
             fd.write.assert_not_called()
