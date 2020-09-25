@@ -200,6 +200,36 @@ class TestMergeOrig(TestCase):
         self.assertEqual(2, len(self.ren.names))
         self.assertEqual('DSCF9762.JPG', self.ren.names[self.new_name])
 
+
+class TestSameName(TestCase):
+    def setUp(self):
+        self.setUpPyfakefs()
+        self.fs.add_real_directory(os.path.dirname(__file__),
+                                   target_path="/orig")
+        self.fs.create_dir("/test")
+        self.fs.create_dir('/test2')
+        shutil.copyfile('/orig/DSCF9762.JPG', '/test2/DSCF9762.JPG')
+        ren = Renamer('/test2')
+        ren.rename()
+        for file in os.listdir('/test2'):
+            if file != 'names.log':
+                self.new_name = file
+
+    def test_init(self):
+        self.assertFalse(os.path.exists('/test2/DSCF9762.JPG'))
+
+    def test_rename(self):
+        ren = Renamer('/test2')
+        ren.rename(self.new_name)
+        self.assertEqual({self.new_name: 'DSCF9762.JPG'}, ren.names)
+
+    def test_merge(self):
+        ren = Renamer('/test')
+        ren.merge('/test2', self.new_name)
+        self.assertTrue(os.path.exists(os.path.join('/test', self.new_name)))
+        self.assertEqual(0, len(ren.names))
+
+
 if __name__ == "__main__":
     import unittest
     unittest.main(verbosity=2)

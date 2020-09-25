@@ -341,6 +341,13 @@ class Renamer:
                         dat = exif_dat(file)
                         if dat is not None:
                             dat += datetime.timedelta(minutes=self.delta)
+                            new_name = dat.strftime(self.dst_mask)
+                            # special case: do not try to rename a file with
+                            # its original name
+                            if (os.path.normcase(new_name + self.ext_mask)
+                                    == os.path.normcase(rel)) and (
+                                    file_action is _move):
+                                continue
                             new_name = self.get_new_name(
                                 dat.strftime(self.dst_mask))
                             if self.debug:
@@ -371,7 +378,8 @@ def _subdir(ren, file):
 
 def _copy(file, folder, new_name, rel, renamer):
     shutil.copy(file, os.path.join(folder, new_name))
-    renamer.names[new_name] = renamer.get_new_file_name(rel)
+    if os.path.normcase(new_name) != os.path.normcase(rel):
+        renamer.names[new_name] = renamer.get_new_file_name(rel)
 
 
 def _warndir(ren, file):
