@@ -406,8 +406,8 @@ def exif_dat(file):
     except ValueError:
         return None
     dt = None
-    for i in (0x9003, 0x9004):
-        dt = exif[i]
+    for i in (0x9003, 0x9004, 0x132):
+        dt = exif.get(i)
         if dt is not None: break
     if dt is None: return None
     return datetime.datetime.strptime(dt.decode("ascii"),
