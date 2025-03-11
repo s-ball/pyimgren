@@ -1,4 +1,0 @@
-# RTD need pre-installation of mo_installer and all dependencies
-mo_installer
-piexif
-i18nparse
