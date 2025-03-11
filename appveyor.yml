@@ -13,15 +13,15 @@ environment:
 install:
   # We need wheel installed to build wheels
   - "%PYTHON%\\python.exe -m pip install --upgrade pip"
-  - "%PYTHON%\\pip install hatch"
+  - "%PYTHON%\\Scripts\\pip install hatch"
 
 build: off
 
 test_script:
-  - "hatch test"
+  - "%PYTHON%\\Scripts\\hatch test"
 
 after_test:
-  - "hatch build"
+  - "%PYTHON%\\Scripts\\hatch build"
 
 artifacts:
   # bdist_wheel puts your built wheel in the dist directory
