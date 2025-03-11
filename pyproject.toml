@@ -1,0 +1,93 @@
+[build-system]
+requires = ["hatchling", "hatch-msgfmt-s-ball", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pyimgren"
+dynamic = ["version"]
+description = "Rename image files according to exif tags"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "s-ball", email = "s-ball@laposte.net" },
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Environment :: Console",
+  "Intended Audience :: End Users/Desktop",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Topic :: Multimedia :: Graphics",
+]
+dependencies = ["piexif", "i18nparse"]
+
+[project.urls]
+Documentation = "https://pyimgren.readthedocs.io/en/latest/"
+Changelog = "https://github.com/s-ball/pyimgren/blob/master/CHANGES.txt"
+Issues = "https://github.com/s-ball/pyimgren/issues"
+Source = "https://github.com/s-ball/pyimgren"
+
+[tool.hatch.version]
+source = "vcs"
+fallback-version = "0.0.0"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "pyimgren/version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["pyimgren"]
+exclude = ["*.po"]
+
+[tool.hatch.build.targets.wheel.hooks.msgfmt]
+domain = "pyimgren"
+messages = "pyimgren/locale"
+locale = "pyimgren/locale"
+
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy>=1.0.0",
+]
+
+[tool.hatch.envs.hatch-test]
+extra-dependencies = [
+  "pyfakefs",
+]
+
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:hatch_msgfmt tests}"
+
+[tool.coverage.run]
+source_pkgs = ["pyimgren"]
+branch = true
+parallel = true
+omit = [
+  "pyimgren/version.py",
+]
+
+[tool.coverage.paths]
+pyimgren = ["pyimgren"]
+tests = ["tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
+
+[project.scripts]
+cli-name = "pyimgren.__main__:main"
+
+[[tool.hatch.envs.hatch-test.matrix]]
+python = ["3.13", "3.12", "3.11", "3.10", "3.9"]
