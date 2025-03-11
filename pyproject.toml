@@ -37,6 +37,8 @@ Changelog = "https://github.com/s-ball/pyimgren/blob/master/CHANGES.txt"
 Issues = "https://github.com/s-ball/pyimgren/issues"
 Source = "https://github.com/s-ball/pyimgren"
 
+# use hatch-vcs to provide the version number from git and
+# generate the "pyimgren/version.py" file.
 [tool.hatch.version]
 source = "vcs"
 fallback-version = "0.0.0"
@@ -44,10 +46,12 @@ fallback-version = "0.0.0"
 [tool.hatch.build.hooks.vcs]
 version-file = "pyimgren/version.py"
 
+# ensure po files nor pot ones are excluded from the wheel
 [tool.hatch.build.targets.wheel]
 packages = ["pyimgren"]
-exclude = ["*.po"]
+exclude = ["*.po*"]
 
+# use hatch-msgfmt-s-ball to generate the mo files and include them in the wheel
 [tool.hatch.build.targets.wheel.hooks.msgfmt]
 domain = "pyimgren"
 messages = "pyimgren/locale"

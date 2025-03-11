@@ -1,4 +1,4 @@
-[![Travis-CI Build Status](https://travis-ci.com/s-ball/pyimgren.svg?branch=master)](https://travis-ci.com/s-ball/pyimgren) [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/salqj2q1h8mid74t/branch/master?svg=true)](https://ci.appveyor.com/project/s-ball/pyimgren/branch/master)
+[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/salqj2q1h8mid74t/branch/master?svg=true)](https://ci.appveyor.com/project/s-ball/pyimgren/branch/master)
 [![Documentation Status](https://readthedocs.org/projects/pyimgren/badge/?version=latest)](https://pyimgren.readthedocs.io/en/latest/?badge=latest)
 
 # pyimgren
@@ -6,17 +6,25 @@ A python module to rename images according to their exif tags.
 
 ## Current status
 
-This package package is distributed in PyPI since version 0.1.0. It can be used by end users, but should be considered at beta quality because it still lacks extensive testing. Its full source is available from [GitHUB](https://github.com/s-ball/pyimgren).
+This package package is distributed in PyPI since version 0.1.0. It can be used by end users,
+but should be considered at beta quality because it still lacks extensive testing.
+Its full source is available from [GitHub](https://github.com/s-ball/pyimgren).
 
 ## Goals
 
-Digital cameras name their pictures in a sequential manner. When you want to put pictures from several cameras in the same folder, they will be sorted by camera instead of by picture date and time.
+Digital cameras name their pictures in a sequential manner. When you want to put
+pictures from several cameras in the same folder, they will be sorted by camera
+instead of by picture date and time.
 
-Even if we can find here and there programs that allow for batch renaming of such pictures, I could not find a portable Python module for that. So the goals of this project are:
+Even if we can find here and there programs that allow for batch renaming of
+such pictures, I could not find a portable Python module for that. So the
+goals of this project are:
 
 * few dependencies: a Python 3 (tested for >= 3.3)
-* few additional module requirements: only [piexif](https://github.com/hMatoba/Piexif) and [i18nparse](https://github.com/s-ball/i18nparse) are required at installation time
-* portability: this is a pure Python package and is tested with Travis-CI (linux) and AppVeyor (Windows) for versions 3.4 to 3.8.
+* few additional module requirements: only [piexif](https://github.com/hMatoba/Piexif) and [i18nparse](https://github.com/s-ball/i18nparse)
+are required at installation time
+* portability: this is a pure Python package and is tested with AppVeyor
+for versions 3.9 to 3.12.
 
 ## Localization
 The package supports gettext type localization, and provides a French translation.
@@ -25,7 +33,9 @@ The package supports gettext type localization, and provides a French translatio
 
 #### As a Python module
 
-The pyimgren package contains one single class `Renamer` with two public methods: `rename` to rename picture files according to their exif date, and `back` to rename them back to their original names.
+The pyimgren package contains one single class `Renamer` with two public
+methods: `rename` to rename picture files according to their exif date,
+and `back` to rename them back to their original names.
 
 A Renamer is used to rename image names provided by a camera
 (commonly IMGxxxxx.JPG or DSCFyyyy.JPG into a name based on the time
@@ -82,7 +92,9 @@ conv.back()      # if you want to revert to original names
 
 #### As a script
 
-The pip installation install a `pyimgren` script (`pyimgren.exe` on Windows) in the Scripts directory. It can then be directly used (provided the Script directory be in the path) with the following syntax:
+The pip installation install a `pyimgren` script (`pyimgren.exe` on Windows)
+in the Scripts directory. It can then be directly used (provided the Script
+directory is in the path) with the following syntax:
 
 ```
 usage: pyimgren [-h] [-v] [--folder FOLDER] [-s SRC_MASK] [-d DST_MASK]
@@ -170,10 +182,12 @@ optional arguments:
 
 #### As a module
 
-It can be use as a Python module, which allows to use it in Windows even if the Scripts directory is not in the path thanks to the `py` launcher with same syntax as the script:
+It can be used as a Python module, which allows to use it in Windows even
+if the Scripts directory is not in the path thanks to the `py` launcher
+with same syntax as the script:
 
 ```
-usage: pyimgren [-h] [-v] [--folder FOLDER] [-s SRC_MASK] [-d DST_MASK]
+usage: python -m pyimgren [-h] [-v] [--folder FOLDER] [-s SRC_MASK] [-d DST_MASK]
                 [-e EXT_MASK] [-r REF_FILE] [-x delta] [-D] [-X]
                 {rename,back,merge} ...
 
@@ -189,7 +203,8 @@ With pip: `pip install pyimgren`.
 
 ### Developper installation
 
-If you want to contribute or integrate pyimgren in your own code, you should get a copy of the full tree from [GitHUB](https://github.com/s-ball/pyimgren):
+If you want to contribute or integrate pyimgren in your own code, you should
+get a copy of the full tree from [GitHUB](https://github.com/s-ball/pyimgren):
 
 ```
 git clone https://github.com/s-ball/pyimgren [your_working_copy_folder]
@@ -197,27 +212,40 @@ git clone https://github.com/s-ball/pyimgren [your_working_copy_folder]
 
 #### Running the tests
 
-As the project intends to be PyPI compatible, you can simply run tests from the main folder with:
+As the project intends to be PyPI compatible, you can simply run tests from
+the main folder with:
 
 ```
-python setup.py test
+pytest tests
+```
+or (if you use `hatch`)
+
+```commandline
+hatch test
 ```
 
-The integration tests depend on [pyfakefs](http://pyfakefs.org), which is automatically intalled from PyPI when you run `python setup.py test`. But it is not require for running `pyimgren`, nor installed by `pip install pyimgren`.
+The integration tests depend on [pyfakefs](http://pyfakefs.org), which is automatically
+installed from PyPI when you run `hatch test`. But it is not required for
+running `pyimgren`, nor installed by `pip install pyimgren`.
 
 ## Contributing
 
-As this project is developped on my free time, I cannot guarantee very fast feedbacks. Anyway, I shall be glad to receive issues or pull requests on GitHUB. 
+As this project is developed on my free time, I cannot guarantee very fast
+feedbacks. Anyway, I shall be glad to receive issues or pull requests on GitHUB. 
 
 ## Versioning
 
-This project uses a standard Major.Minor.Patch versioning pattern. Inside a major version, public API stability is expected (at least after 1.0.0 version will be published).
+This project uses a standard Major.Minor.Patch versioning pattern. Inside a
+major version, public API stability is expected (at least after 1.0.0
+version will be published).
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE.txt file for details
+This project is licensed under the MIT License - see the LICENSE.txt file
+for details
 
 ## Acknowledgments
 
 * The hard job of exif data processing was already done in [piexif](https://github.com/hMatoba/Piexif)
-* The excellent [pyfakefs](http://pyfakefs.org), allows integration tests to run on a fake file system
+* The excellent [pyfakefs](http://pyfakefs.org), allows integration tests to run on a
+fake file system
