@@ -1,5 +1,9 @@
 # ignore dot initial files
 .*
+
+# except for .readthedocs.yaml
+!.readthedocs.yaml
+
 # ignore vi backup files
 *~
 
