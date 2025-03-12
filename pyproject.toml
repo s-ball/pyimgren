@@ -1,12 +1,12 @@
 [build-system]
-requires = ["hatchling", "hatch-msgfmt-s-ball", "hatch-vcs"]
+requires = ["hatchling", "hatch-msgfmt-s-ball", "hatch-vcs", "hatch-fancy-pypi-readme"]
 build-backend = "hatchling.build"
 
 [project]
 name = "pyimgren"
-dynamic = ["version"]
+dynamic = ["version", "readme"]
 description = "Rename image files according to exif tags"
-readme = "README.md"
+#readme = "README.md"
 requires-python = ">=3.9"
 license = "MIT"
 keywords = []
@@ -98,3 +98,25 @@ cli-name = "pyimgren.__main__:main"
 
 [[tool.hatch.envs.hatch-test.matrix]]
 python = ["3.13", "3.12", "3.11", "3.10", "3.9"]
+
+[tool.hatch.metadata.hooks.fancy-pypi-readme]
+content-type = "text/markdown"
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+path = "README.md"
+end-before = "[![Documentation Status]"
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
+pattern = '(.*?)master(.*)master(.*)'
+replacement = '\1$HFPR_VERSION\2$HFPR_VERSION\3'
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+path = "README.md"
+start-at = "[![Documentation Status]"
+#end-before ="""
+## pyimgren"""
+#
+#[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+#path = "README.md"
+#start-at = """
+## pyimgren"""
