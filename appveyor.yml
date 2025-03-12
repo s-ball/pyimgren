@@ -13,10 +13,10 @@ environment:
 install:
   # We need a test install and have build installed
   - "%PYTHON%\\python.exe -m pip install --upgrade pip"
+  - "%PYTHON%\\Scripts\\pip install .[test]"
   - "%PYTHON%\\Scripts\\pip install build"
 
-build:
-  - "%PYTHON%\\Scripts\\pip install .[test]"
+build: off
 
 test_script:
   - "%PYTHON%\\python.exe -m unittest"
