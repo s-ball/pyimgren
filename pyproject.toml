@@ -31,6 +31,9 @@ classifiers = [
 ]
 dependencies = ["piexif", "i18nparse"]
 
+[project.optional-dependencies]
+test = [ "pyfakefs" ]
+
 [project.urls]
 Documentation = "https://pyimgren.readthedocs.io/en/latest/"
 Changelog = "https://github.com/s-ball/pyimgren/blob/master/CHANGES.txt"
