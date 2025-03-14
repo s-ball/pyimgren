@@ -6,7 +6,11 @@ A python module to rename images according to their exif tags.
 
 ## Current status
 
-This package package is distributed in PyPI since version 0.1.0. It can be used by end users,
+**BEWARE**: the upcoming 1.0.0 version will be a major rewrite. Until it is
+released, commits on GitHub will be  inconsistent with this README page
+and the documentation. Some could even crash or destroy data. *DO NOT USE THEM*.
+
+This package  is distributed in PyPI since version 0.1.0. It can be used by end users,
 but should be considered at beta quality because it still lacks extensive testing.
 Its full source is available from [GitHub](https://github.com/s-ball/pyimgren).
 
@@ -23,7 +27,7 @@ goals of this project are:
 * few dependencies: a Python 3 (tested for >= 3.3)
 * few additional module requirements: only [piexif](https://github.com/hMatoba/Piexif) and [i18nparse](https://github.com/s-ball/i18nparse)
 are required at installation time
-* portability: this is a pure Python package and is tested with AppVeyor
+* portability: this is a pure Python package and is tested with Appveyor
 for versions 3.9 to 3.12.
 
 ## Localization
@@ -38,12 +42,12 @@ methods: `rename` to rename picture files according to their exif date,
 and `back` to rename them back to their original names.
 
 A Renamer is used to rename image names provided by a camera
-(commonly IMGxxxxx.JPG or DSCFyyyy.JPG into a name based on the time
+(commonly IMGxxxxx.JPG or DSCFyyyy.JPG) into a name based on the time
 when the photography had been taken (as smartphones do). That time is
 extracted from the exif tag of the picture. No rename occurs if the
 picture contains no exif time. Optionally, a number of minutes to add to
 the exif time can be given to process images from a camera that would
-have a wrong time..
+have a wrong time.
 
 A file named names.log is created in the folder to store the new names
 and the original ones, in order to be able to rename them back.
@@ -201,10 +205,10 @@ or when using the Windows launcher `py -m pyimgren ...`
 
 With pip: `pip install pyimgren`.
 
-### Developper installation
+### Developer installation
 
 If you want to contribute or integrate pyimgren in your own code, you should
-get a copy of the full tree from [GitHUB](https://github.com/s-ball/pyimgren):
+get a copy of the full tree from [GitHub](https://github.com/s-ball/pyimgren):
 
 ```
 git clone https://github.com/s-ball/pyimgren [your_working_copy_folder]
