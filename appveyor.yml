@@ -6,15 +6,15 @@ environment:
 
   matrix:
 
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio2022
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
       PYTHON: "C:\\Python39"
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio2022
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
       PYTHON: "C:\\Python310"
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio2022
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
       PYTHON: "C:\\Python311"
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio2022
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
       PYTHON: "C:\\Python312"
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio2022
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
       PYTHON: "C:\\Python313"
     - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
       VENV: "venv3.9"
@@ -28,7 +28,7 @@ environment:
       VENV: "venv3.13"
 
 init:
-  - sh: ". ${VENV}/bin/activate"
+  - sh: "source ${HOME}/${VENV}/bin/activate"
   - cmd: "%PYTHON%\\python.exe -m venv venv"
   - cmd: "venv\\Scripts\activate"
 
