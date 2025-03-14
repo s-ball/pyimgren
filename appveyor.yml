@@ -27,12 +27,10 @@ environment:
     - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
       VENV: "venv3.13"
 
-init:
+install:
   - sh: "source ${HOME}/${VENV}/bin/activate"
   - cmd: "%PYTHON%\\python.exe -m venv venv"
   - cmd: "venv\\Scripts\\activate"
-
-install:
   # We need a test install and have build installed
   - "python -m pip install --upgrade pip"
   - "pip install .[test]"
