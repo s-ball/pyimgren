@@ -1,28 +1,50 @@
-image: Visual Studio 2022
+image:
+  - Visual Studio 2022
+  - Ubuntu2004
 
 environment:
 
   matrix:
 
-    - PYTHON: "C:\\Python39"
-    - PYTHON: "C:\\Python310"
-    - PYTHON: "C:\\Python311"
-    - PYTHON: "C:\\Python312"
-    - PYTHON: "C:\\Python313"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio2022
+      PYTHON: "C:\\Python39"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio2022
+      PYTHON: "C:\\Python310"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio2022
+      PYTHON: "C:\\Python311"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio2022
+      PYTHON: "C:\\Python312"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio2022
+      PYTHON: "C:\\Python313"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
+      VENV: "venv3.9"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
+      VENV: "venv3.10"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
+      VENV: "venv3.11"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
+      VENV: "venv3.12"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
+      VENV: "venv3.13"
+
+init:
+  - sh: . ${VENV}/bin/activate
+  - cmd: %PYTHON%\\python.exe -m venv venv
+  - cmd: venv\\Scripts\activate
 
 install:
   # We need a test install and have build installed
-  - "%PYTHON%\\python.exe -m pip install --upgrade pip"
-  - "%PYTHON%\\Scripts\\pip install .[test]"
-  - "%PYTHON%\\Scripts\\pip install build"
+  - "python -m pip install --upgrade pip"
+  - "pip install .[test]"
+  - "pip install build"
 
 build: off
 
 test_script:
-  - "%PYTHON%\\python.exe -m unittest"
+  - "python -m unittest"
 
 after_test:
-  - "%PYTHON%\\python.exe -m build"
+  - "python -m build"
 
 artifacts:
   # bdist_wheel puts your built wheel in the dist directory
