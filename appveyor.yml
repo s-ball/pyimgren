@@ -30,7 +30,7 @@ environment:
 init:
   - sh: "source ${HOME}/${VENV}/bin/activate"
   - cmd: "%PYTHON%\\python.exe -m venv venv"
-  - cmd: "venv\\Scripts\activate"
+  - cmd: "venv\\Scripts\\activate"
 
 install:
   # We need a test install and have build installed
