@@ -3,18 +3,37 @@
 # MIT License
 # Copyright (c) 2018 s-ball
 
-import os.path
-import glob
-import datetime
-import piexif
-import sys
 import collections
+import datetime
+import glob
 import io
+import itertools
 import logging
 import os.path
+import os.path
 import shutil
+import sys
+from typing import Iterable, Mapping
+
+import piexif
 
 _ = lambda x: x
+
+# a hack to use the new root_dir feature of glob.glob for Python>=3.10
+# while still being 3.9 compliant
+
+try:
+    glob.glob('a', root_dir='b')
+    def genfiles(names: Iterable[str], folder: str):
+        for name in names:
+            for n in glob.glob(name, root_dir=folder):
+                yield n
+except TypeError:
+    def genfiles(names: Iterable[str], folder: str):
+        for name in names:
+            for n in glob.glob(os.path.join(folder, name)):
+                yield os.path.basename(n)
+
 
 class PyimgrenException(Exception):
     """Base for pyimgren exceptions"""
@@ -27,7 +46,7 @@ class NamesLogException(PyimgrenException):
         numlig: line number where the problem occurs
         line  : content of the offending line
     """
-    def __init__(self, numlig, line):
+    def __init__(self, numlig: int, line: str):
         self.numlig = numlig
         self.line = line
     def __str__(self):
@@ -40,10 +59,11 @@ class UnknownPictureException(PyimgrenException):
     ref_file
 
     Attributes:
-        file   : name of the unknown image
-        renamer: the Renamer object that raised the current error
+        file    : name of the unknown image
+        ref_file: the reference file (names.txt) of the Renamer
+        folder  : the (output) folder of the Renamer
     """
-    def __init__(self, file, renamer):
+    def __init__(self, file: str, renamer: "Renamer"):
         self.file = file
         self.ref_file = renamer.ref_file
         self.folder = renamer.folder
@@ -56,9 +76,8 @@ class MergeSameDirException(PyimgrenException):
 
     Attributes:
         folder: name of the directory
-        ren: name of the Renamer folder
     """
-    def __init__(self, folder):
+    def __init__(self, folder: str):
         self.folder = folder
 
     def __str__(self):
@@ -69,34 +88,33 @@ class Renamer:
     """Main class of the module.
 
     A Renamer is used to rename image names provided by a camera
-    (commonly IMGxxxxx.JPG or DSCFyyyy.JPG into a name based on the time
+    (commonly IMGxxxxx.JPG or DSCFyyyy.JPG) into a name based on the time
     when the photography had been taken (as smartphones do). That time is
     extracted from the exif tag of the picture. No rename occurs if the
-    picture contains no exif time..
+    picture contains no exif time.
 
     Parameters:
         folder  : the folder where pictures will be renamed
-        src_mask: a pattern to select the files to be renamed (default
-                  "DSCF*.jpg")
         dst_mask: a format containing strftime formatting directives, that
                   will be used for the new name of a picture (default
                   "%Y%m%d_%H%M%S")
         ext_mask: the extension of the new name
         ref_file: the name of a file that will remember the old names
                   (default names.log)
-        delta:    a number of minutes to add to the time found in exif data.
-                  This is intended to cope with a camera having a wrong time
-        debug   : a boolean flag that will cause a line to be printed for
-                  each rename when true
-        dummy   : a boolean flag that will cause a "dry run", meaning that
-                  the folder will be scanned, and debug info eventually printed
-                  but no file will be renamed
 
 
     All parameters become attribute of the object with the same name
 
     Attributes:
-        log: an object respecting a logging.Logger interface. By default
+            delta:    a number of minutes to add to the time found in exif data.
+                      This is intended to cope with a camera having a wrong time
+                      (default 0)
+            debug   : a boolean flag that will cause a line to be printed for
+                      each rename when true (default false)
+            dummy   : a boolean flag that will cause a "dry run", meaning that
+                      the folder will be scanned, and debug info eventually printed
+                      but no file will be renamed (default false)
+        log: an object respecting a logging.Logger interface. By default,
             ``logging.getLogger("pyimgren")``
 
     A file named names.log is created in the folder to store the new names
@@ -105,105 +123,120 @@ class Renamer:
     Example::
 
         conv = Renamer(path)
-        conv.rename()   # to convert all files with selected pattern to
-                        #  "date" names
+        conv.rename(*files)   # to convert all files from the iterable files to
+                              #  "date" names
         conv.back()
 
     Note:
         This class requires piexif and Python >= 3.
     """
-    
-    def __init__(self, folder, src_mask = "DSCF*.JPG",
+
+    delta: int
+    debug: bool
+    dummy: bool
+
+    def __init__(self, folder,
                  dst_mask = "%Y%m%d_%H%M%S",
                  ext_mask = ".jpg",
                  ref_file = "names.log",
-                 delta = 0,
-                 debug = False,
-                 dummy = False):
-        self.folder, self.src_mask, self.dst_mask, self.ref_file = (
-            folder, src_mask, dst_mask, ref_file)
-        self.ext_mask, self.debug, self.dummy = ext_mask, debug, dummy
-        self.delta = delta
+                 ):
+        self.folder, self.dst_mask, self.ext_mask, self.ref_file = (
+            folder, dst_mask, ext_mask, ref_file)
         self.log = logging.getLogger("pyimgren")
         self.names = None
-        
-    def rename(self, *pictures):
-        """Rename pictures in folder (by default the pictures with the
-        src_mask pattern)
+        self._reset()
+
+    def rename(self, *pictures, delta:int = 0,
+               debug: bool=False, dummy:bool=False) -> None:
+        """Rename pictures in folder
 
         Parameters:
-            pictures: an iterable of paths. If a path is a folder, a new Renamer
-                is started in that folder with current parameters to rename all
-                files matching src_mask. If it is a file (that must be in the
-                Renamer folder), that file will be renamed regardless of
-                src_mask. If it contains wildcard characters (* and ?), all
-                files matching that pattern will berenamed.
+            pictures: an iterable of names of files to rename (they must be in the
+                Renamer folder). If a name contains
+                wildcard characters (* and ?), all
+                files matching that pattern will be renamed.
+            delta:    a number of minutes to add to the time found in exif data.
+                      This is intended to cope with a camera having a wrong time
+            debug   : a boolean flag that will cause a line to be printed for
+                      each rename when true
+            dummy   : a boolean flag that will cause a "dry run", meaning that
+                      the folder will be scanned, and debug info eventually printed
+                      but no file will be renamed
 
         Uses load_names to load the names.log file, and get_new_name to avoid
         collisions in file names.
 
         Raises:
             RuntimeErrorException:
-                if all files from a to zz already exist
+                if for a destination name, all files from a to zz already exist
         """
+        self.delta, self.debug, self.dummy = delta, debug, dummy
         names = self.load_names()
-        self._process(names, pictures, self.folder, _move, _subdir)
+        self._process(names, pictures, self.folder, _move)
         self._save_names()
+        self._reset()
 
-    def back(self, *pictures):
+    def back(self, *pictures, delta:int = 0,
+               debug: bool=False, dummy:bool=False) -> None:
         """Rename pictures back to their initial name in folder
         (by default all pictures known in ref file)
 
         Parameters:
-            pictures: an iterable of names. If one name exists in the local,
+            pictures: an iterable of names. If one name exists in the local
                 ref_file, that file will be renamed back. If it contains
                 wildcard characters (* and ?), all files matching that
                 pattern will be processed.
+            delta:    a number of minutes to add to the time found in exif data.
+                      This is intended to cope with a camera having a wrong time
+            debug   : a boolean flag that will cause a line to be printed for
+                      each rename when true
+            dummy   : a boolean flag that will cause a "dry run", meaning that
+                      the folder will be scanned, and debug info eventually printed
+                      but no file will be renamed
 
         Uses load_names to load the names.log file.
         """
+        self.delta, self.debug, self.dummy = delta, debug, dummy
         names = self.load_names()
         if len(pictures) == 0:
-            files = [os.path.join(self.folder, i) for i in names.keys()]
+            files = list(names.keys())
         else:
-            def genfiles():
-                for name in pictures:
-                    for file in glob.glob(os.path.join(self.folder, name)):
-                        yield file
-            files = genfiles()
+            files = genfiles(pictures, self.folder)
         for file in files:
-            if os.path.isdir(file):
-                sub = Renamer(file, self.src_mask,
-                              self.dst_mask,
-                              self.ext_mask,
-                              self.ref_file,
-                              self.debug,
-                              self.dummy)
-                sub.log = self.log
-                sub.back()
-            elif not os.path.exists(file) and file not in pictures:
+            try:
+                orig = names[os.path.normcase(file)]
+            except KeyError:
+                self.log.warning(UnknownPictureException(file,self))
                 continue
-            else:  # it is a file: must be in names
-                rel = os.path.relpath(file, self.folder)
+            if self.debug: self.log.debug("%s -> %s", file, orig)
+            if not self.dummy:
                 try:
-                    orig = names[os.path.normcase(rel)]
-                except KeyError as e:
-                    self.log.warning(UnknownPictureException(rel,self))
-                    continue
-                if self.debug: self.log.debug("%s -> %s", rel, orig)
-                if not self.dummy:
-                    os.rename(file, os.path.join(self.folder, orig))
-                    del self.names[rel]
+                    os.rename(os.path.join(self.folder, file),
+                              os.path.join(self.folder, orig))
+                    del self.names[file]
+                except OSError as e:
+                    self.log.warning(_("Could not rename {file} in {folder}",
+                                       ).format(file=file, folder = self.folder),
+                                     exc_info=e)
         self._save_names()
+        self._reset()
                     
-    def merge(self, src_folder, *files):
+    def merge(self, *files, src_folder: str, delta:int = 0,
+               debug: bool=False, dummy:bool=False) -> None:
         """Merge files from a different folder.
 
         Parameters:
+            *files: file names or patterns containing wildcard characters (* or?)
+                defining the files to be copied.
             src_folder: the name of the folder containing the files to merge.
                 It cannot contain wildcard characters.
-            *files: file names or patterns containing wilcard characters (* or?)
-                defining the files to be copied.
+            delta:    a number of minutes to add to the time found in exif data.
+                      This is intended to cope with a camera having a wrong time
+            debug   : a boolean flag that will cause a line to be printed for
+                      each rename when true
+            dummy   : a boolean flag that will cause a "dry run", meaning that
+                      the folder will be scanned, and debug info eventually printed
+                      but no file will be renamed
 
         The files are not moved but remain in their original folder. As usual,
         the copies receive a name based on their exif timestamp encoded by
@@ -216,13 +249,15 @@ class Renamer:
             RuntimeErrorException:
                 if all files from a to zz already exist
         """
+        self.delta, self.debug, self.dummy = delta, debug, dummy
         if os.path.samefile(self.folder, src_folder):
             raise MergeSameDirException(self.folder)
         names = self.load_names()
-        self._process(names, files, src_folder, _copy, _warndir)
+        self._process(names, files, src_folder, _copy)
         self._save_names()
+        self._reset()
 
-    def load_names(self):
+    def load_names(self) -> Mapping[str, str]:
         """Load new and original names from a names.log file.
 
         Returns:
@@ -268,7 +303,7 @@ class Renamer:
                         fd.write("{}:{}\n".format(os.path.normcase(name),
                                                   old))
 
-    def get_new_name(self, name):
+    def get_new_name(self, name: str) -> str:
         """Finds the final name of a picture if a file with that name
             already exists.
 
@@ -289,8 +324,9 @@ class Renamer:
         """
         return self.get_new_file_name(name + self.ext_mask)
 
-    def get_new_file_name(self, file):
-        old_names = [os.path.normcase(name) for name in self.names.values()]
+    def get_new_file_name(self, file: str) -> str:
+        old_names = set(os.path.normcase(name) for name in itertools.chain(
+            self.names.values(), self.names.keys()))
         name, ext = file.split('.') if '.' in file else (file, '')
         if ext != '':
             ext = '.' + ext
@@ -314,10 +350,9 @@ class Renamer:
                 file))
         return file
 
-    def _process(self, names, pictures, src_folder, file_action, dir_action):
+    def _process(self, names: Mapping[str, str], pictures: Iterable[str],
+                 src_folder: str, file_action):
         """Processing common to rename and merge."""
-        if len(pictures) == 0:
-            pictures = [self.src_mask]
         for pict in pictures:
             files = glob.glob(os.path.join(src_folder, pict))
             if len(files) == 0:
@@ -325,7 +360,7 @@ class Renamer:
             else:
                 for file in files:
                     if os.path.isdir(file):
-                        dir_action(self, file)
+                        self._warn_dir(file)
                     else:  # it is a file: must be in folder
                         rel = os.path.relpath(file, src_folder)
                         if rel.startswith(".."):
@@ -356,33 +391,25 @@ class Renamer:
                                             rel, self)
         return names
 
+    def _reset(self):
+        self.delta = 0
+        self.debug = self.dummy = False
 
-def _move(file, folder, new_name, rel, renamer):
+    def _warn_dir(self, file: str):
+        self.log.warning(_("Merge cannot process {}: is a directory"), file)
+
+
+
+def _move(file: str, folder: str, new_name: str, rel: str, renamer: Renamer):
     """Simply rename a file (full path) in a directory (folder)."""
     os.rename(file, os.path.join(folder, new_name))
     renamer.names[new_name] = rel
 
 
-def _subdir(ren, file):
-    """Start a copy of a Renamer in a new folder (file)."""
-    sub = Renamer(file, ren.src_mask,
-                  ren.dst_mask,
-                  ren.ext_mask,
-                  ren.ref_file,
-                  ren.debug,
-                  ren.dummy)
-    sub.log = ren.log
-    sub.rename()
-
-
-def _copy(file, folder, new_name, rel, renamer):
+def _copy(file: str, folder: str, new_name: str, rel: str, renamer: Renamer):
     shutil.copy(file, os.path.join(folder, new_name))
     if os.path.normcase(new_name) != os.path.normcase(rel):
         renamer.names[new_name] = renamer.get_new_file_name(rel)
-
-
-def _warndir(ren, file):
-    ren.log.warning(_("Merge cannot process {}: is a directory"), file)
 
 
 def exif_dat(file):
@@ -405,7 +432,6 @@ def exif_dat(file):
         exif = piexif.load(file)["Exif"]
     except ValueError:
         return None
-    dt = None
     for i in (0x9003, 0x9004, 0x132):
         dt = exif.get(i)
         if dt is not None: break
