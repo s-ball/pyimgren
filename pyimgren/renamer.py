@@ -134,6 +134,8 @@ class Renamer:
     delta: int
     debug: bool
     dummy: bool
+    _orig: set
+    _target: set
 
     def __init__(self, folder,
                  dst_mask = "%Y%m%d_%H%M%S",
@@ -172,7 +174,8 @@ class Renamer:
         """
         self.delta, self.debug, self.dummy = delta, debug, dummy
         names = self.load_names()
-        self._process(names, pictures, self.folder, _move)
+        pictures = self._rename_filter(pictures)
+        self._process(names, pictures, self.folder, self._move)
         self._save_names()
         self._reset()
 
@@ -221,7 +224,7 @@ class Renamer:
         self._save_names()
         self._reset()
                     
-    def merge(self, *files, src_folder: str, delta:int = 0,
+    def merge(self, *files, src_folder:str= '.', delta:int = 0,
                debug: bool=False, dummy:bool=False) -> None:
         """Merge files from a different folder.
 
@@ -238,11 +241,14 @@ class Renamer:
                       the folder will be scanned, and debug info eventually printed
                       but no file will be renamed
 
+        If src_folder is given it is used as a start path component for all
+        relative paths in files.
+
         The files are not moved but remain in their original folder. As usual,
         the copies receive a name based on their exif timestamp encoded by
         strftime using dst_mask and dst_ext.
 
-        If a name matches the directory, the directory is ignored and a warning
+        If a name matches a directory, the directory is ignored and a warning
         is issued.
         
         Raises:
@@ -250,10 +256,9 @@ class Renamer:
                 if all files from a to zz already exist
         """
         self.delta, self.debug, self.dummy = delta, debug, dummy
-        if os.path.samefile(self.folder, src_folder):
-            raise MergeSameDirException(self.folder)
+        files = self._merge_filter(src_folder, files)
         names = self.load_names()
-        self._process(names, files, src_folder, _copy)
+        self._process(names, files, src_folder, self._copy)
         self._save_names()
         self._reset()
 
@@ -289,6 +294,8 @@ class Renamer:
             raise NamesLogException(numlig,line).with_traceback(
                 sys.exc_info()[2]) from e
         self.names = names
+        self._target = set(self.names.keys())
+        self._orig = set(self.names.values())
         return names
 
     def _save_names(self):
@@ -302,6 +309,8 @@ class Renamer:
                     for name, old in self.names.items():
                         fd.write("{}:{}\n".format(os.path.normcase(name),
                                                   old))
+            self._target = set(self.names.keys())
+            self._orig = set(self.names.values())
 
     def get_new_name(self, name: str) -> str:
         """Finds the final name of a picture if a file with that name
@@ -362,16 +371,7 @@ class Renamer:
                     if os.path.isdir(file):
                         self._warn_dir(file)
                     else:  # it is a file: must be in folder
-                        rel = os.path.relpath(file, src_folder)
-                        if rel.startswith(".."):
-                            self.log.warning(_("%s is not in %s"), file,
-                                           src_folder)
-                            continue
-                        if os.path.dirname(rel) != "":
-                            self.log.warning(_("%s is not directly in %s"),
-                                           file, src_folder)
-                            continue
-                            
+                        rel = os.path.basename(file)
                         dat = exif_dat(file)
                         if dat is not None:
                             dat += datetime.timedelta(minutes=self.delta)
@@ -380,15 +380,14 @@ class Renamer:
                             # its original name
                             if (os.path.normcase(new_name + self.ext_mask)
                                     == os.path.normcase(rel)) and (
-                                    file_action is _move):
+                                    file_action == self._move):
                                 continue
                             new_name = self.get_new_name(
                                 dat.strftime(self.dst_mask))
                             if self.debug:
                                 self.log.debug("%s -> %s", rel, new_name)
                             if not self.dummy:
-                                file_action(file, self.folder, new_name,
-                                            rel, self)
+                                file_action(file, self.folder, new_name, rel)
         return names
 
     def _reset(self):
@@ -396,20 +395,44 @@ class Renamer:
         self.debug = self.dummy = False
 
     def _warn_dir(self, file: str):
-        self.log.warning(_("Merge cannot process {}: is a directory"), file)
+        self.log.warning(_("Merge cannot process %s: is a directory"), file)
 
 
+    def _move(self, file: str, folder: str, new_name: str, rel: str):
+        """Simply rename a file (full path) in a directory (folder)."""
+        os.rename(file, os.path.join(folder, new_name))
+        new_rel = os.path.normcase(rel)
+        if new_rel in self._target:
+            new_rel = self.names[rel]
+            del self.names[rel]
+            rel = new_rel
+        elif new_rel in self._orig:
+            rel = self.get_new_file_name(rel)
+        self.names[new_name] = rel
 
-def _move(file: str, folder: str, new_name: str, rel: str, renamer: Renamer):
-    """Simply rename a file (full path) in a directory (folder)."""
-    os.rename(file, os.path.join(folder, new_name))
-    renamer.names[new_name] = rel
+    def _copy(self, file: str, folder: str, new_name: str, rel: str):
+        shutil.copy(file, os.path.join(folder, new_name))
+        if os.path.normcase(new_name) != os.path.normcase(rel):
+            self.names[new_name] = self.get_new_file_name(rel)
 
+    def _merge_filter(self, src_folder, files: Iterable[str]) -> Iterable[str]:
+        def test_path(file, folder):
+            if os.path.dirname(os.path.normpath(os.path.abspath(file))) == folder:
+                self.log.warning(_('%(file)s in target folder'), {'file': file})
+                return False
+            return True
+        return [file for file in (os.path.join(src_folder, file) for file in files)
+                if test_path(file, os.path.normpath(os.path.abspath(self.folder)))]
 
-def _copy(file: str, folder: str, new_name: str, rel: str, renamer: Renamer):
-    shutil.copy(file, os.path.join(folder, new_name))
-    if os.path.normcase(new_name) != os.path.normcase(rel):
-        renamer.names[new_name] = renamer.get_new_file_name(rel)
+    def _rename_filter(self, pictures: Iterable[str]) -> Iterable[str]:
+        def test_path(file):
+            if (os.path.dirname(file) != '' and
+                    os.path.relpath(file, self.folder) != os.path.basename(file)):
+                self.log.warning('%(file)s not in target folder',
+                                 {'file': file})
+                return False
+            return True
+        return [file for file in pictures if test_path(file)]
 
 
 def exif_dat(file):

@@ -1,8 +1,13 @@
-from pyfakefs.fake_filesystem_unittest import TestCase
+#  SPDX-FileCopyrightText: 2025-present s-ball <s-ball@laposte.net>
+#  #
+#  SPDX-License-Identifier: MIT
+
 import os.path
 import shutil
-
 import sys
+
+from pyfakefs.fake_filesystem_unittest import TestCase
+
 parent = os.path.dirname(os.path.dirname(__file__))
 if parent not in sys.path:
     sys.path.append(parent)
@@ -46,33 +51,6 @@ the file is actually back"""
         self.ren.back()
         self.assertTrue(os.path.exists("/test/foo"))
 
-    def test_dir_rename(self):
-        """Call rename on a subdir and controls that:
-   * the main folder was not touched
-   * the rename occurred in the sub folder"""
-        self.fs.create_dir("/test/sub")
-        shutil.copyfile("/orig/DSCF9762.JPG", "/test/DSCF9762.JPG")
-        shutil.copyfile("/orig/DSCF9762.JPG", "/test/sub/DSCF9762.JPG")
-        self.ren.rename("sub")
-        self.assertTrue(os.path.exists("/test/DSCF9762.JPG"))
-        self.assertFalse(os.path.exists("/test/sub/DSCF9762.JPG"))
-        self.assertTrue(os.path.exists("/test/sub/names.log"))
-        self.assertFalse(os.path.exists("/test/names.log"))
-
-    def test_dir_back(self):
-        """Call rename then back on a subfolder and controls that the image
-file is back in the sub folder"""
-        self.fs.create_dir("/test/sub")
-        shutil.copyfile("/orig/DSCF9762.JPG", "/test/DSCF9762.JPG")
-        shutil.copyfile("/orig/DSCF9762.JPG", "/test/sub/DSCF9762.JPG")
-        self.ren.rename("sub")
-        self.assertTrue(os.path.exists("/test/sub/names.log"))
-        self.ren.back("sub")
-        self.assertTrue(os.path.exists("/test/DSCF9762.JPG"))
-        self.assertTrue(os.path.exists("/test/sub/DSCF9762.JPG"))
-        self.assertFalse(os.path.exists("/test/sub/names.log"))
-        self.assertFalse(os.path.exists("/test/names.log"))
-
     def test_common_timestamp(self):
         """Rename many files having same timestamp and control the names they
 receive"""
@@ -103,15 +81,16 @@ class MergeTest(TestCase):
         """Merge a single file by giving its name and control that:
             * the original file not been touched
             * no names.log was created
-            * a new file exists in /test
+            * a new file exists in /test along with a names.log
         """
         shutil.copyfile("/orig/DSCF9762.JPG", "/src/foo")
-        self.ren.merge("/src", "foo")
+        self.ren.merge("foo", src_folder="/src")
         self.assertTrue(os.path.exists("/src/foo"))
         self.assertTrue(os.path.exists("/test/names.log"))
         new, old = next(iter(self.ren.names.items()))
         self.assertEqual('foo', old)
         self.assertTrue(os.path.exists(os.path.join('/test', new)))
+        self.assertTrue(os.path.exists(os.path.join('/test', 'names.log')))
         files = os.listdir("/test")
         self.assertEqual(2, len(files))
 
@@ -122,7 +101,7 @@ class MergeTest(TestCase):
         """
         shutil.copyfile("/orig/DSCF9762.JPG", "/src/foo")
         shutil.copyfile("/orig/DSCF9762.JPG", "/src/bar")
-        self.ren.merge("/src", "foo", "bar")
+        self.ren.merge("foo", "bar", src_folder="/src")
         files = sorted(os.listdir("/test"))
         self.assertEqual(3, len(files))
         self.assertEqual(files[1][:-4], files[0][:-4] + "a")
@@ -133,8 +112,7 @@ class TestMultiRenames(TestCase):
     Test renaming of files already present in the ref file.
 
     When a file has already an original name, and a different delta is used,
-    a new line should be added to the ref file. That way if it is renamed
-    multiple times each back operation will pop the previous name.
+    the new name replaces the previous one to point to the original name.
     """
     def setUp(self):
         self.setUpPyfakefs()
@@ -153,34 +131,27 @@ class TestMultiRenames(TestCase):
         self.assertEqual('DSCF9762.JPG', old)
 
     def test_double(self):
-        ren = Renamer('/test', delta=2)
-        ren.rename(self.new_name)
-        self.assertEqual(2, len(ren.names))
-        self.assertTrue(self.new_name in ren.names.values())
+        ren = Renamer('/test')
+        ren.rename(self.new_name, delta=2)
+        self.assertEqual(1, len(ren.names))
+        self.assertFalse(self.new_name in ren.names.keys())
         self.assertTrue('DSCF9762.JPG' in ren.names.values())
 
     def test_back(self):
-        ren = Renamer('/test', delta=2)
-        ren.rename(self.new_name)
-        ren.back()
-        self.assertTrue(os.path.exists(os.path.join('/test', self.new_name)))
+        ren = Renamer('/test')
+        ren.rename(self.new_name, delta=2)
         ren.back()
         self.assertTrue(os.path.exists('/test/DSCF9762.JPG'))
         self.ren.names = None
         self.ren.load_names()
         self.assertEqual(0, len(self.ren.names))
 
-    def test_delta_0(self):
-        ren = Renamer('/test', delta=2)
-        ren.rename(self.new_name)
+    def test_delta_2(self):
         ren = Renamer('/test')
-        ren.rename('*.jpg')
-        self.assertEqual(3, len(ren.names))
-        self.assertTrue(os.path.exists(
-            os.path.join('/test', self.new_name.replace('.', 'a.'))))
-        ren = Renamer('/test')
-        ren.back()
-        ren.back()
+        ren.rename('*.jpg', delta = 2)
+        self.assertEqual(1, len(ren.names))
+        self.assertFalse(os.path.exists(
+            os.path.join('/test', self.new_name)))
         ren.back()
         self.assertEqual(0, len(ren.names))
         self.assertTrue(os.path.exists('/test/DSCF9762.JPG'))
@@ -200,7 +171,7 @@ class TestMergeOrig(TestCase):
         self.new_name = next(iter(self.ren.names.keys()))
 
     def test_file_is_orig(self):
-        self.ren.merge('/test2')
+        self.ren.merge('/test2/*')
         self.assertEqual(2, len(self.ren.names))
         self.assertEqual('DSCF9762.JPG', self.ren.names[self.new_name])
 
@@ -214,7 +185,7 @@ class TestSameName(TestCase):
         self.fs.create_dir('/test2')
         shutil.copyfile('/orig/DSCF9762.JPG', '/test2/DSCF9762.JPG')
         ren = Renamer('/test2')
-        ren.rename()
+        ren.rename('*.jpg')
         for file in os.listdir('/test2'):
             if file != 'names.log':
                 self.new_name = file
@@ -229,7 +200,7 @@ class TestSameName(TestCase):
 
     def test_merge(self):
         ren = Renamer('/test')
-        ren.merge('/test2', self.new_name)
+        ren.merge(os.path.join('/test2', self.new_name))
         self.assertTrue(os.path.exists(os.path.join('/test', self.new_name)))
         self.assertEqual(0, len(ren.names))
 
