@@ -94,7 +94,7 @@ exclude_lines = [
 ]
 
 [project.scripts]
-cli-name = "pyimgren.__main__:main"
+pyimgren = "pyimgren.cmdline:simple_cmd"
 
 [[tool.hatch.envs.hatch-test.matrix]]
 python = ["3.13", "3.12", "3.11", "3.10", "3.9"]

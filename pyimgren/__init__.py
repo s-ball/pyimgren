@@ -5,7 +5,7 @@ from .renamer import Renamer
 from .version import version as __version__
 
 
-__all__ = ["Renamer"]
+__all__ = ["Renamer", "nls_init"]
 
 import gettext
 import locale

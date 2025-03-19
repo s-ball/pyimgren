@@ -20,7 +20,7 @@ def nls_init():
     ext_init()
     localedir = os.path.join(os.path.dirname(__file__), "locale")
     lang = locale.getlocale()[0]
-    tr = gettext.translation("main", localedir, [lang], fallback=True)
+    tr = gettext.translation("cmdline", localedir, [lang], fallback=True)
     _ = tr.gettext
 
 def set_parser():

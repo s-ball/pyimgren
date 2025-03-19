@@ -1,14 +1,14 @@
 # French translations for pyimgren.
-# Copyright (C) 2018,2019 s-ball
+# Copyright (C) 2018-2025 s-ball
 # This file is distributed under the same license as the pyimgren project.
-# S. Ballesta <s-ball@laposte.net>, 2018,2019.
-# 
+# S. Ballesta <s-ball@laposte.net>, 2018-2025.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: pyimgren 0.6.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-21 09:18+0200\n"
-"PO-Revision-Date: 2019-04-21 09:33+0100\n"
+"Report-Msgid-Bugs-To: s-ball@laposte.net\n"
+"POT-Creation-Date: 2025-03-19 22:58+0100\n"
+"PO-Revision-Date: 2025-03-19 23:06+0100\n"
 "Last-Translator: s-ball <s-ball@laposte.net>\n"
 "Language-Team: fr <LL@li.org>\n"
 "Language: fr\n"
@@ -18,32 +18,31 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "Generated-By: Babel 2.6.0\n"
 
-#: pyimgren.py:34
+#: renamer.py:53
 msgid "Error in name log file line {}: >{}<"
 msgstr "Erreur dans le fichier name log ligne {} : >{}<"
 
-#: pyimgren.py:65
+#: renamer.py:84
 msgid "Cannot merge {} into itself"
 msgstr "Impossible de fusionner {} avec lui-même"
 
-#: pyimgren.py:283
+#: renamer.py:221
+#, python-brace-format
+msgid "Could not rename {file} in {folder}"
+msgstr "Impossible de renommer {file} dans {folder}"
+
+#: renamer.py:358
 msgid "Too many files for {}"
 msgstr "Trop de fichiers pour {}"
 
-#: pyimgren.py:294
+#: renamer.py:368
 msgid "{} not found"
 msgstr "{} non trouvé"
 
-#: pyimgren.py:302
-#, python-format
-msgid "%s is not in %s"
-msgstr "%s n'est pas dans %s"
+#: renamer.py:398
+msgid "Merge cannot process %s: is a directory"
+msgstr "merge ne peut traiter %s : c'est un répertoire"
 
-#: pyimgren.py:306
-#, python-format
-msgid "%s is not directly in %s"
-msgstr "%s n'est pas directement dans %s"
-
-#: pyimgren.py:341
-msgid "Merge cannot process {}: is a directory"
-msgstr "merge ne peut traiter {} : c'est un répertoire"
+#: renamer.py:421
+msgid "%(file)s in target folder"
+msgstr "%(file)s dans le dossier cible"

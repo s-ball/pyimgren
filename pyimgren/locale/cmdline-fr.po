@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pyimgren 0.6.0.dev1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-21 09:18+0200\n"
-"PO-Revision-Date: 2019-04-21 09:30:00+0100\n"
+"Report-Msgid-Bugs-To: s-ball@laposte.net\n"
+"POT-Creation-Date: 2025-03-19 19:38+0100\n"
+"PO-Revision-Date: 2025-03-19 19:51:00+0100\n"
 "Last-Translator: s-ball@laposte.net\n"
 "Language-Team: fr <LL@li.org>\n"
 "Language: fr\n"
@@ -16,70 +16,66 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "Generated-By: Babel 2.6.0\n"
 
-#: __main__.py:26
+#: cmdline.py:29
 msgid "Rename pictures according to their exif timestamp"
 msgstr "Renomme des images en fonction de leur date exif"
 
-#: __main__.py:29
+#: cmdline.py:32
 msgid "show program's version number and exit"
 msgstr "affiche le numéro de version du programme et termine l'exécution"
 
-#: __main__.py:31
+#: cmdline.py:34
 msgid "folder containing files to rename"
 msgstr "dossier contenant les fichiers à renommer"
 
-#: __main__.py:33
-msgid "pattern to select the files to rename"
-msgstr "modèle des fichiers à renommer"
-
-#: __main__.py:35
+#: cmdline.py:36
 msgid "format for the new file name"
 msgstr "format des nouveaux noms des fichiers"
 
-#: __main__.py:37
+#: cmdline.py:38
 msgid "extension for the new file name"
 msgstr "extension des nouveaux noms des fichiers"
 
-#: __main__.py:39
+#: cmdline.py:40
 msgid "a file to remember the old names"
 msgstr "un fichier pour enregistrer les anciens noms"
 
-#: __main__.py:41
+#: cmdline.py:42
 msgid "number of minutes to add to exif time"
 msgstr "nombre de minutes à ajouter à l'heure du champ exif"
 
-#: __main__.py:43
+#: cmdline.py:44
 msgid "print a line per rename"
 msgstr "affiche une ligne par fichier renommé"
 
-#: __main__.py:45
+#: cmdline.py:46
 msgid "process normally except no rename occurs"
 msgstr "fonctionne normallement mais ne renomme aucun fichier"
 
-#: __main__.py:48
+#: cmdline.py:49
 msgid "sub-commands"
 msgstr "sous-commandes"
 
-#: __main__.py:50
+#: cmdline.py:51
 msgid "rename files by using their exif timestamp"
 msgstr "renomme des fichiers en fonction de leur date exif"
 
-#: __main__.py:52 __main__.py:62
-msgid "files to process (default: src_mask)"
-msgstr "fichiers à traiter (par défaut : src_mask)"
+#: cmdline.py:53 cmdline.py:61
+msgid "files to process"
+msgstr "fichiers à traiter"
 
-#: __main__.py:54
+#: cmdline.py:55
 msgid "rename files back to their original name"
 msgstr "renomme les fichiers avec leur nom d'origine"
 
-#: __main__.py:56
+#: cmdline.py:57
 msgid "files to process (default: content of ref_file)"
 msgstr "fichier à traiter (par défaut le contenu de ref_file)"
 
-#: __main__.py:58
+#: cmdline.py:59
 msgid "merge files from a different folder"
 msgstr "fusionne des fichiers provenant d'un autre dossier"
 
-#: __main__.py:60
-msgid "folder from where merge picture files"
-msgstr "dossier à partir d'où fusionner les fichiers image"
+#: cmdline.py:63
+msgid "source folder for merging from"
+msgstr "dossier source des fichiers à fusionner"
