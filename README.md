@@ -6,12 +6,11 @@ A python module to rename images according to their exif tags.
 
 ## Current status
 
-**BEWARE**: the upcoming 1.0.0 version will be a major rewrite. Until it is
-released, commits on GitHub will be  inconsistent with this README page
-and the documentation. Some could even crash or destroy data. *DO NOT USE THEM*.
+The current 1.0.0 version is still in beta. It has a correct test coverage, but
+the documentation has not been fully updated, and it still lacks *real world*
+tests.
 
-This package  is distributed in PyPI since version 0.1.0. It can be used by end users,
-but should be considered at beta quality because it still lacks extensive testing.
+This package  is distributed in PyPI since version 0.1.0.
 Its full source is available from [GitHub](https://github.com/s-ball/pyimgren).
 
 ## Goals
@@ -24,22 +23,28 @@ Even if we can find here and there programs that allow for batch renaming of
 such pictures, I could not find a portable Python module for that. So the
 goals of this project are:
 
-* few dependencies: a Python 3 (tested for >= 3.3)
+* few dependencies: a Python 3 (tested for >= 3.9)
 * few additional module requirements: only [piexif](https://github.com/hMatoba/Piexif) and [i18nparse](https://github.com/s-ball/i18nparse)
-are required at installation time
+are required at installation time; [hatch-msgfmt-s-ball](https://github.com/s-ball/hatch-msgfmt-s-ball)
+is also required to build a wheel (compiles PO files to MO format)
 * portability: this is a pure Python package and is tested with Appveyor
 for versions 3.9 to 3.12.
 
 ## Localization
 The package supports gettext type localization, and provides a French translation.
 
+## Documentation
+A more complete documentation (including a French translation) is available on
+[ReadTheDocs](https://pyimgren.readthedocs.io/)
+
 ## Usage:
 
 #### As a Python module
 
-The pyimgren package contains one single class `Renamer` with two public
+The pyimgren package contains one single class `Renamer` with three public
 methods: `rename` to rename picture files according to their exif date,
-and `back` to rename them back to their original names.
+`back` to rename them back to their original names, and `merge` to copy images
+from another folder again with a name computed from their exif date.
 
 A Renamer is used to rename image names provided by a camera
 (commonly IMGxxxxx.JPG or DSCFyyyy.JPG) into a name based on the time
@@ -55,11 +60,10 @@ and the original ones, in order to be able to rename them back.
 You create a Renamer with: 
 
  ```
-renamer = Renamer(folder, src_mask = "DSCF*.jpg",
+renamer = Renamer(folder,
                  dst_mask = "%Y%m%d_%H%M%S",
                  ext_mask = ".jpg",
                  ref_file = "names.log",
-                 delta = 0.0,
                  debug = False,
                  dummy = False)
 ```
@@ -67,16 +71,12 @@ renamer = Renamer(folder, src_mask = "DSCF*.jpg",
 Parameters:
 
 * folder: the default folder where pictures will be renamed
-* src_mask: a pattern to select the files to be renamed (default
-          "DSCF*.jpg")
 * dst_mask: a format containing strftime formatting directives, that
           will be used for the new name of a picture (default
           "%Y%m%d_%H%M%S")
 * ext_mask: the extension of the new name (default ".jpg")
 * ref_file: the name of a file that will remember the old names
           (default "names.log")
-* delta:  a (floating point) number of minutes to add to the exif
-          tag time (default 0.0)
 * debug   : a boolean flag that will cause a line to be printed for
           each rename when true (default False)
 * dummy   : a boolean flag that will cause a "dry run", meaning that
@@ -89,9 +89,9 @@ Typical use:
 from pyimgren import Renamer
 ...
 conv = Renamer(path)
-conv.rename()    # to convert to "date" names
+conv.rename('IMG*.jpg')    # to convert to "date" names
 ...
-conv.back()      # if you want to revert to original names
+conv.back()                # if you want to revert to original names
 ```
 
 #### As a script
@@ -101,9 +101,9 @@ in the Scripts directory. It can then be directly used (provided the Script
 directory is in the path) with the following syntax:
 
 ```
-usage: pyimgren [-h] [-v] [--folder FOLDER] [-s SRC_MASK] [-d DST_MASK]
-                [-e EXT_MASK] [-r REF_FILE] [-x delta] [-D] [-X]
-                {rename,back,merge} ...
+usage: pyimgren [-h] [-v] [--folder FOLDER] [-d DST_MASK]
+                [-e EXT_MASK] [-r REF_FILE] [-D] [-X]
+                {rename,back,merge} [-x delta] files [files...]
 
 Rename pictures according to their exif timestamp
 
@@ -112,22 +112,19 @@ positional arguments:
     rename              rename files by using their exif timestamp
     back                rename files back to their original name
     merge               merge files from a different folder
+  files                 paths of the files, may contain wildchars (? and *)
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -v, --version         show program's version number and exit
   --folder FOLDER, -f FOLDER
                         folder containing files to rename
-  -s SRC_MASK, --src_mask SRC_MASK
-                        pattern to select the files to rename
   -d DST_MASK, --dst_mask DST_MASK
                         format for the new file name
   -e EXT_MASK, --ext EXT_MASK
                         extension for the new file name
   -r REF_FILE, --ref_file REF_FILE
                         a file to remember the old names
-  -x delta, --delta delta
-                        minutes to add to the exif tag time
   -D, --debug           print a line per rename
   -X, --dry_run         process normally except no rename occurs
 ```
@@ -135,49 +132,31 @@ optional arguments:
 The sub commands have the following syntax:
 
 ```
-usage: pyimgren [global_options ...] {back|rename} [-h] [files [files ...]]
+usage: pyimgren [global_options ...] {back|rename}
+            [-h] [-x delta] [-D] [-X] files [files ...]
 
 positional arguments:
   files       files to process (default: content of ref_file)
 
-optional arguments:
+options:
   -h, --help  show this help message and exit
+  -x delta, --delta delta
+                        minutes to add to the exif tag time
+  -D, --debug           print a line per rename
+  -X, --dry_run         process normally except no rename occurs
 ```
 
 and
 
 ```
-usage: pyimgren [global_options ...] merge [-h] folder [files [files ...]]
+usage: pyimgren [global_options ...] merge [-h] -s folder files [files ...]
 
 positional arguments:
-  folder      folder from where merge picture files
   files       files to process (default: src_mask)
 
-optional arguments:
-  -h, --help  show this help message and exit
-
-usage: pyimgren [-h] [-v] [-b] [-s SRC_MASK] [-d DST_MASK] [-e EXT_MASK]
-                [-r REF_FILE] [-x delta] [-D] [-X]
-                folder [files [files ...]]
-
-Rename pictures according to their exif timestamp
-
-positional arguments:
-  folder                folder containing files to rename
-  files                 files of sub folders to process (optional)
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -v, --version         show program's version number and exit
-  -b, --back            restore original names
-  -s SRC_MASK, --src_mask SRC_MASK
-                        pattern to select the files to rename
-  -d DST_MASK, --dst_mask DST_MASK
-                        format for the new file name
-  -e EXT_MASK, --ext EXT_MASK
-                        extension for the new file name
-  -r REF_FILE, --ref_file REF_FILE
-                        a file to remember the old names
+options:
+  -h, --help           show this help message and exit
+  -s folder            folder from where merge picture files
   -x delta, --delta delta
                         minutes to add to the exif tag time
   -D, --debug           print a line per rename
@@ -191,9 +170,7 @@ if the Scripts directory is not in the path thanks to the `py` launcher
 with same syntax as the script:
 
 ```
-usage: python -m pyimgren [-h] [-v] [--folder FOLDER] [-s SRC_MASK] [-d DST_MASK]
-                [-e EXT_MASK] [-r REF_FILE] [-x delta] [-D] [-X]
-                {rename,back,merge} ...
+usage: python -m pyimgren same_arguments...
 
 ```
 
@@ -229,8 +206,10 @@ hatch test
 ```
 
 The integration tests depend on [pyfakefs](http://pyfakefs.org), which is automatically
-installed from PyPI when you run `hatch test`. But it is not required for
-running `pyimgren`, nor installed by `pip install pyimgren`.
+installed from PyPI when you run `hatch test`. But as it is not required for
+running `pyimgren`, nor installed by `pip install pyimgren`, you should
+use `pip install .[test]` from the cloned directory to safely use `pytest test`
+of `python -m unittest`
 
 ## Contributing
 
