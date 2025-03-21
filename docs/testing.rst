@@ -1,16 +1,22 @@
 Testing pyimgren
 ================
 
-The pyimgren package comes with a tests directory that tries to keep the code coverage above 90%.
+The pyimgren package comes with a tests directory that tries to keep the code
+coverage above 90%.
 
-To use it, you must first clone the repository, then checkout the most relevant version. For example if you want to work with the 0.3.0 release, you could use::
+To use it, you must first clone the repository, then checkout the most
+relevant version. For example if you want to work with the 1.0.0 release,
+you could use::
 
     git clone https://github.com/s-ball/pyimgren.git pyimgren
     cd pyimgren
-    git checkout 0.3.0
+    git checkout 1.0.0
 
-Then you should run the tests (preferently in a virtual environment) to control that all works fine in your environment::
+Then you should run the tests (preferentially in a virtual environment) to
+control that all works fine in your environment::
 
-    python setup.py test
+    pip install .[test]       # or pip install -e .[test] for a dev. install
+    python -m unittest
 
-The first time you use it, it may fetch `pyfakefs` from PyPI because it is required for integration tests.
+The first time you use it, it may fetch `pyfakefs` from PyPI because it is
+required for integration tests.

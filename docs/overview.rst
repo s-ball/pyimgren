@@ -25,7 +25,7 @@ shell.
 Features
 --------
 
-The central class of the package is :class:`~pyimgren.pyimgren.Renamer`. It
+The central class of the package is :class:`~pyimgren.renamer.Renamer`. It
 normally acts on a single folder passed at initialization time. It should be
 given a ``strftime`` format string and an extension (starting with a dot like
 ``.jpg``). It can then:
@@ -40,7 +40,7 @@ given a ``strftime`` format string and an extension (starting with a dot like
   ``"20160910a.jpeg"``. Optionally, you can pass a delta in minutes to add to
   the time extracted for the exif tag.
 
-* rename back files from the folder to their original names. For that
+* rename back files from the folder to their original names. For that,
   ``rename`` creates a special file in the folder (by default ``names.log``) to
   record the new and original names. Optionally it can operate on a limited set
   of the renamed pictures.
@@ -53,11 +53,11 @@ Dependencies
 
 This package has few requirements:
 
-* a Python >= 3 (only tested with >= 3.3)
-* the piexif_ package available from Pypi and automatically installed in a
+* a Python >= 3 (only tested with >= 3.9)
+* the piexif_ package available from PyPI and automatically installed in a
   `pip` installation.
 * the i18nparse_ package available from PyPI, and automatically installed
-  too (since 0.6)
+  too.
 
 Internationalization
 --------------------
@@ -68,6 +68,8 @@ Limits
 ------
 
 The upcoming 1.0 version breaks a lot of compatibility with previous ones.
+
+The documentations (both English and French) are still a work in progress...
 
 .. _piexif:  https://github.com/hMatoba/Piexif
 .. _i18nparse: https://github.com/s-ball/i18nparse

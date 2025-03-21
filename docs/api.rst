@@ -1,12 +1,12 @@
 API reference
 =============
 
-:mod:`pyimgren` module
+:mod:`pyimger` module
 ----------------------
 
 .. module:: pyimgren
 
-This module imports :py:class:`pyimgren.pyimgren.Renamer` . It also defines the following constants:
+This module imports :py:class:`pyimgren.renamer.Renamer` . It also defines the following constants:
 
 .. data:: __name__
 
@@ -16,9 +16,9 @@ This module imports :py:class:`pyimgren.pyimgren.Renamer` . It also defines the 
 
         the actual version of the package (|release|)
 
-:mod:`pyimgren.pymgren` module
+:mod:`pyimgren.renamer` module
 ------------------------------
 
-.. automodule:: pyimgren.pyimgren
+.. automodule:: pyimgren.renamer
     :members:
     :show-inheritance:

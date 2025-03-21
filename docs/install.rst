@@ -10,26 +10,48 @@ If you have it in your path, you can simply use::
 
     pip install pyimgren
 
-It will take care of any required dependencies and will install the latest version of pyimgren. It will also install a :program:`pyimgren` command that will be directly callable from a shell (:ref:`ref <cmd_line>`).
+It will take care of any required dependencies and will install the latest
+version of pyimgren.
+It will also install a :program:`pyimgren` command that will be directly
+callable from a shell (:ref:`ref <cmd_line>`).
 
-If it is not in your path, it is likely that you have to use the :program:`py` launcher. In that case you use :program:`pip` as::
+If ``pip`` is not in your path (common on Windows), you are likely to have
+to use the :program:`py`
+launcher. In that case you use :program:`pip` as::
 
     py -m pip install pyimgren
 
-The installation is exactly the same as it is when launching directly :program:`pip`. But you will have to still use the :program:`py` launcher to call pyimgren from a command line :ref:`ref <py_launch>`.
+The installation is exactly the same as it is when launching directly
+:program:`pip`. But you will have to still use the :program:`py` launcher to
+call pyimgren from a command line :ref:`ref <py_launch>`.
 
-Developper installation
+Developer installation
 -----------------------
 
-The source is of course available on `PyPI <https://pypi.org/project/pyimgren/#files>`_. But the tests directory is only available on GitHUB.
+The source is of course available in the source package from
+`PyPI <https://pypi.org/project/pyimgren/#files>`_.
 
-Here again, you can download the full source for the relevant version, but the recommended way is to use Git to clone the repository. It will give you all the versions in one single operation, as well as a nice environment if you want  to later send a pull request.
+Alternatively, you can download the full source for the relevant version
+as a :file:`.zip` file from GitHub, but the
+recommended way is to use Git to clone the repository. It will give you all
+the versions in one single operation, as well as a nice environment if you
+want  to later send a pull request.
 
 So simply do::
 
     git clone https://github.com/s-ball/pyimgren.git pyimgren
 
-Beware: integration tests require `pyfakefs <https://pypi.org/project/pyfakefs>`_. See :doc:`testing` for more.
+In any case, you should then install the package in development mode and
+ask for the ``test`` extra dependencies::
+
+    pip install -e .[test]
+
+That way you will automatically get the ``pyfakefs`` package which is required
+for the integration tests.
 
 .. note::
-  The various untagged commits in the Git hierarchy are not guaranteed to be directly useable. At some points, some tests can fail and unexpected errors can occur. Use the master branch when you want to contribute. In any other cases, stick to a release, or be sure to pass all tests and be prepared to look into the source code if something goes wrong.
+  The various untagged commits in the Git hierarchy are not guaranteed to be
+directly usable. At some points, some tests can fail and unexpected errors can
+occur. Use the master branch when you want to contribute. In any other cases,
+stick to a release, or be sure to pass all tests and be prepared to look into
+the source code if something goes wrong.
