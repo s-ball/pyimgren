@@ -15,6 +15,9 @@ call the ``nls_init`` function::
     ...
     pyimgren.nls_init()          # enable i18n on the pyimgren package
 
+If the ``LANG`` environment variable is present, it is used to define the
+locale that will be used by ``pyimgren``. Else the default locale is used.
+
 Localisation of the code
 ------------------------
 
