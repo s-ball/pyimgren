@@ -5,10 +5,13 @@
 
 import collections
 import datetime
+import gettext
 import glob
 import io
 import itertools
+import locale
 import logging
+import os.path
 import os.path
 import os.path
 import shutil
@@ -34,6 +37,38 @@ except TypeError:
             for n in glob.glob(os.path.join(folder, name)):
                 yield os.path.basename(n)
 
+
+def nls_init(reset: bool=False) -> str:
+    """ Initialize the package for i18n
+
+    Parameters:
+        reset: Indicates whether i18n should be setup (if True)
+               or removed (if False)
+
+    Returns: the name of the locale currently used by the package
+    """
+    global _
+
+    if reset:
+        _ = lambda x: x
+        loc = None
+    else:
+        if "LANG" in os.environ:
+            loc = os.environ["LANG"]
+        else:
+            loc = locale.getlocale()[0]
+            if loc is None:
+                try:
+                    loc = locale.setlocale(locale.LC_ALL, '')[0]
+                except locale.Error:
+                    loc = None
+
+        _ = gettext.translation("pyimgren",
+                                         os.path.join(os.path.dirname(__file__),
+                                                      "locale"),
+                                         loc,
+                                         fallback=True).gettext
+    return loc
 
 class PyimgrenException(Exception):
     """Base for pyimgren exceptions"""

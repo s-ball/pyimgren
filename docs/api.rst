@@ -1,12 +1,14 @@
 API reference
 =============
 
-:mod:`pyimger` module
+:mod:`pyimgren` module
 ----------------------
 
 .. module:: pyimgren
 
-This module imports :py:class:`pyimgren.renamer.Renamer` . It also defines the following constants:
+This module imports :py:class:`pyimgren.renamer.Renamer`
+and the function ``pyimgren.renamer.nls_init``.
+It also defines the following constants:
 
 .. data:: __name__
 
@@ -14,7 +16,7 @@ This module imports :py:class:`pyimgren.renamer.Renamer` . It also defines the f
 
 .. data:: __version__
 
-        the actual version of the package (|release|)
+        the current version of the package (|release|)
 
 :mod:`pyimgren.renamer` module
 ------------------------------
