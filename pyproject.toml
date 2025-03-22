@@ -33,6 +33,7 @@ dependencies = ["piexif", "i18nparse"]
 
 [project.optional-dependencies]
 test = [ "pyfakefs" ]
+docs = ["sphinx-intl"]
 
 [project.urls]
 Documentation = "https://pyimgren.readthedocs.io/en/latest/"

@@ -15,6 +15,7 @@ Welcome to pyimgren |version| documentation!
    usage
    api
    testing
+   localisation
    license
 
 Indices and tables

@@ -50,8 +50,8 @@ That way you will automatically get the ``pyfakefs`` package which is required
 for the integration tests.
 
 .. note::
-  The various untagged commits in the Git hierarchy are not guaranteed to be
-directly usable. At some points, some tests can fail and unexpected errors can
-occur. Use the master branch when you want to contribute. In any other cases,
-stick to a release, or be sure to pass all tests and be prepared to look into
-the source code if something goes wrong.
+    The various untagged commits in the Git hierarchy are not guaranteed to be
+    directly usable. At some points, some tests can fail and unexpected errors can
+    occur. Use the master branch when you want to contribute. In any other cases,
+    stick to a release, or be sure to pass all tests and be prepared to look into
+    the source code if something goes wrong.
