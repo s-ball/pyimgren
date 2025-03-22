@@ -50,7 +50,7 @@ folder with::
 
 and prepare (or update) the PO files for the ``ll`` locale with::
 
-    sphinx-intl -p _build/gettext -l ll
+    sphinx-intl update -p _build/gettext -l ll
 
 The PO files will end in the ``docs/locale/ll/LC_MESSAGES`` folder.
 
