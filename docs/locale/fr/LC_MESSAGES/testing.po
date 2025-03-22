@@ -1,21 +1,20 @@
 # French translation for pyimgren documentation
-# Copyright (C) 2018, s-ball
+# Copyright (C) 2018-current, s-ball
 # This file is distributed under the same license as the pyimgren package.
-# s-ball < s-ball@laposte.net>, 2018.
+# s-ball < s-ball@laposte.net>, 2018-current.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: pyimgren 0.6\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-24 12:58+0100\n"
-"PO-Revision-Date: 2018-11-25 19:50+0100\n"
+"Project-Id-Version: pyimgren 1.0\n"
+"Report-Msgid-Bugs-To: s-ball@laposte.net\n"
+"POT-Creation-Date: 2025-03-22 12:04+0100\n"
+"PO-Revision-Date: 2025-03-22 23:10+0100\n"
 "Last-Translator: s-ball < s-ball@laposte.net>\n"
 "Language-Team: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.6.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../testing.rst:2
 msgid "Testing pyimgren"
@@ -29,26 +28,26 @@ msgstr ""
 "Le paquet pyimgren arrive avec un répertoire de tests qui essaye de "
 "maintenir une couverture au dessus de 90%"
 
-#: ../../testing.rst:6
+#: ../../testing.rst:7
 msgid ""
 "To use it, you must first clone the repository, then checkout the most "
-"relevant version. For example if you want to work with the 0.3.0 release,"
+"relevant version. For example if you want to work with the 1.0.0 release,"
 " you could use::"
 msgstr ""
-"Pour l'utiliser, il faut d'abord cloner le dépôt, puis récupérer la version"
-" la plus appropriée. Par example, pour travailler sur la version 0.3.0, il"
-" faudrait utiliser ::"
+"Pour l'utiliser, il faut d'abord cloner le dépôt, puis récupérer la "
+"version la plus appropriée. Par example, pour travailler sur la version "
+"1.0.0, il faudrait utiliser ::"
 
-#: ../../testing.rst:12
+#: ../../testing.rst:15
 msgid ""
-"Then you should run the tests (preferently in a virtual environment) to "
-"control that all works fine in your environment::"
+"Then you should run the tests (preferentially in a virtual environment) "
+"to control that all works fine in your environment::"
 msgstr ""
 "Ensuite, il est possible d'exécuter les tests (de préférence dans un "
 "environnement virtuel) pour contrôler que tout fonctionne normalement "
 "dans votre environnement ::"
 
-#: ../../testing.rst:16
+#: ../../testing.rst:21
 msgid ""
 "The first time you use it, it may fetch `pyfakefs` from PyPI because it "
 "is required for integration tests."

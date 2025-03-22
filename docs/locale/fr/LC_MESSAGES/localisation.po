@@ -1,0 +1,164 @@
+# French translation for pyimgren documentation
+# Copyright (C) 2018-current, s-ball
+# This file is distributed under the same license as the pyimgren package.
+# s-ball <s-ball@laposte.net>, 2025-current.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pyimgren 1.0\n"
+"Report-Msgid-Bugs-To: s-ball@laposte.net\n"
+"POT-Creation-Date: 2025-03-22 15:38+0100\n"
+"PO-Revision-Date: 2025-03-22 18:50+0100\n"
+"Last-Translator: s-ball < s-ball@laposte.net>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../localisation.rst:2
+msgid "Localisation"
+msgstr ""
+
+#: ../../localisation.rst:5
+msgid "Internationalization"
+msgstr "Internationalisation"
+
+#: ../../localisation.rst:7
+msgid ""
+"``pyimgren`` is a fully internationalized package. The French "
+"translations are provided for the source files and the documentation."
+msgstr ""
+"``pyimgren`` est un paquet totalement internationalisé. Les traductions"
+" françaises sont fournies pour les fichiers source et la documentation."
+
+#: ../../localisation.rst:11
+msgid ""
+"If you use it as a module, and want to use that feature, you just have to"
+" call the ``nls_init`` function::"
+msgstr ""
+"Si vous l'utilisez comme un module et voulez utiliser cette fonctionalité,"
+" il suffit d'appeler la fonction ``nls_init`` ::"
+
+#: ../../localisation.rst:18
+msgid ""
+"If the ``LANG`` environment variable is present, it is used to define the"
+" locale that will be used by ``pyimgren``. Else the default locale is "
+"used."
+msgstr ""
+"Si la variable d'environnement ``LANG`` est présente, elle est utilisée"
+" pour définir le paramètre régional qui sera utilisé par ``pyimgren``."
+" Sinon c'est le paramètre régional par défaut qui est utilisé."
+
+#: ../../localisation.rst:22
+msgid "Localisation of the code"
+msgstr "Localisation du code"
+
+#: ../../localisation.rst:24
+msgid ""
+"You should use the `GNU gettext tools`_ to generate the POT files for "
+"``cmdline.py`` and ``pyimgren.py``. The fully translated PO files are "
+"expected to be in the locale folder. For a language ``ll`` (resp. "
+"``ll_CC``) they should be named ``pyimgren-ll.po`` and ``cmdline-ll.po`` "
+"(resp. ``pyimgren-ll_CC.po`` and ``cmdline-ll_CC.po``)"
+msgstr ""
+"Vous devriez utiliser les `outils GNU gettext`_ pour générer les fichiers"
+" POT pour ``cmdline.py`` et ``pyimgren.py``. Les fichiers PO complètement"
+" traduits sont attendus dans le dossier ``locale``. Pour une langue ``ll``"
+" (resp. ``ll_CC``) ils devraient s'appeler ``pyimgren-ll.po`` et"
+" ``cmdline-ll.po)`` " 
+"(resp. ``pyimgren-ll_CC.po`` and ``cmdline-ll_CC.po``)"
+
+#: ../../localisation.rst:30
+msgid ""
+"That way they will be automatically compiled at build time to the "
+"corresponding MO file and will be used at run time."
+msgstr ""
+"Ainsi, ils seront automatiquement compilés en fichiers MO au moment"
+" du *build* pour être utilisés à l'exécution."
+#: ../../localisation.rst:34
+msgid "Localisation of the documentation"
+msgstr "Localisation de la documentation"
+
+#: ../../localisation.rst:36
+msgid ""
+"In addition to the `GNU gettext tools`_, you will need to install "
+"``sphinx-intl``::"
+msgstr ""
+"En plus des `outils GNU gettext`_, vous devrez installer ``sphinx-intl`` ::"
+
+#: ../../localisation.rst:41
+msgid ""
+"Alternatively, the package is automatically installed along with the "
+"``pyimgren`` package it you ask for the ``docs`` options at install "
+"time::"
+msgstr ""
+"Sinon, le paquet est automatiquement installé avec le paquet ``pyimgren``"
+" si vous demandez l'option ``docs`` à l'installation ::"
+
+#: ../../localisation.rst:46
+msgid ""
+"Once installed, you can generate the POT files in the ``_build/gettext`` "
+"folder with::"
+msgstr ""
+"Une fois installé, vous pouvez générer les fichiers POT dans le dossier"
+" ``_build/gettext`` avec ::"
+
+#: ../../localisation.rst:51
+msgid "and prepare (or update) the PO files for the ``ll`` locale with::"
+msgstr ""
+"et préparer (ou mettre à jour) les fichier PO pour le paramètre régional"
+" ``ll`` avec ::"
+
+#: ../../localisation.rst:55
+msgid "The PO files will end in the ``docs/locale/ll/LC_MESSAGES`` folder."
+msgstr ""
+"Les fichiers PO finiront dans le dossier ``docs/locale/ll/LC_MESSAGES``."
+
+#: ../../localisation.rst:57
+msgid ""
+"You will have to edit them to add all the translated strings. You will "
+"then generate the translated documentation on a Unix-like system with "
+"(assuming a sphinx >= 1.3)::"
+msgstr ""
+"Vous devrez les éditer pour ajouter les chaînes traduites. Vous génèrerez"
+" ensuite la documentation traduite sur un système Unix ou équivalent"
+" avec (en supposant un sphinx >= 1.3) ::"
+
+#: ../../localisation.rst:64
+msgid "and on Windows with::"
+msgstr "et sur Windows avec ::"
+
+#: ../../localisation.rst:70
+msgid "Have everything on ReadTheDocs"
+msgstr "Tout mettre sur ReadTheDocs"
+
+#: ../../localisation.rst:72
+msgid ""
+"I maintain a documentation project for ``pyimgren`` on `Read the Docs "
+"<https://about.readthedocs.com/>`_. So the English documentation is "
+"directly accessible at `<https://pyimgren.readthedocs.io/>`_"
+msgstr ""
+"Je maintiens un projet de documentation pour ``pyimgren`` sur"
+" `Read the Docs <https://about.readthedocs.com/>`_. Ainsi la documentation"
+" en anglais est directement accessible en"
+" `<https://pyimgren.readthedocs.io/>`_"
+
+
+#: ../../localisation.rst:76
+msgid ""
+"I also maintain (manually) a companion project for the French "
+"documentation."
+msgstr ""
+"Je maintiens également (à la main) un projet secondaire pour la"
+" documentation en français."
+
+#: ../../localisation.rst:78
+msgid ""
+"If you have a translation that you would like to be there, you should "
+"contact me through an issue on GitHub, or directly by mail."
+msgstr ""
+"Si vous avez une traduction que vous aimeriez voir ici, vous devriez"
+" me contacter par une fiche (*issue*) sur GitHub ou directement par mail."

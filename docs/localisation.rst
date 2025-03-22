@@ -8,7 +8,7 @@ Internationalization
 are provided for the source files and
 the documentation.
 
-If you use it as a module, and what to use that feature, you just have to
+If you use it as a module, and want to use that feature, you just have to
 call the ``nls_init`` function::
 
     import pyimgren

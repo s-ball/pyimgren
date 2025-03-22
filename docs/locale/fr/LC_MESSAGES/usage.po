@@ -1,21 +1,20 @@
 # French translation for pyimgren documentation
-# Copyright (C) 2018, s-ball
+# Copyright (C) 2018-current, s-ball
 # This file is distributed under the same license as the pyimgren package.
-# s-ball < s-ball@laposte.net>, 2018.
+# s-ball < s-ball@laposte.net>, 2018-current.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: pyimgren 0.6\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-25 23:30+0100\n"
-"PO-Revision-Date: 2018-11-25 23:35+0100\n"
+"Project-Id-Version: pyimgren 1.0\n"
+"Report-Msgid-Bugs-To: s-ball@laposte.net\n"
+"POT-Creation-Date: 2025-03-22 23:09+0100\n"
+"PO-Revision-Date: 2025-03-22 23:10+0100\n"
 "Last-Translator: s-ball < s-ball@laposte.net>\n"
 "Language-Team: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.6.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../usage.rst:2
 msgid "Usage"
@@ -31,11 +30,11 @@ msgstr "Utilisation simple"
 
 #: ../../usage.rst:10
 msgid ""
-"You only have to import :mod:`pyimgren` and create a "
-":class:`~pyimgren.pyimgren.Renamer`::"
+"You only have to import ``pyimgren`` and create a "
+"``pyimgren.renamer.Renamer``::"
 msgstr ""
-"Il suffit d'importer :mod:`pyimgren` et de créer un "
-":class:`~pyimgren.pyimgren.Renamer`::"
+"Il suffit d'importer ``pyimgren`` et de créer un "
+"``pyimgren.pyimgren.Renamer``::"
 
 #: ../../usage.rst:16
 msgid "and that's all..."
@@ -43,13 +42,13 @@ msgstr "et c'est tout ..."
 
 #: ../../usage.rst:18
 msgid ""
-"You can then use the :meth:`~.rename` and :meth:`~.back` methods to "
-"rename pictures forth and back::"
+"You can then use the ``rename`` and ``back`` methods to rename pictures "
+"forth and back::"
 msgstr ""
-"Vous pouvez ensuite utiliser les méthodes :meth:`~.rename` et "
-":meth:`~.back` pour renommer les images dans un sens et dans l'autre ::"
+"Vous pouvez ensuite utiliser les méthodes ``rename`` et "
+"``back`` pour renommer les images dans un sens et dans l'autre ::"
 
-#: ../../usage.rst:24
+#: ../../usage.rst:25
 msgid ""
 "You can also merge files from a different directory. It makes sense when "
 "you want to pick pictures from another camera::"
@@ -58,85 +57,40 @@ msgstr ""
 "répertoire. Cela prend tout son sens si vous vouler récupérer des images "
 "prises par un autre appareil photo ::"
 
-#: ../../usage.rst:29
+#: ../../usage.rst:31
 msgid "Mid-level usage"
 msgstr "Utilisation intermédaire"
 
-#: ../../usage.rst:31
+#: ../../usage.rst:33
 msgid ""
-"All messages from the :mod:`pyimgren` module go through the "
-":mod:`logging` module. If you want debug messages to be actually printed,"
-" you **must** configure a non default handler processing that level "
-"before using :meth:`~.rename`, :meth:`~.back` and :meth:`~.merge`, "
-"methods with a `debug=True` parameter::"
+"All messages from the ``pyimgren`` module go through the ``logging`` "
+"module. If you want debug messages to be actually printed, you **must** "
+"configure a non default handler processing that level before using "
+"``rename``, ``back`` and ``merge``, methods with a ``debug=True`` "
+"parameter::"
 msgstr ""
-"Tous les messages du module :mod:`pyimgren` passent par le module "
-":mod:`logging`. Pour afficher les messages de niveau déverminage "
+"Tous les messages du module ``pyimgren`` passent par le module "
+"``logging``. Pour afficher les messages de niveau déverminage "
 "(*debug*), il **faut** configurer un *handler* traitant ce niveau avant "
-"d'utiliser les méthodes :meth:`~.rename`, :meth:`~.back` and "
-":meth:`~.merge`  avec un paramètre `debug=True` ::"
-
-#: ../../usage.rst:39
-msgid ""
-"You can automatically process sub folders. If `thumbnails` is a subfolder"
-" of the current folder, you can use::"
-msgstr ""
-"Il est possible de traiter automatiquement des sous-dossiers. Si "
-"`thumbnails` est un sous-dossier du dossier courant, vous pouvez faire ::"
-
-#: ../../usage.rst:43
-msgid ""
-"This will automatically start a new :class:`~.Renamer` in ``thumbnails`` "
-"with the exact same options as ``ren`` and call :meth:`~.rename` on it. "
-"But **beware**:"
-msgstr ""
-"Cela lancera automatiquement un nouveau :class:`~.Renamer` dans "
-"``thumbnails`` avec exactement les même options que ``ren`` and appelera "
-"la méthode :meth:`~.rename` dans le sous-dossier. Mais **attention** :"
-
-#: ../../usage.rst:45
-msgid "this will process all files matching the ``src_mask`` parameter of ``ren``"
-msgstr ""
-"cela traitera tous les fichiers correspondant au paramètre ``src_mask`` "
-"de ``ren``"
+"d'utiliser les méthodes ``rename``, ``back`` and "
+"``merge``  avec un paramètre `debug=True` ::"
 
 #: ../../usage.rst:46
-msgid ""
-"this will create a ``names.log`` file (or more exactly a file for which "
-"the name is the value of the ``ref_file`` parameter) in the "
-"``thumbnails`` directory."
-msgstr ""
-"cela créera un fichier ``names.log`` (ou plus exactement un fichier dont "
-"le nom est la valeur du paramère ``ref_file``) dans le répertoire "
-"``thumbnails``."
-
-#: ../../usage.rst:48
-msgid ""
-"Long story made short, it can make sense and is actually used in the "
-"command line interface, but it does not allow to process folders that are"
-" not descendant from the ``ren`` folder, nor to specify a limited list of"
-" files."
-msgstr ""
-"En résumé, cela prend tout son sens et c'est effectivement utilisé dans "
-"l'interface en mode ligne, mais cela ne permet pas de traiter des "
-"dossiers qui ne sont pas au dessous du dossier de ``ren``, ni de "
-"spécifier une liste réduite de fichiers."
-
-#: ../../usage.rst:51
 msgid "Advanced usage"
 msgstr "Utilisation avancée"
 
-#: ../../usage.rst:53
+#: ../../usage.rst:48
 msgid ""
-"If you want to build a complete front end for :mod:`pyimgren`, you will "
-"probably be interested by the others methods from :class:`~.Renamer` and "
-"the function :func:`~.exif_dat`."
+"If you want to build a complete front end for ``pyimgren``, you will "
+"probably be interested by the others methods from ``Renamer`` and the "
+"function ``exif_dat``."
 msgstr ""
 "Si vous voulez construire une interface complète au dessus de "
-":mod:`pyimgren`, vous serez probablement intéressés par les autres "
-"méthodes de :class:`~.Renamer` et par la fonction :func:`~.exif_dat`."
+"``pyimgren``, vous serez probablement intéressés par les autres "
+"méthodes de ``Renamer`` et par la fonction ``exif_dat``."
 
-#: ../../usage.rst:55
+#: ../../usage.rst:52
+#, python-brace-format
 msgid ""
 "This last one tries its best to extract an exif timestamp from a file and"
 " returns ``None`` if it could not find one. You can use it to easily "
@@ -148,86 +102,82 @@ msgstr ""
 "pouvez l'utiliser pour construire un dictionnaire``{file_name: "
 "exif_timestamp}`` à partir d'une liste de noms d'images ::"
 
-#: ../../usage.rst:59
-msgid "It is guaranteed to never raise an exception."
+#: ../../usage.rst:58
+msgid "It is guaranteed to never raise any exception."
 msgstr "Elle garantit de ne jamais lever d'exception."
 
-#: ../../usage.rst:61
+#: ../../usage.rst:60
 msgid ""
-"The other methods from :class:`~.Renamer`, namely :meth:`~.load_names` "
-"and :meth:`~.get_new_name` respectively load the names of pictures which "
-"have been renamed (both new name and original one), and find what would "
-"be the new name of a file with respect to the ``a`` to ``zz`` suffixes. "
-"Examples::"
+"The other methods from ``Renamer``, namely ``load_names`` and "
+"``get_new_name`` respectively load the names of pictures which have been "
+"renamed (both new name and original one), and find what would be the new "
+"name of a file with respect to the ``a`` to ``zz`` suffixes. Examples::"
 msgstr ""
-"Les autres méthodes de :class:`~.Renamer`, à savoir :meth:`~.load_names` "
-"et :meth:`~.get_new_name` servent respectivement à charger les noms des "
+"Les autres méthodes de ``Renamer``, à savoir ``load_names`` "
+"et ``get_new_name`` servent respectivement à charger les noms des "
 "images qui ont été renommées (à la fois le nouveau nom et le nom "
 "d'origine), et de déterminer ce que serait le nouveau nom d'un fichier en"
 " tenant compte des suffixes ``a`` à ``zz``. Examples ::"
 
-#: ../../usage.rst:66
+#: ../../usage.rst:68
 msgid "or::"
 msgstr "ou ::"
 
-#: ../../usage.rst:76
+#: ../../usage.rst:78
 msgid "From the command line"
 msgstr "Depuis la ligne de commande"
 
-#: ../../usage.rst:78
-msgid ""
-"The package provides a command line interface to the :class:`~.Renamer` "
-"class."
+#: ../../usage.rst:80
+msgid "The package provides a command line interface to the ``Renamer`` class."
 msgstr ""
 "Ce paquet fournie une interface en ligne de commande pour la classe "
-":class:`~.Renamer` "
+"``Renamer`` "
 
-#: ../../usage.rst:80
+#: ../../usage.rst:82
 msgid "Syntax:"
 msgstr "Syntaxe ::"
 
-#: ../../usage.rst:112
+#: ../../usage.rst:114
 msgid "and for sub-commands:"
 msgstr "et pour les sous-commandes :"
 
-#: ../../usage.rst:124
+#: ../../usage.rst:126
 msgid "or:"
 msgstr "ou :"
 
-#: ../../usage.rst:137
-msgid ""
-"This internally starts a :class:`~.Renamer` with the options passed as "
-"parameter. If option ``-D|--debug`` is present a :class:`StreamHandler` "
-"is configured to process Debug level message in the :mod:`logging` "
-"module. Then, the :class:`~.Renamer` runs the method corresponding to the"
-" sub-command."
-msgstr ""
-"Ceci lance en interne un :class:`~.Renamer` avec les options passées en "
-"paramètre. Si l'option ``-D|--debug`` est présente, un "
-":class:`StreamHandler` est configuré pour traiter les messages de niveau "
-"déverminage (*Debug*) dans le module  :mod:`logging`. Ensuite, le "
-":class:`~.Renamer` exécute la méthode correspondant à la sous-commande."
-
 #: ../../usage.rst:140
+msgid ""
+"This internally starts a ``Renamer`` with the options passed as "
+"parameter. If option ``-D|--debug`` is present a ``StreamHandler`` is "
+"configured to process Debug level message in the ``logging`` module. "
+"Then, the ``Renamer`` runs the method corresponding to the sub-command."
+msgstr ""
+"Ceci lance en interne un ``Renamer`` avec les options passées en "
+"paramètre. Si l'option ``-D|--debug`` est présente, un "
+"``StreamHandler`` est configuré pour traiter les messages de niveau "
+"déverminage (*Debug*) dans le module  ``logging``. Ensuite, le "
+"``Renamer`` exécute la méthode correspondant à la sous-commande."
+
+#: ../../usage.rst:146
 msgid "Default values:"
 msgstr "Valeurs par défaut :"
 
-#: ../../usage.rst:142
+#: ../../usage.rst:148
 msgid "All (global) options have default values::"
 msgstr "Toutes les options (globales) ont des valeurs par défaut ::"
 
-#: ../../usage.rst:150
+#: ../../usage.rst:156
 msgid "Options ``debug`` and ``dry_run`` are inactive by default."
 msgstr "Les options ``debug`` et ``dry_run`` sont inactives par défaut."
 
-#: ../../usage.rst:155
+#: ../../usage.rst:161
 msgid "Special case"
 msgstr "Cas particuliers"
 
-#: ../../usage.rst:157
+#: ../../usage.rst:163
 msgid ""
 "On Windows, the Python script directories are commonly not in the PATH, "
-"and users use the :program:`py` launcher to start the interpretor or the "
+"and users use the :program:`py` launcher to start the interpreter or the "
 "scripts. In that case, the ``pyimgren`` package can be started from the "
 "command line as a module:"
 msgstr ""
@@ -237,7 +187,6 @@ msgstr ""
 " cas, le paquet ``pyimgren`` peut être lancé depuis la ligne de commande "
 "comme un module :"
 
-#: ../../usage.rst:165
+#: ../../usage.rst:174
 msgid "The parameters are exactly the same they were for the script."
 msgstr "Les paramètres sont exactement les mêmes que pour le script."
-
