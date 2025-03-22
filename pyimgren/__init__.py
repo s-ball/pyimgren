@@ -14,13 +14,21 @@ import os.path
 def nls_init(reset=False):
     if reset:
         renamer._ = lambda x: x
+        loc = None
     else:
-        loc = locale.getlocale()[0]
-        if loc is None:
-            loc = locale.setlocale(locale.LC_ALL, '')[0]
+        if "LANG" in os.environ:
+            loc = os.environ["LANG"]
+        else:
+            loc = locale.getlocale()[0]
+            if loc is None:
+                try:
+                    loc = locale.setlocale(locale.LC_ALL, '')[0]
+                except locale.Error:
+                    loc = None
 
         renamer._ = gettext.translation("pyimgren",
                                          os.path.join(os.path.dirname(__file__),
                                                       "locale"),
                                          loc,
                                          fallback=True).gettext
+    return loc

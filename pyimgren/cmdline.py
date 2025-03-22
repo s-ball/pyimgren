@@ -15,13 +15,15 @@ from . import nls_init as ext_init
 
 _ = lambda x: x
 
+
 def nls_init():
     global _
-    ext_init()
-    localedir = os.path.join(os.path.dirname(__file__), "locale")
-    lang = locale.getlocale()[0]
-    tr = gettext.translation("cmdline", localedir, [lang], fallback=True)
-    _ = tr.gettext
+    lang = ext_init()
+    if lang:
+        localedir = os.path.join(os.path.dirname(__file__), "locale")
+        tr = gettext.translation("cmdline", localedir, [lang], fallback=True)
+        _ = tr.gettext
+
 
 def set_parser():
     parser = argparse.ArgumentParser(
@@ -63,6 +65,7 @@ def set_parser():
                        help = _("source folder for merging from"))
     # parser.set_defaults(subcommand="rename") # uncomment to have a default
     return parser
+
 
 def simple_cmd():
     locale.setlocale(locale.LC_ALL, "")
