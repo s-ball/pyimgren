@@ -41,7 +41,8 @@ given a ``strftime`` format string and an extension (starting with a dot like
   the time extracted for the exif tag.
 
 * rename back files from the folder to their original names. For that,
-  ``rename`` creates a special file in the folder (by default ``names.log``) to
+  :meth:`~pyimgren.renamer.Renamer.rename` creates a special file in the folder
+  (by default :file:`names.log`) to
   record the new and original names. Optionally it can operate on a limited set
   of the renamed pictures.
 

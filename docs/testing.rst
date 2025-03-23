@@ -1,7 +1,7 @@
 Testing pyimgren
 ================
 
-The pyimgren package comes with a tests directory that tries to keep the code
+The :mod:pyimgren package comes with a tests directory that tries to keep the code
 coverage above 90%.
 
 To use it, you must first clone the repository, then checkout the most
@@ -18,5 +18,7 @@ control that all works fine in your environment::
     pip install .[test]       # or pip install -e .[test] for a dev. install
     python -m unittest
 
-The first time you use it, it may fetch `pyfakefs` from PyPI because it is
+The first time you use it, it may fetch `pyfakefs`_ from PyPI because it is
 required for integration tests.
+
+.. _pyfakefs: https://pypi.org/project/pyfakefs/

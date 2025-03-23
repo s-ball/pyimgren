@@ -7,7 +7,7 @@ API reference
 .. module:: pyimgren
 
 This module imports :py:class:`pyimgren.renamer.Renamer`
-and the function ``pyimgren.renamer.nls_init``.
+and the function :py:func:`pyimgren.renamer.nls_init`.
 It also defines the following constants:
 
 .. data:: __name__

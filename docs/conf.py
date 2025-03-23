@@ -187,4 +187,4 @@ autodoc_member_order = 'bysource'
 todo_include_todos = True
 
 # -- Options for sphinx-intl -------------------------------------------------
-locale_dirs = ['locale/']
+locale_dirs = ['locale/', '../pyimgren/locale']

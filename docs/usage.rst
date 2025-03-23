@@ -7,7 +7,8 @@ As a Python module
 Simple usage
 ************
 
-You only have to import ``pyimgren`` and create a ``pyimgren.renamer.Renamer``::
+You only have to import :mod:`pyimgren` and create a
+:class:`pyimgren.renamer.Renamer`::
 
     import pyimgren
 
@@ -15,7 +16,8 @@ You only have to import ``pyimgren`` and create a ``pyimgren.renamer.Renamer``::
 
 and that's all...
 
-You can then use the ``rename`` and ``back`` methods to rename
+You can then use the :meth:`~pyimgren.renamer.Renamer.rename` and
+:meth:`~pyimgren.renamer.Renamer.back` methods to rename
 pictures forth and back::
 
     ren.rename("DSC*.JPF")     # rename all files in the folder matching DSCF*.JPG
@@ -30,10 +32,12 @@ want to pick pictures from another camera::
 Mid-level usage
 ***************
 
-All messages from the ``pyimgren`` module go through the ``logging``
+All messages from the :mod:`pyimgren` module go through the :mod:`logging`
 module. If you want debug messages to be actually printed, you **must**
 configure a non default handler processing that level before using
-``rename``, ``back`` and ``merge``, methods with a
+:meth:`~pyimgren.renamer.Renamer.rename`,
+:meth:`~pyimgren.renamer.Renamer.back` and
+:meth:`~pyimgren.renamer.Renamer.merge`, methods with a
 ``debug=True`` parameter::
 
     log = logging.getLogger('pyimgren')
@@ -45,9 +49,10 @@ configure a non default handler processing that level before using
 Advanced usage
 **************
 
-If you want to build a complete front end for ``pyimgren``, you will
-probably be interested by the others methods from ``Renamer`` and the
-function ``exif_dat``.
+If you want to build a complete front end for :mod:`pyimgren`, you will
+probably be interested by the others methods from
+:class:`~pyimgren.renamer.Renamer` and the
+function :func:`~pyimgren.renamer.exif_dat`.
 
 This last one tries its best to extract an exif timestamp from a file and
 returns ``None`` if it could not find one. You can use it to easily build a
@@ -57,8 +62,10 @@ dictionary ``{file_name: exif_timestamp}`` from a list of picture names::
 
 It is guaranteed to never raise any exception.
 
-The other methods from ``Renamer``, namely ``load_names`` and
-``get_new_name`` respectively load the names of pictures which have been
+The other methods from :class:`~pyimgren.renamer.Renamer`, namely
+:meth:`~pyimgren.renamer.Renamer.load_names` and
+:meth:`~pyimgren.renamer.Renamer.get_new_name` respectively load
+the names of pictures which have been
 renamed (both new name and original one), and find what would be the new name
 of a file with respect to the ``a`` to ``zz`` suffixes. Examples::
 
@@ -77,7 +84,8 @@ or::
 From the command line
 ---------------------
 
-The package provides a command line interface to the ``Renamer`` class.
+The package provides a command line interface to the
+:class:`~pyimgren.renamer.Renamer` class.
 
 Syntax:
 
@@ -137,10 +145,12 @@ or:
       -s SRC_FOLDER, --src_folder SRC_FOLDER
                             source folder for merging from
 
-This internally starts a ``Renamer`` with the options passed as
-parameter. If option ``-D|--debug`` is present a ``StreamHandler``
-is configured to process Debug level message in the ``logging`` module.
-Then, the ``Renamer`` runs the method corresponding to the sub-command.
+This internally starts a :class:`~pyimgren.renamer.Renamer`
+with the options passed as
+parameter. If option ``-D|--debug`` is present a :class:`StreamHandler`
+is configured to process Debug level message in the :mod:`logging` module.
+Then, the :class:`~pyimgren.renamer.Renamer` runs the method corresponding
+to the sub-command.
 
 Default values:
 ***************
@@ -162,7 +172,7 @@ Special case
 
 On Windows, the Python script directories are commonly not in the PATH,
 and users use the :program:`py` launcher to start the interpreter or the
-scripts. In that case, the ``pyimgren`` package can be started from the
+scripts. In that case, the :mod:`pyimgren` package can be started from the
 command line as a module:
 
 .. code-block:: none
