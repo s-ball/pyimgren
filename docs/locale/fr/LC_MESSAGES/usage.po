@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyimgren 1.0\n"
 "Report-Msgid-Bugs-To: s-ball@laposte.net\n"
-"POT-Creation-Date: 2025-03-22 23:09+0100\n"
-"PO-Revision-Date: 2025-03-22 23:10+0100\n"
+"POT-Creation-Date: 2025-03-23 16:35+0100\n"
+"PO-Revision-Date: 2025-03-23 17:20+0100\n"
 "Last-Translator: s-ball < s-ball@laposte.net>\n"
 "Language-Team: fr\n"
 "MIME-Version: 1.0\n"
@@ -30,25 +30,28 @@ msgstr "Utilisation simple"
 
 #: ../../usage.rst:10
 msgid ""
-"You only have to import ``pyimgren`` and create a "
-"``pyimgren.renamer.Renamer``::"
+"You only have to import :mod:`pyimgren` and create a "
+":class:`pyimgren.renamer.Renamer`::"
 msgstr ""
-"Il suffit d'importer ``pyimgren`` et de créer un "
-"``pyimgren.pyimgren.Renamer``::"
+"Il suffit d'importer :mod:`pyimgren` et de créer un "
+":class:`pyimgren.pyimgren.Renamer` ::"
 
-#: ../../usage.rst:16
+#: ../../usage.rst:17
 msgid "and that's all..."
 msgstr "et c'est tout ..."
 
-#: ../../usage.rst:18
+#: ../../usage.rst:19
 msgid ""
-"You can then use the ``rename`` and ``back`` methods to rename pictures "
-"forth and back::"
+"You can then use the :meth:`~pyimgren.renamer.Renamer.rename` and "
+":meth:`~pyimgren.renamer.Renamer.back` methods to rename pictures forth "
+"and back::"
 msgstr ""
-"Vous pouvez ensuite utiliser les méthodes ``rename`` et "
-"``back`` pour renommer les images dans un sens et dans l'autre ::"
+"Vous pouvez ensuite utiliser les méthodes "
+":meth:`~pyimgren.renamer.Renamer.rename` et "
+":meth:`~pyimgren.renamer.Renamer.back` pour "
+"renommer les images dans un sens et dans l'autre ::"
 
-#: ../../usage.rst:25
+#: ../../usage.rst:27
 msgid ""
 "You can also merge files from a different directory. It makes sense when "
 "you want to pick pictures from another camera::"
@@ -57,39 +60,45 @@ msgstr ""
 "répertoire. Cela prend tout son sens si vous vouler récupérer des images "
 "prises par un autre appareil photo ::"
 
-#: ../../usage.rst:31
+#: ../../usage.rst:33
 msgid "Mid-level usage"
 msgstr "Utilisation intermédaire"
 
-#: ../../usage.rst:33
+#: ../../usage.rst:35
 msgid ""
-"All messages from the ``pyimgren`` module go through the ``logging`` "
-"module. If you want debug messages to be actually printed, you **must** "
-"configure a non default handler processing that level before using "
-"``rename``, ``back`` and ``merge``, methods with a ``debug=True`` "
+"All messages from the :mod:`pyimgren` module go through the "
+":mod:`logging` module. If you want debug messages to be actually printed,"
+" you **must** configure a non default handler processing that level "
+"before using :meth:`~pyimgren.renamer.Renamer.rename`, "
+":meth:`~pyimgren.renamer.Renamer.back` and "
+":meth:`~pyimgren.renamer.Renamer.merge`, methods with a ``debug=True`` "
 "parameter::"
 msgstr ""
-"Tous les messages du module ``pyimgren`` passent par le module "
-"``logging``. Pour afficher les messages de niveau déverminage "
-"(*debug*), il **faut** configurer un *handler* traitant ce niveau avant "
-"d'utiliser les méthodes ``rename``, ``back`` and "
-"``merge``  avec un paramètre `debug=True` ::"
+"Tous les messages du module :mod:`pyimgren` passent par le module "
+":mod:`logging`. Pour afficher les messages de niveau déverminage (*debug*), "
+"il **faut** configurer un *handler* traitant ce niveau avant d'utiliser "
+"les méthodes :meth:`~pyimgren.renamer.Renamer.rename`"
+", :meth:`~pyimgren.renamer.Renamer.back` et "
+":meth:`~pyimgren.renamer.Renamer.merge`  avec un paramètre "
+"`debug=True` ::"
 
-#: ../../usage.rst:46
+#: ../../usage.rst:50
 msgid "Advanced usage"
 msgstr "Utilisation avancée"
 
-#: ../../usage.rst:48
+#: ../../usage.rst:52
 msgid ""
-"If you want to build a complete front end for ``pyimgren``, you will "
-"probably be interested by the others methods from ``Renamer`` and the "
-"function ``exif_dat``."
+"If you want to build a complete front end for :mod:`pyimgren`, you will "
+"probably be interested by the others methods from "
+":class:`~pyimgren.renamer.Renamer` and the function "
+":func:`~pyimgren.renamer.exif_dat`."
 msgstr ""
 "Si vous voulez construire une interface complète au dessus de "
-"``pyimgren``, vous serez probablement intéressés par les autres "
-"méthodes de ``Renamer`` et par la fonction ``exif_dat``."
+":mod:`pyimgren`, vous serez probablement intéressés par les autres méthodes"
+" de :class:`~pyimgren.renamer.Renamer` et par la fonction "
+":func:`~pyimgren.renamer.exif_dat`."
 
-#: ../../usage.rst:52
+#: ../../usage.rst:57
 #, python-brace-format
 msgid ""
 "This last one tries its best to extract an exif timestamp from a file and"
@@ -99,94 +108,105 @@ msgid ""
 msgstr ""
 "Cette dernière fait de son mieux pour extraire une date et une heure exif"
 " d'un fichier et renvoie ``None`` si elle ne peut pas en trouver. Vous "
-"pouvez l'utiliser pour construire un dictionnaire``{file_name: "
+"pouvez l'utiliser pour construire un dictionnaire ``{file_name: "
 "exif_timestamp}`` à partir d'une liste de noms d'images ::"
 
-#: ../../usage.rst:58
+#: ../../usage.rst:63
 msgid "It is guaranteed to never raise any exception."
 msgstr "Elle garantit de ne jamais lever d'exception."
 
-#: ../../usage.rst:60
+#: ../../usage.rst:65
 msgid ""
-"The other methods from ``Renamer``, namely ``load_names`` and "
-"``get_new_name`` respectively load the names of pictures which have been "
-"renamed (both new name and original one), and find what would be the new "
-"name of a file with respect to the ``a`` to ``zz`` suffixes. Examples::"
+"The other methods from :class:`~pyimgren.renamer.Renamer`, namely "
+":meth:`~pyimgren.renamer.Renamer.load_names` and "
+":meth:`~pyimgren.renamer.Renamer.get_new_name` respectively load the "
+"names of pictures which have been renamed (both new name and original "
+"one), and find what would be the new name of a file with respect to the "
+"``a`` to ``zz`` suffixes. Examples::"
 msgstr ""
-"Les autres méthodes de ``Renamer``, à savoir ``load_names`` "
-"et ``get_new_name`` servent respectivement à charger les noms des "
-"images qui ont été renommées (à la fois le nouveau nom et le nom "
-"d'origine), et de déterminer ce que serait le nouveau nom d'un fichier en"
-" tenant compte des suffixes ``a`` à ``zz``. Examples ::"
+"Les autres méthodes de :class:`~pyimgren.renamer.Renamer`, à savoir "
+":meth:`~pyimgren.renamer.Renamer.load_names` et "
+":meth:`~pyimgren.renamer.Renamer.get_new_name` servent respectivement"
+" à charger les noms des images qui"
+" ont été renommées (à la fois le nouveau nom et le nom d'origine), et de "
+"déterminer ce que serait le nouveau nom d'un fichier en tenant compte des"
+" suffixes ``a`` à ``zz``. Examples ::"
 
-#: ../../usage.rst:68
+#: ../../usage.rst:75
 msgid "or::"
 msgstr "ou ::"
 
-#: ../../usage.rst:78
+#: ../../usage.rst:85
 msgid "From the command line"
 msgstr "Depuis la ligne de commande"
 
-#: ../../usage.rst:80
-msgid "The package provides a command line interface to the ``Renamer`` class."
+#: ../../usage.rst:87
+msgid ""
+"The package provides a command line interface to the "
+":class:`~pyimgren.renamer.Renamer` class."
 msgstr ""
 "Ce paquet fournie une interface en ligne de commande pour la classe "
-"``Renamer`` "
+":class:`~pyimgren.renamer.Renamer`."
 
-#: ../../usage.rst:82
+#: ../../usage.rst:90
 msgid "Syntax:"
 msgstr "Syntaxe ::"
 
-#: ../../usage.rst:114
+#: ../../usage.rst:122
 msgid "and for sub-commands:"
 msgstr "et pour les sous-commandes :"
 
-#: ../../usage.rst:126
+#: ../../usage.rst:134
 msgid "or:"
 msgstr "ou :"
 
-#: ../../usage.rst:140
+#: ../../usage.rst:148
 msgid ""
-"This internally starts a ``Renamer`` with the options passed as "
-"parameter. If option ``-D|--debug`` is present a ``StreamHandler`` is "
-"configured to process Debug level message in the ``logging`` module. "
-"Then, the ``Renamer`` runs the method corresponding to the sub-command."
+"This internally starts a :class:`~pyimgren.renamer.Renamer` with the "
+"options passed as parameter. If option ``-D|--debug`` is present a "
+":class:`StreamHandler` is configured to process Debug level message in "
+"the :mod:`logging` module. Then, the :class:`~pyimgren.renamer.Renamer` "
+"runs the method corresponding to the sub-command."
 msgstr ""
-"Ceci lance en interne un ``Renamer`` avec les options passées en "
+"Ceci lance en interne un :class:`~pyimgren.renamer.Renamer` avec les"
+" options passées en "
 "paramètre. Si l'option ``-D|--debug`` est présente, un "
-"``StreamHandler`` est configuré pour traiter les messages de niveau "
-"déverminage (*Debug*) dans le module  ``logging``. Ensuite, le "
-"``Renamer`` exécute la méthode correspondant à la sous-commande."
+":class:`StreamHandler` "
+"est configuré pour traiter les messages de niveau déverminage (*Debug*) "
+"dans le module :mod:`logging`. Ensuite, le "
+":class:`~pyimgren.renamer.Renamer` exécute la méthode "
+"correspondant à la sous-commande."
 
-#: ../../usage.rst:146
+#: ../../usage.rst:156
 msgid "Default values:"
 msgstr "Valeurs par défaut :"
 
-#: ../../usage.rst:148
+#: ../../usage.rst:158
 msgid "All (global) options have default values::"
 msgstr "Toutes les options (globales) ont des valeurs par défaut ::"
 
-#: ../../usage.rst:156
+#: ../../usage.rst:166
 msgid "Options ``debug`` and ``dry_run`` are inactive by default."
 msgstr "Les options ``debug`` et ``dry_run`` sont inactives par défaut."
 
-#: ../../usage.rst:161
+#: ../../usage.rst:171
 msgid "Special case"
 msgstr "Cas particuliers"
 
-#: ../../usage.rst:163
+#: ../../usage.rst:173
 msgid ""
 "On Windows, the Python script directories are commonly not in the PATH, "
 "and users use the :program:`py` launcher to start the interpreter or the "
-"scripts. In that case, the ``pyimgren`` package can be started from the "
-"command line as a module:"
+"scripts. In that case, the :mod:`pyimgren` package can be started from "
+"the command line as a module:"
 msgstr ""
 "Sous Windows, le répertoire des scripts de Python n'est généralement pas "
 "dans le chemin de recherche (*PATH*), et les utilisateurs utilisent le "
 "lanceur :program:`py` pour appeler l'interpréteur ou les scripts. Dans ce"
-" cas, le paquet ``pyimgren`` peut être lancé depuis la ligne de commande "
+" cas, le paquet :mod:`pyimgren` peut être lancé depuis la ligne de commande "
 "comme un module :"
 
-#: ../../usage.rst:174
+#: ../../usage.rst:184
 msgid "The parameters are exactly the same they were for the script."
 msgstr "Les paramètres sont exactement les mêmes que pour le script."
+

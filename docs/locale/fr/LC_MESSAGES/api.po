@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyimgren 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-22 15:38+0100\n"
-"PO-Revision-Date: 2025-03-22 15:43+0100\n"
+"POT-Creation-Date: 2025-03-23 14:33+0100\n"
+"PO-Revision-Date: 2025-03-23 16:43+0100\n"
 "Last-Translator: s-ball < s-ball@laposte.net>\n"
 "Language-Team: fr\n"
 "MIME-Version: 1.0\n"
@@ -27,10 +27,11 @@ msgstr "Module :mod:`pyimgren`"
 #: ../../api.rst:9
 msgid ""
 "This module imports :py:class:`pyimgren.renamer.Renamer` and the function"
-" ``pyimgren.renamer.nls_init``. It also defines the following constants:"
+" :py:func:`pyimgren.renamer.nls_init`. It also defines the following "
+"constants:"
 msgstr ""
 "Ce module importe :py:class:`pyimgren.renamer.Renamer` et la fonction "
-"``pyimgren.renamer.nls_init``. Il définit également les constantes "
+":py:func:`pyimgren.renamer.nls_init`. Il définit également les constantes "
 "suivantes :"
 
 #: ../../api.rst:15
@@ -77,7 +78,7 @@ msgstr "Classe de base des exceptions de pyimgren"
 #: pyimgren.renamer.NamesLogException:1
 #: pyimgren.renamer.UnknownPictureException:1
 msgid "Bases: :py:class:`~pyimgren.renamer.PyimgrenException`"
-msgstr "Bases: :py:class:`pyimgren.renamer.PyimgrenException`"
+msgstr "Bases: :py:class:`~pyimgren.renamer.PyimgrenException`"
 
 #: of pyimgren.renamer.NamesLogException:1
 msgid "Raised when a line in the names.log file cannot be parsed"
@@ -159,11 +160,13 @@ msgstr "l'extension du nouveau nom"
 
 #: of pyimgren.renamer.Renamer:14
 msgid "the name of a file that will remember the old names (default names.log)"
-msgstr "le nom d'un fichier qui enregistrera les anciens noms (default names.log)"
+msgstr ""
+"le nom d'un fichier qui enregistrera les anciens noms (default names.log)"
 
 #: of pyimgren.renamer.Renamer:17
 msgid "All parameters become attribute of the object with the same name"
-msgstr "Tous les paramètres deviennent des attributs de l'object, avec le même nom"
+msgstr ""
+"Tous les paramètres deviennent des attributs de l'object, avec le même nom"
 
 #: of pyimgren.renamer.Renamer:21
 msgid ""
@@ -288,7 +291,8 @@ msgstr "Lève une exception"
 
 #: of pyimgren.renamer.Renamer.rename:18
 msgid "if for a destination name, all files from a to zz already exist"
-msgstr "si pour un nom de destination, tous les fichiers de a à zz existent déjà"
+msgstr ""
+"si pour un nom de destination, tous les fichiers de a à zz existent déjà"
 
 #: of pyimgren.renamer.Renamer.back:1
 msgid ""
@@ -438,7 +442,8 @@ msgstr "ext_mask"
 
 #: of pyimgren.renamer.exif_dat:1
 msgid "Extract the timestamp of a picture file from the exif tags."
-msgstr "Extrait la date et l'heure d'un fichier image à partir de ses champs exif."
+msgstr ""
+"Extrait la date et l'heure d'un fichier image à partir de ses champs exif."
 
 #: of pyimgren.renamer.exif_dat:3
 msgid ""
@@ -464,4 +469,3 @@ msgstr ""
 "le moment où la photographie a été prise ou enregistrée sur la carte "
 "mémoire indiqué par les champs exif, ou None si ce moment ne peut être "
 "déterminé."
-

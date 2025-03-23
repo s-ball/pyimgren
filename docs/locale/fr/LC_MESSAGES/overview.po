@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pyimgren 1.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-22 12:04+0100\n"
-"PO-Revision-Date: 2019-04-21 10:05+0100\n"
+"Report-Msgid-Bugs-To: s-ball@laposte.net\n"
+"POT-Creation-Date: 2025-03-23 16:35+0100\n"
+"PO-Revision-Date: 2025-03-23 17:05+0100\n"
 "Last-Translator: s-ball <s-ball@laposte.net>\n"
 "Language-Team: fr\n"
 "MIME-Version: 1.0\n"
@@ -87,9 +87,9 @@ msgid ""
 "should be given a ``strftime`` format string and an extension (starting "
 "with a dot like ``.jpg``). It can then:"
 msgstr ""
-"La classe centrale du paquet est :class:`~pyimgren.renamer.Renamer`. "
-"Elle agit normalement sur un dossier unique indiqué à l'initialisation. "
-"Il est possible de lui donner une chaîne en format ``strftime`` et une "
+"La classe centrale du paquet est :class:`~pyimgren.renamer.Renamer`. Elle"
+" agit normalement sur un dossier unique indiqué à l'initialisation. Il "
+"est possible de lui donner une chaîne en format ``strftime`` et une "
 "extension (commençant par un point comme ``.jpg``). Elle peut alors :"
 
 #: ../../overview.rst:33
@@ -123,16 +123,18 @@ msgstr ""
 #: ../../overview.rst:43
 msgid ""
 "rename back files from the folder to their original names. For that, "
-"``rename`` creates a special file in the folder (by default "
-"``names.log``) to record the new and original names. Optionally it can "
-"operate on a limited set of the renamed pictures."
+":meth:`~pyimgren.renamer.Renamer.rename` creates a special file in the "
+"folder (by default :file:`names.log`) to record the new and original "
+"names. Optionally it can operate on a limited set of the renamed "
+"pictures."
 msgstr ""
-"redonner aux fichiers du dossier leur nom original. Pour cela, ``rename``"
-" crée un fichier spécial dans le dossier (par défaut ``names.log``) pour "
+"redonner aux fichiers du dossier leur nom original. Pour cela, "
+":meth:`~pyimgren.renamer.Renamer.rename` crée "
+"un fichier spécial dans le dossier (par défaut :files:`names.log`) pour "
 "enregistrer les noms nouveaux et originaux. En option, il peut agir sur "
 "un ensemble limité des images renommées."
 
-#: ../../overview.rst:48
+#: ../../overview.rst:49
 msgid ""
 "merge files from a different directory. The files are directly copied "
 "from their original folder with their final name based on their exif "
@@ -142,19 +144,19 @@ msgstr ""
 " directement copiés depuis leur dossier d'origine sous leur nom définitif"
 " basé sur leur date et heure exif."
 
-#: ../../overview.rst:52
+#: ../../overview.rst:53
 msgid "Dependencies"
 msgstr "Dépendances"
 
-#: ../../overview.rst:54
+#: ../../overview.rst:55
 msgid "This package has few requirements:"
 msgstr "Ce paquet a peu d'exigences"
 
-#: ../../overview.rst:56
+#: ../../overview.rst:57
 msgid "a Python >= 3 (only tested with >= 3.9)"
 msgstr "un Python >= 3 (testé seulement pour >=3.9)"
 
-#: ../../overview.rst:57
+#: ../../overview.rst:58
 msgid ""
 "the piexif_ package available from PyPI and automatically installed in a "
 "`pip` installation."
@@ -162,7 +164,7 @@ msgstr ""
 "le paquet piexif_ disponible sur PyPI et installé automatiquement lors "
 "d'une installation par ``pip``."
 
-#: ../../overview.rst:59
+#: ../../overview.rst:60
 msgid ""
 "the i18nparse_ package available from PyPI, and automatically installed "
 "too."
@@ -170,11 +172,11 @@ msgstr ""
 "le paquet i18nparse_ disponible sur PyPI, et également installé "
 "automatiquement"
 
-#: ../../overview.rst:63
+#: ../../overview.rst:64
 msgid "Internationalization"
 msgstr "Internationalisation"
 
-#: ../../overview.rst:65
+#: ../../overview.rst:66
 msgid ""
 "This package supports gettext type localization, and provides French "
 "messages in addition to English."
@@ -182,17 +184,18 @@ msgstr ""
 "Ce paquet accepte une localisation de type gettext, et fournit des "
 "messages en français en plus de l'anglais."
 
-#: ../../overview.rst:68
+#: ../../overview.rst:69
 msgid "Limits"
 msgstr "Limitations"
 
-#: ../../overview.rst:70
+#: ../../overview.rst:71
 msgid "The upcoming 1.0 version breaks a lot of compatibility with previous ones."
 msgstr "La future version 1.0 introduit de nombreuses pertes de compatibilité"
 
-#: ../../overview.rst:72
+#: ../../overview.rst:73
 msgid ""
 "The documentations (both English and French) are still a work in "
 "progress..."
 msgstr ""
-"Les documentations (en français et en anglais) sont encore en cours ..."
+"Les documentations (en français et en anglais) sont encore en travaux ..."
+

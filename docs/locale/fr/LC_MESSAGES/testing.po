@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyimgren 1.0\n"
 "Report-Msgid-Bugs-To: s-ball@laposte.net\n"
-"POT-Creation-Date: 2025-03-22 12:04+0100\n"
-"PO-Revision-Date: 2025-03-22 23:10+0100\n"
+"POT-Creation-Date: 2025-03-23 16:35+0100\n"
+"PO-Revision-Date: 2025-03-23 17:10+0100\n"
 "Last-Translator: s-ball < s-ball@laposte.net>\n"
 "Language-Team: fr\n"
 "MIME-Version: 1.0\n"
@@ -22,10 +22,10 @@ msgstr "Tester pyimgren"
 
 #: ../../testing.rst:4
 msgid ""
-"The pyimgren package comes with a tests directory that tries to keep the "
-"code coverage above 90%."
+"The :mod:pyimgren package comes with a tests directory that tries to keep"
+" the code coverage above 90%."
 msgstr ""
-"Le paquet pyimgren arrive avec un répertoire de tests qui essaye de "
+"Le paquet :mod:pyimgren arrive avec un répertoire de tests qui essaye de "
 "maintenir une couverture au dessus de 90%"
 
 #: ../../testing.rst:7
@@ -49,9 +49,9 @@ msgstr ""
 
 #: ../../testing.rst:21
 msgid ""
-"The first time you use it, it may fetch `pyfakefs` from PyPI because it "
+"The first time you use it, it may fetch `pyfakefs`_ from PyPI because it "
 "is required for integration tests."
 msgstr ""
-"A la première utilisation, cela récupère `pyfakefs` depuis PyPI parce que"
+"A la première utilisation, cela récupère `pyfakefs`_ depuis PyPI parce que"
 " ce paquet est nécessaire pour les tests d'intégration."
 
