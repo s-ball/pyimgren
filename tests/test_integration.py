@@ -144,6 +144,7 @@ class TestMultiRenames(TestCase):
         self.assertTrue(os.path.exists('/test/DSCF9762.JPG'))
         self.ren.names = None
         self.ren.load_names()
+        # noinspection PyTypeChecker
         self.assertEqual(0, len(self.ren.names))
 
     def test_delta_2(self):
@@ -185,7 +186,7 @@ class TestSameName(TestCase):
         self.fs.create_dir('/test2')
         shutil.copyfile('/orig/DSCF9762.JPG', '/test2/DSCF9762.JPG')
         ren = Renamer('/test2')
-        ren.rename('*.jpg')
+        ren.rename('*.JPG')
         for file in os.listdir('/test2'):
             if file != 'names.log':
                 self.new_name = file
