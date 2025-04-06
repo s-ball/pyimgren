@@ -1,5 +1,12 @@
-RELEASE 1.0.0: upcoming
-    Major rewrite
+RELEASE 1.0.0: Major rewrite
+    Build system uses hatchling
+    There is no longer any *default mask*: you are expected to provide the
+        names of the files to process with optional wild characters.
+    The rename strategy has changed: when a file is renamed multiple times,
+        it keeps using one single line in names.log with its true original
+        name
+    Support Python versions above 3.9 (tested up to 3.12)
+    Only uses AppVeyor as a CI test system (Travis-CI is now a paying tool)
 
 RELEASE 0.9.2: 2020-09-30
     Fix an old error in exif date extraction.

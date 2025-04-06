@@ -6,11 +6,11 @@ A python module to rename images according to their exif tags.
 
 ## Current status
 
-The current 1.0.0 version is still in beta. It has a correct test coverage, but
-the documentation has not been fully updated, and it still lacks *real world*
+The current 1.0.0 version is the first version to be declared *stable.
+It has a correct test coverage, but it still lacks *real world*
 tests.
 
-This package  is distributed in PyPI since version 0.1.0.
+This package  is distributed in [PyPI](https://pypi.org/project/pyimgren/) since version 0.1.0.
 Its full source is available from [GitHub](https://github.com/s-ball/pyimgren).
 
 ## Goals
@@ -209,7 +209,7 @@ The integration tests depend on [pyfakefs](http://pyfakefs.org), which is automa
 installed from PyPI when you run `hatch test`. But as it is not required for
 running `pyimgren`, nor installed by `pip install pyimgren`, you should
 use `pip install .[test]` from the cloned directory to safely use `pytest test`
-of `python -m unittest`
+or `python -m unittest`
 
 ## Contributing
 
